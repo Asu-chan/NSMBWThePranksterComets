@@ -45,8 +45,8 @@ While most of the credits goes to me (Asu-chan) and the [Newer Team](https://new
 If you contributed to any of the work that is featured in this repo and you weren't credited, feel free to contact me on discord at Asu-chan#2929.
 
 
-**Usage of any of the game's source code requires crediting Asu-chan, Treeki, Tempus, megazig, CLF78 and Nin0.**
+**Usage of any of the game's source code requires crediting [Asu-chan](https://github.com/Asu-chan), [Treeki](https://github.com/Treeki), [Tempus](https://github.com/Tempus), [megazig](https://github.com/Megazig), [CLF78](https://github.com/CLF78) and [Nin0](https://github.com/N-I-N-0).**
 
-**Usage of any of the game's code loader's code requires crediting Asu-chan and CLF78.**
+**Usage of any of the game's code loader's code requires crediting [Asu-chan](https://github.com/Asu-chan) and [CLF78](https://github.com/CLF78).**
 
-**Usage of any of the Prankster Toolbox's source code requires crediting Asu-chan.**
+**Usage of any of the Prankster Toolbox's source code requires crediting [Asu-chan](https://github.com/Asu-chan).**
