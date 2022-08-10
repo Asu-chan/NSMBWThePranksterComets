@@ -15,7 +15,7 @@ This repo is (meant to be) a fork of the [/Newer-Team/NewerSMBW, clang-no-transl
 
 Unfortunately, GitHub doesn't allow to fork the same repo more than once so this repo isn't marked as a fork.
 
-### Usage of this code
+### Using this code
 
 This repo is meant as a public archive for people to take parts from to make their own **New Super Mario Bros. Wii** mods better. Feel free to use anything as long as credits are given (see Credits section below).
 
@@ -27,7 +27,7 @@ While I can't really do anything to prevent people from doing so, if someone doe
 
 #### Compiling the game's source code (`Kamek` folder)
 
-* Install [Python 2.7](https://www.python.org/download/releases/2.7/) with the modules [`pyyaml`](https://github.com/yaml/pyyaml/tree/702b1767bf632d5bae390ec1f855173d256bb52f) and [`pyelftools`](https://github.com/eliben/pyelftools) in your `C:\` directory, so the path `C:\Python27\python.exe` is valid.
+* Install [Python 2.7](https://www.python.org/download/releases/2.7/) with the modules [`pyyaml`](https://github.com/yaml/pyyaml/tree/5.4.1.1) and [`pyelftools`](https://github.com/eliben/pyelftools) in your `C:\` directory, so the path `C:\Python27\python.exe` is valid.
 
 * If you're struggling with that, [here's a direct link](https://drive.google.com/file/d/19SXhD7GiSNXLqYpC8_DKudwZ5et_RM6b/view?usp=sharing) to an installed Python 2.7 with said modules, though it's bad practice to download this kind of thing directly as it could contain malware.
 
