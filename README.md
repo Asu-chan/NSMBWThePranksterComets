@@ -9,6 +9,7 @@ These resources include:
 - The game's source code (`Kamek` folder)
 - The game's code loader (`Loader` folder)
 - An all-in-one toolbox to edit various of the custom file formats used in the game (`PranksterToolbox` folder)
+- The game's [Reggie Next v4.8.0](https://github.com/CLF78/Reggie-Next/tree/v4.8.0) patch (`Reggie` folder)
 
 This repo is (meant to be) a fork of the [/Newer-Team/NewerSMBW, clang-no-translations branch](https://github.com/Newer-Team/NewerSMBW/tree/clang-no-translations) repo since part of [**Newer Super Mario Bros. Wii**](https://newerteam.com/wii/)'s code was used in [**New Super Mario Bros. Wii: The Prankster Comets**](https://youtu.be/5QI8ACl1E9c).
 
@@ -50,3 +51,5 @@ If you contributed to any of the work that is featured in this repo and you were
 **Usage of any of the game's code loader's code requires crediting [Asu-chan](https://github.com/Asu-chan) and [CLF78](https://github.com/CLF78).**
 
 **Usage of any of the Prankster Toolbox's source code requires crediting [Asu-chan](https://github.com/Asu-chan).**
+
+**Usage of any of the Reggie Next v4.8.0 patch requires crediting [Asu-chan](https://github.com/Asu-chan) and the [Reggie Next Team](https://github.com/CLF78/Reggie-Next/tree/v4.8.0#reggie-team).**

@@ -1,0 +1,1157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- &lt; = < -->
+<!-- &gt; = > -->
+<!-- &quot; = " -->
+<!-- &lt;font color=&quot;COLOR&quot;&gt;TEXT TEXT TEXT.&lt;/font&gt; = Colored Text -->
+<!-- Opinion on each dualbox to determine if it should be dualbox or if it should revert to being a list or checkbox. -->
+<!-- idtypes: Star Set, Path Movement, Rotation, Two Way Line, Water Ball, Mushroom, Group, Bolt, Target Event, Triggering Event, Collection, Location, Physics, Message, Path, Path Movement, Red Coin, Hill, Stretch, Ray, Coaster, Bubble Cannon, Burner, Wiggling, Panel, Colony -->
+<!-- idtypes - Sprites with multiple Target Events or Triggering Events may need a secondary idtype, so that the primary Target/Triggering can be displayed in the sprite's display box. -->
+<!-- idtypes - Sprites with idtypes should have their idtype displayed within their blue box, usually in the lower right corner. (primary) Target Event should usually be in the lower right, and Triggering Event should usually be in the lower left. Secondary values like AND controller's second+ Triggering Event, and IF controller's secondary Location ID should be displayed in the top right corner or otherwise not displayed at all. -->
+<!-- Sample sprite with full settings -->
+<!-- <sprite id="#" name="Sprite Name" noyoshi="True" yoshinotes="Talk about how it interacts with Yoshi. Advanced Only." notes="Talk about how to use this sprite in a basic sense." advancednotes="Talk about how to use this sprite in an advanced sense. Advanced Only."> -->
+<!--   <dependency notes="Talk about the dependencies."> -->
+<!--     <required sprite="#" /> -->
+<!--     <suggested sprite="#" /> -->
+<!--   </dependency> -->
+<!--   <checkbox bit="#" title="What it does when checked." comment="Information about it." comment2="Another bit of commentary." advanced="True" advancedcomment="Wordy complicated information about it. Advanced Only." idtype="ID Type etc." requiredbit="#-#, #-#" requiredval="#-#, #-#" /> Checkbox is ALWAYS bit - EXCEPT: #38, IF Controller, when setting 'ignore player/enemy'... -->
+<!--   <dualbox bit="#" title1="What it does when unchecked." title2="What it does when checked." comment="All of that stuff above here is an option." /> -->
+<!--   <value bit="#-# or" nybble="# or" multibit="#-#, #-#" title="What it's for." comment="Etc." /> -->
+<!--   <list bit="#-# or" nybble="#" title="What it's for." comment="Etc."> -->
+<!--     <entry value="#">Name</entry> -->
+<!--   </list> -->
+<!--   <multidualbox bit="#-#" title="What it's for." comment="Etc." /> -->
+<!-- </sprite> -->
+<!-- Stopped after Line xxxx / 10755 (#x) -->
+
+<sprites>
+  <sprite id="61" name="Big Boo" notes="A large version of the Boo enemy.">
+    <checkbox nybble="12.4" title="Slightly Faster" comment="When enabled, the Big Boo will move slightly faster."/>
+    <checkbox nybble="11.4" title="Always Despawn" comment="When disabled, the Big Boo will only despawn if it's off-screen and not moving. When enabled, it will despawn when it's off screen regardless of whether it's moving."/>
+    <checkbox nybble="10.4" title="Place over other sprites" comment="If checked, 300 units will be added to each Boo's position. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;"/>
+  </sprite> <!-- #61: Big Boo -->
+
+  <sprite id="79" name="Cosmic Mario" asmhack="true" notes="&lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+  </sprite> <!-- #79: Cosmic Mario -->
+
+  <sprite id="88" name="Race Recorder" asmhack="true" notes="&lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+  </sprite> <!-- #88: Race Recorder -->
+
+  <sprite id="131" name="Boo" notes="A standard loose Boo enemy. The Boo will chase the player when there is no player actively facing the Boo.">
+    <checkbox nybble="12.4" title="Slightly Faster" comment="When enabled, the Boo will move slightly faster towards the player."/>
+    <checkbox nybble="11.4" title="Always Despawn" comment="When enabled, the Boo will despawn when it's off screen regardless of whether it's moving. When disabled, the Boo will only despawn if it's off-screen and not moving."/>
+    <checkbox nybble="10.4" title="Place over other sprites" comment="If checked, 300 units will be added to each Boo's position. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;"/>
+  </sprite> <!-- #131: Boo -->
+
+  <sprite id="175" name="Flying ? Block" noyoshi="True">
+    <list nybble="9.3-9.4" title="Color">
+      <entry value="0">Overworld (Yellow)</entry>
+      <entry value="1">Underground (Blue)</entry>
+      <entry value="2">Snow (Gray)</entry>
+      <entry value="3">Lava (Red)</entry>
+    </list>
+    <list nybble="11.3-11.4" title="Movement">
+      <entry value="0">Moves Right</entry>
+      <entry value="1">Moves Left and Right</entry>
+      <entry value="2">Moves Up and Down</entry>
+    </list>
+    <checkbox nybble="10.4" title="Reverse Direction"/>
+    <list nybble="12" title="Contains" comment="Unlisted values are Empty. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+      <entry value="0">Empty</entry>
+      <entry value="1">1 Coin</entry>
+      <entry value="3">Fire Flower</entry>
+      <entry value="15">Ice Flower</entry>
+      <entry value="4">Propeller Shroom</entry>
+      <entry value="5">Penguin Suit</entry>
+      <entry value="2">Hammer Suit</entry>
+      <entry value="6">Mini Mushroom</entry>
+      <entry value="7">Star</entry>
+      <entry value="11">1-Up</entry>
+    </list>
+    <checkbox nybble="5.4" title="Unknown Flag 5 (1)" comment="Used in Retail: 06-05 A2. Possibly distance related."/>
+  </sprite> <!-- #175: Flying ? Block -->
+
+  <sprite id="191" name="Tile God Event" notes="The Tile God can Create / Change / Destroy tiles within a specified area when an Event is activated.">
+    <dependency notes="The Tile God sprite can be placed no more than one block outside of the Zone it is being activated in for it to function."/>
+    <value nybble="3-4" title="Triggering Event ID" comment="When this Event ID is activated, the tiles affected by the Tile God's area will be created or destroyed, depending on the Mode." idtype="Triggering Event"/>
+    <value nybble="11" title="Width" comment="This determines the width of the area that is affected."/>
+    <value nybble="12" title="Height" comment="This determines the height of the area that is affected."/>
+    <list nybble="16" title="Target Layer" comment="This determines which terrain layer is affected. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+      <entry value="2">Layer 0</entry>
+      <entry value="0">Layer 1</entry>
+      <entry value="1">Layer 2</entry>
+    </list>
+    <dualbox nybble="10.4" title1="Destroys Tiles" title2="Creates Tiles" comment="This determines how the Tile God will act when the Triggering Event is activated." comment2="When creating, the Tile God will place these tiles on top of existing tiles instead of replacing them."/>
+    <dualbox nybble="5.4" title1="Reverse Action when Deactivated" title2="Permanent" comment="This determines how the Tile God will act when the Triggering Event is deactivated" comment2="When set to Reverse, previously created tiles will be destroyed, and locations where tiles were destroyed will be filled by the creation settings of the Tile God."/>
+    <checkbox nybble="8.2" title="Disable Effects" comment="When enabled, the visual effect for Tile Creation/Destruction will be removed." comment2="You can use the Effect/Sound Spawner (332) to add your own effect in its place."/>
+    <checkbox nybble="8.1" title="Disable Sounds" comment="When enabled, the sound effect for Tile Creation/Destruction will be removed." comment2="You can use the Effect/Sound Spawner (332) to add your own sound in its place."/>
+    <list nybble="8.3-8.4" title="Pattern" comment="This determines the fill pattern for the Tile God's selected area." comment2="A checkered pattern and reverse checked pattern overlapping will create the same effect as a regular fill. This is sometimes useful for its visual effect.">
+      <entry value="0">Fill</entry>
+      <entry value="1">Checkers</entry>
+      <entry value="2">Reverse Checkers</entry>
+    </list>
+    <list nybble="9" title="Tile" comment="This determines what terrain tile will appear at the Tile God's selected area. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+      <entry value="0">Red Block (Pa0 3,7) (Object #57)</entry>
+      <entry value="1">Brick Block (Pa0 3,0) (Object #26)</entry>
+      <entry value="3">Stone Block (Pa0 3,4) (Object #51)</entry>
+      <entry value="4">Wooden Block (Pa0 3,3) (Object #50)</entry>
+      <entry value="8">Tile from Pa0</entry>
+      <entry value="9">Tile from Pa1</entry>
+      <entry value="10">Tile from Pa2</entry>
+      <entry value="11">Tile from Pa3</entry>
+      <entry value="6">Pa0 2,13</entry>
+      <entry value="14">Pa1 0,0</entry>
+      <entry value="12">Pa3 4,3</entry>
+    </list>
+    <value nybble="6" title="Tileset Row" comment="When using [Tile: Tile from Pa(x)], you can spawn every tile from the tileset by selecting it from a grid formation. Each tileset contains 16 Rows (0-15), and 16 Columns (0-15). The first tile in the top left is 0,0 and the last tile in the bottom right is 15,15. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" comment2="Some common examples for Pa0: &lt;br&gt; &lt;i&gt;Coin: 1,14 | Coin Outline: 1,15 | ?-Block: 3,1 | Used Block: 3,2 | Wooden Block: 3,3 | Stone Block: 3,4 | Donut Lift: 3,5 | Steel Block: 3,6" requirednybble="9" requiredval="8-11"/> <!-- Appears only if Block Type (Tile) = 8-11 -->
+    <value nybble="7" title="Tileset Column" comment="When using [Block Type: Tile from Pa(x)], you can spawn every tile from the tileset by selecting it from a grid formation. Each tileset contains 16 Rows (0-15), and 16 Columns (0-15). The first tile in the top left is 0,0 and the last tile in the bottom right is 15,15. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" comment2="Some common examples for Pa0: &lt;br&gt; &lt;i&gt;Coin: 1,14 | Coin Outline: 1,15 | ?-Block: 3,1 | Used Block: 3,2 | Wooden Block: 3,3 | Stone Block: 3,4 | Donut Lift: 3,5 | Steel Block: 3,6" requirednybble="9" requiredval="8-11"/> <!-- Appears only if Block Type (Tile) = 8-11 -->
+  </sprite> <!-- #191: Tile God Event -->
+
+  <!-- Test Z-Order Nybble 8 to see if it places the block behind Chainlink Fence objects (Fix 208, too) -->
+  <sprite id="207" name="? Block" sizehacks="True" notes="Your most basic, most flexible, standard Question Block. When spawning power-ups, it will spawn enough for every player! Such a generous block~">
+    <dependency notes="If pairing the ?-Block for movement or other features, you'll likely need one of the sprites listed in the Dependency List.">
+      <suggested sprite="159"/>
+      <suggested sprite="260"/>
+      <suggested sprite="474"/>
+      <suggested sprite="172"/>
+      <suggested sprite="382"/>
+    </dependency>
+    <list nybble="7" title="Movement Type" comment="This determines which type of movement the Block will be assigned." comment2="Movement Types 2, and 9+ are unused or otherwise unknown. Movement Type 3 and Type 8 only function with Coins. If you want to experiment with unknown Types, you'll need to modify the Raw Data.">
+      <entry value="0">None / [159] Path Controlled</entry>
+      <entry value="1">[260] Two-Way Line</entry>
+      <entry value="4">[474] Dancing</entry>
+      <entry value="7">[474] Dancing (Reversed)</entry>
+      <entry value="5">[172] Mushroom with Bolt Main</entry>
+      <entry value="6">[382] Mushroom with Bolt Pair</entry>
+    </list>
+    <value nybble="5-6" title="Path Movement ID" comment="If pairing the ?-Block with Sprite 159, match the Path Movement ID to enable Path controlled movement." requirednybble="7" requiredval="0" idtype="Path Movement"/> <!-- Appears if [Movement Type] = 0 -->
+    <value nybble="5-6" title="Two Way Line ID" comment="If pairing the ?-Block with sprite 260, match the Two Way Line ID to enable Two Way synchronized movement." requirednybble="7" requiredval="1" idtype="Two Way Line"/> <!-- Appears if [Movement Type] = 1 -->
+    <value nybble="5-6" title="Set to Zero" comment="If pairing the ?-Block with sprite 474, no further action is needed to create Dancing synchronized movement." requirednybble="7" requiredval="4"/> <!-- Appears if [Movement Type] = 4 -->
+    <value nybble="5-6" title="Set to Zero" comment="If pairing the ?-Block with sprite 474, no further action is needed to create Dancing synchronized movement." requirednybble="7" requiredval="7"/> <!-- Appears if [Movement Type] = 7 -->
+    <value nybble="5-6" title="Mushroom ID" comment="If pairing the ?-Block with sprite 172, match the Mushroom ID to enable Mushroom Bolt controlled movement. It will be paired to the platform with the Bolt." requirednybble="7" requiredval="5" idtype="Mushroom"/> <!-- Appears if [Movement Type] = 5 -->
+    <value nybble="5-6" title="Mushroom ID" comment="If pairing the ?-Block with sprite 382, match the Mushroom ID to enable Mushroom Bolt controlled movement. It will be paired to the platform without the Bolt." requirednybble="7" requiredval="6" idtype="Mushroom"/> <!-- Appears if [Movement Type] = 6 -->
+    <list nybble="12" title="Block Contains" comment="This determines what item the block contains." comment2="This block will release as many items as there are players. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+      <entry value="0">Empty</entry>
+      <entry value="1">1 Coin</entry>
+      <entry value="10">10-Coin</entry>
+      <entry value="14">Mushroom (if small)</entry>
+      <entry value="3">Fire Flower</entry>
+      <entry value="15">Ice Flower</entry>
+      <entry value="4">Propeller Shroom</entry>
+      <entry value="5">Penguin Suit</entry>
+      <entry value="2">Hammer Suit</entry>
+      <entry value="6">Mini Mushroom</entry>
+      <entry value="7">Star</entry>
+      <entry value="8">Continuous Star</entry>
+      <entry value="9">Yoshi Egg</entry>
+      <entry value="11">1-Up</entry>
+      <entry value="12">Vine</entry>
+      <entry value="13">Spring</entry>
+    </list>
+    <checkbox nybble="8.4" title="Place Behind Other Sprites" comment="When enabled, this changes the relative Z-order of the ?-Block placing it further behind other sprites." comment2="This will place the ?-Block behind even Chainlink Fence and Layer 1 terrain."/>
+    <checkbox nybble="10.4" title="Follows Lines" comment="It is recommended to use [402] Line Controlled ? Block instead."/>
+    <dualbox nybble="9.4" title1="Start Right/Up" title2="Start Left/Down" comment="This determines which direction the ?-Block will move based on the Line that it is connected to."/>
+  </sprite> <!-- #207: ? Block -->
+
+  <sprite id="208" name="(Unused) ? Block" sizehacks="True" notes="This is a nearly identical version of [207] to the point that you should probably just be using [207]...">
+    <dependency notes="If pairing the ?-Block for movement or other features, you'll likely need one of the sprites listed in the Dependency List.">
+      <suggested sprite="159"/>
+      <suggested sprite="260"/>
+      <suggested sprite="474"/>
+      <suggested sprite="172"/>
+      <suggested sprite="382"/>
+    </dependency>
+    <list nybble="7" title="Movement Type" comment="This determines which type of movement the Block will be assigned." comment2="Movement Types 2, and 9+ are unused or otherwise unknown.&lt;br&gt;Movement Type 3 and Type 8 only function with Coins. If you want to experiment with unknown Types, you'll need to modify the Raw Data.">
+      <entry value="0">None / [159] Path Controlled</entry>
+      <entry value="1">[260] Two-Way Line</entry>
+      <entry value="4">[474] Dancing</entry>
+      <entry value="7">[474] Dancing (Reversed)</entry>
+      <entry value="5">[172] Mushroom with Bolt Main</entry>
+      <entry value="6">[382] Mushroom with Bolt Pair</entry>
+    </list>
+    <value nybble="5-6" title="Path Movement ID" comment="If pairing the ?-Block with Sprite 159, match the Path Movement ID to enable Path controlled movement." requirednybble="7" requiredval="0" idtype="Path Movement"/> <!-- Appears if [Movement Type] = 0 -->
+    <value nybble="5-6" title="Two Way Line ID" comment="If pairing the ?-Block with sprite 260, match the Two Way Line ID to enable Two Way synchronized movement." requirednybble="7" requiredval="1" idtype="Two Way Line"/> <!-- Appears if [Movement Type] = 1 -->
+    <value nybble="5-6" title="Set to Zero" comment="If pairing the ?-Block with sprite 474, no further action is needed to create Dancing synchronized movement." requirednybble="7" requiredval="4"/> <!-- Appears if [Movement Type] = 4 -->
+    <value nybble="5-6" title="Set to Zero" comment="If pairing the ?-Block with sprite 474, no further action is needed to create Dancing synchronized movement." requirednybble="7" requiredval="7"/> <!-- Appears if [Movement Type] = 7 -->
+    <value nybble="5-6" title="Mushroom ID" comment="If pairing the ?-Block with sprite 172, match the Mushroom ID to enable Mushroom Bolt controlled movement. It will be paired to the platform with the Bolt." requirednybble="7" requiredval="5" idtype="Mushroom"/> <!-- Appears if [Movement Type] = 5 -->
+    <value nybble="5-6" title="Mushroom ID" comment="If pairing the ?-Block with sprite 382, match the Mushroom ID to enable Mushroom Bolt controlled movement. It will be paired to the platform without the Bolt." requirednybble="7" requiredval="6" idtype="Mushroom"/> <!-- Appears if [Movement Type] = 6 -->
+    <list nybble="12" title="Block Contains" comment="This determines what item the block contains." comment2="This block will release as many items as there are players. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+      <entry value="0">Empty</entry>
+      <entry value="1">1 Coin</entry>
+      <entry value="10">10-Coin</entry>
+      <entry value="14">Mushroom (if small)</entry>
+      <entry value="3">Fire Flower</entry>
+      <entry value="15">Ice Flower</entry>
+      <entry value="4">Propeller Shroom</entry>
+      <entry value="5">Penguin Suit</entry>
+      <entry value="2">Hammer Suit</entry>
+      <entry value="6">Mini Mushroom</entry>
+      <entry value="7">Star</entry>
+      <entry value="8">Continuous Star</entry>
+      <entry value="9">Yoshi Egg</entry>
+      <entry value="11">1-Up</entry>
+      <entry value="12">Vine</entry>
+      <entry value="13">Spring</entry>
+    </list>
+    <checkbox nybble="8.4" title="Place Behind Other Sprites" comment="When enabled, this changes the relative Z-Order of the ?-Block placing it further behind other sprites." comment2="This will place the ?-Block behind even Chainlink Fence and Layer 1 terrain." advanced="True" advancedcomment="When this is checked, enemies will &lt;b&gt;fall through the block&lt;/b&gt; from all sides, even from above. This is also the case for the block's final form (Used Block). The player cannot pass through the block." />
+  </sprite> <!-- #208: (Unused) ? Block -->
+
+  <sprite id="209" name="Brick Block" sizehacks="True" notes="Your most basic, most flexible, standard brown Brick Block. When spawning power-ups, it will spawn only one, no matter how many players! Such a stingy block~">
+    <dependency notes="If pairing the Brick Block for movement or other features, you'll likely need one of the sprites listed in the Dependency List.">
+      <suggested sprite="159"/>
+      <suggested sprite="260"/>
+      <suggested sprite="474"/>
+      <suggested sprite="172"/>
+      <suggested sprite="382"/>
+    </dependency>
+    <list nybble="7" title="Movement Type" comment="This determines which type of movement the Block will be assigned." comment2="Movement Types 2, and 9+ are unused or otherwise unknown.&lt;br&gt;Movement Type 3 and Type 8 only function with Coins. If you want to experiment with unknown Types, you'll need to modify the Raw Data.">
+      <entry value="0">None / [159] Path Controlled</entry>
+      <entry value="1">[260] Two-Way Line</entry>
+      <entry value="4">[474] Dancing</entry>
+      <entry value="7">[474] Dancing (Reversed)</entry>
+      <entry value="5">[172] Mushroom with Bolt Main</entry>
+      <entry value="6">[382] Mushroom with Bolt Pair</entry>
+    </list>
+    <value nybble="5-6" title="Path Movement ID" comment="If pairing the Brick Block with Sprite 159, match the Path Movement ID to enable Path controlled movement." requirednybble="7" requiredval="0" idtype="Path Movement"/> <!-- Appears if [Movement Type] = 0 -->
+    <value nybble="5-6" title="Two Way Line ID" comment="If pairing the Brick Block with sprite 260, match the Two Way Line ID to enable Two Way synchronized movement." requirednybble="7" requiredval="1" idtype="Two Way Line"/> <!-- Appears if [Movement Type] = 1 -->
+    <value nybble="5-6" title="Set to Zero" comment="If pairing the Brick Block with sprite 474, no further action is needed to create Dancing synchronized movement." requirednybble="7" requiredval="4"/> <!-- Appears if [Movement Type] = 4 -->
+    <value nybble="5-6" title="Set to Zero" comment="If pairing the Brick Block with sprite 474, no further action is needed to create Dancing synchronized movement." requirednybble="7" requiredval="7"/> <!-- Appears if [Movement Type] = 7 -->
+    <value nybble="5-6" title="Mushroom ID" comment="If pairing the Brick Block with sprite 172, match the Mushroom ID to enable Mushroom Bolt controlled movement. It will be paired to the platform with the Bolt." requirednybble="7" requiredval="5" idtype="Mushroom"/> <!-- Appears if [Movement Type] = 5 -->
+    <value nybble="5-6" title="Mushroom ID" comment="If pairing the Brick Block with sprite 382, match the Mushroom ID to enable Mushroom Bolt controlled movement. It will be paired to the platform without the Bolt." requirednybble="7" requiredval="6" idtype="Mushroom"/> <!-- Appears if [Movement Type] = 6 -->
+    <list nybble="12" title="Block Contains" comment="This determines what item the block contains. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" comment2="This block will release only one power-up item.">
+      <entry value="0">Empty</entry>
+      <entry value="1">1 Coin</entry>
+      <entry value="10">10-Coin</entry>
+      <entry value="14">Mushroom (if small)</entry>
+      <entry value="3">Fire Flower</entry>
+      <entry value="15">Ice Flower</entry>
+      <entry value="4">Propeller Shroom</entry>
+      <entry value="5">Penguin Suit</entry>
+      <entry value="2">Hammer Suit</entry>
+      <entry value="6">Mini Mushroom</entry>
+      <entry value="7">Star</entry>
+      <entry value="8">Continuous Star</entry>
+      <entry value="9">Yoshi Egg</entry>
+      <entry value="11">1-Up</entry>
+      <entry value="12">Vine</entry>
+      <entry value="13">Spring</entry>
+    </list>
+    <checkbox nybble="8.4" title="Place Behind Other Sprites" comment="When enabled, this changes the relative Z-Order of the Brick Block placing it further behind other sprites." comment2="This will place the Brick Block behind even Chainlink Fence and Layer 1 terrain." advanced="True" advancedcomment="When this is checked, enemies will &lt;b&gt;fall through the block&lt;/b&gt; from all sides, even from above. This is also the case for the block's final form (Used Block). The player cannot pass through the block." />
+    <checkbox nybble="10.4" title="Follows Lines" comment="It is recommended to use [403] Line Controlled Brick Block instead."/>
+    <dualbox nybble="9.4" title1="Start Right/Up" title2="Start Left/Down" comment="This determines which direction the Brick Block will move based on the Line that it is connected to."/>
+  </sprite> <!-- #209: Brick Block -->
+
+  <!-- Check if you can use the Z-Order to place the invisible block behind Chainlink -->
+  <!-- Confirm if Invisible Block can be paired with movement controllers -->
+  <sprite id="221" name="Invisible Block" sizehacks="True" notes="Your most sneaky, most annoying, hidden transparent Invisible Block. When spawning power-ups, it will spawn only one, no matter how many players! Such a rude block~" advancednotes="The tileset-based Invisible Blocks can be destroyed by sprites like Bob-ombs. Sprite-based Invisible Blocks however cannot be destroyed.">
+    <dependency notes="If pairing the Invisible Block for movement or other features, you'll likely need one of the sprites listed in the Dependency List.">
+      <suggested sprite="159"/>
+      <suggested sprite="260"/>
+      <suggested sprite="474"/>
+      <suggested sprite="172"/>
+      <suggested sprite="382"/>
+    </dependency>
+    <list nybble="7" title="Movement Type" comment="This determines which type of movement the Block will be assigned." comment2="Movement Types 2, and 9+ are unused or otherwise unknown. &lt;br&gt;Movement Type 3 and Type 8 only function with Coins. If you want to experiment with unknown Types, you'll need to modify the Raw Data.">
+      <entry value="0">None / [159] Path Controlled</entry>
+      <entry value="1">[260] Two-Way Line</entry>
+      <entry value="4">[474] Dancing</entry>
+      <entry value="7">[474] Dancing (Reversed)</entry>
+      <entry value="5">[172] Mushroom with Bolt Main</entry>
+      <entry value="6">[382] Mushroom with Bolt Pair</entry>
+    </list>
+    <value nybble="5-6" title="Path Movement ID" comment="If pairing the Invisible Block with Sprite 159, match the Path Movement ID to enable Path controlled movement." requirednybble="7" requiredval="0" idtype="Path Movement"/> <!-- Appears if [Movement Type] = 0 -->
+    <value nybble="5-6" title="Two Way Line ID" comment="If pairing the Invisible Block with sprite 260, match the Two Way Line ID to enable Two Way synchronized movement." requirednybble="7" requiredval="1" idtype="Two Way Line"/> <!-- Appears if [Movement Type] = 1 -->
+    <value nybble="5-6" title="Set to Zero" comment="If pairing the Invisible Block with sprite 474, no further action is needed to create Dancing synchronized movement." requirednybble="7" requiredval="4"/> <!-- Appears if [Movement Type] = 4 -->
+    <value nybble="5-6" title="Set to Zero" comment="If pairing the Invisible Block with sprite 474, no further action is needed to create Dancing synchronized movement." requirednybble="7" requiredval="7"/> <!-- Appears if [Movement Type] = 7 -->
+    <value nybble="5-6" title="Mushroom ID" comment="If pairing the Invisible Block with sprite 172, match the Mushroom ID to enable Mushroom Bolt controlled movement. It will be paired to the platform with the Bolt." requirednybble="7" requiredval="5" idtype="Mushroom"/> <!-- Appears if [Movement Type] = 5 -->
+    <value nybble="5-6" title="Mushroom ID" comment="If pairing the Invisible Block with sprite 382, match the Mushroom ID to enable Mushroom Bolt controlled movement. It will be paired to the platform without the Bolt." requirednybble="7" requiredval="6" idtype="Mushroom"/> <!-- Appears if [Movement Type] = 6 -->
+    <list nybble="12" title="Block Contains" comment="This determines what item the block contains. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" comment2="This block will only release one power-up item. If the invisible block has 10 coins, it will stay in the used block graphic the entire time. Additionally, it won't release the extra few coins if the block is hit multiple times successfully.">
+      <entry value="0">Empty</entry>
+      <entry value="1">1 Coin</entry>
+      <entry value="10">10-Coin (buggy)</entry>
+      <entry value="14">Mushroom (if small)</entry>
+      <entry value="3">Fire Flower</entry>
+      <entry value="15">Ice Flower</entry>
+      <entry value="4">Propeller Shroom</entry>
+      <entry value="5">Penguin Suit</entry>
+      <entry value="2">Hammer Suit</entry>
+      <entry value="6">Mini Mushroom</entry>
+      <entry value="7">Star</entry>
+      <entry value="8">Continuous Star</entry>
+      <entry value="9">Yoshi Egg</entry>
+      <entry value="11">1-Up</entry>
+      <entry value="12">Vine</entry>
+      <entry value="13">Spring</entry>
+    </list>
+    <checkbox nybble="8.4" title="Place Behind Other Sprites" comment="When enabled, this changes the relative Z-Order of the Invisible Block placing it further behind other sprites." comment2="This will place the Invisible Block behind even Chainlink Fence and Layer 1 terrain."/>
+    <checkbox nybble="10.4" title="Follows Lines"/>
+    <dualbox nybble="9.4" title1="Start Right/Up" title2="Start Left/Down" comment="This determines which direction the Invisible Block will move based on the Line that it is connected to."/>
+  </sprite> <!-- #221: Invisible Block -->
+
+  <sprite id="239" name="Purple Coin" asmhack="true" notes="&lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+    <value nybble="11-12" title="ID" comment="Each purple coin must have its own ID in a level." idtype="Purple Coin"/>
+    <list nybble="10" title="Movement Type" comment="This determines which type of movement the Purple Coin will be assigned.">
+      <entry value="0">Normal</entry>
+      <entry value="1">[205] Water Ball</entry>
+      <entry value="2">[459]/[461] Crowd Clapper</entry>
+    </list>
+    <value nybble="8-9" title="Water Ball ID" comment="If pairing the Purple Coin with sprite 205, match the Water Ball ID to enable Water Ball synchronized movement." requirednybble="10" requiredval="1"/>
+    <value nybble="9" title="Collection ID" comment="If pairing the Purple Coin with sprite 459/461, match the Collection ID to have the game count this Purple Coin towards the Collection Set." requirednybble="10" requiredval="2"/>
+  </sprite> <!-- #239: Purple Coin -->
+
+  <sprite id="244" name="Plus/Minus Clock" asmhack="true" notes="&lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+    <value nybble="11-12" title="ID" comment="Each plus clock must have its own ID in a level."/>
+    <dualbox nybble="8.4" title1="Adds Time" title2="Subtracts Time" comment="Determine if time will be added or subtracted to the timer upon hitting this sprite."/>
+    <value nybble="9-10" title="Time Added" comment="The amount of seconds that will be added to the game's timer." requirednybble="8.4" requiredval="0"/>
+    <value nybble="9-10" title="Time Subtracted" comment="The amount of seconds that will be subtracted to the game's timer." requirednybble="8.4" requiredval="1"/>
+  </sprite> <!-- #244: Plus/Minus Clock -->
+
+  <sprite id="255" name="Rotation Controlled ? Block" notes="A ?-Block that can either be moved by rotation controllers or manually angled.">
+    <dependency notes="A rotation controller is not required for this sprite to function. You can, instead, set a manual angle for the block.">
+      <suggested sprite="96"/>
+      <suggested sprite="149"/>
+    </dependency>
+    <value nybble="11-12" title="Rotation ID" comment="This pairs the ?-Block to a matching rotation controller." requirednybble="9" requiredval="0" idtype="Rotation"/>
+    <list nybble="9" title="Tilt Angle" comment="This determines the angle the block will be tilted. Tiled blocks can't be rotation controlled.">
+      <entry value="0">0°</entry>
+      <entry value="1">3°</entry>
+      <entry value="2">6°</entry>
+      <entry value="3">9°</entry>
+      <entry value="4">12°</entry>
+      <entry value="5">15°</entry>
+      <entry value="6">18°</entry>
+      <entry value="7">21°</entry>
+      <entry value="8">24°</entry>
+      <entry value="9">27°</entry>
+      <entry value="10">30°</entry>
+      <entry value="11">33°</entry>
+      <entry value="12">36°</entry>
+      <entry value="13">39°</entry>
+      <entry value="14">42°</entry>
+      <entry value="15">45°</entry>
+    </list>
+    <dualbox nybble="8.4" title1="Tilts Right" title2="Tilts Left"/> 
+    <list nybble="10" title="Block Contains" comment="This determines what item the block contains. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" comment2="This block will release as many items as there are players. Some items, such as the Spring, won't appear if the player strikes the Block while it is actively rotating.">
+      <entry value="0">Empty</entry>
+      <entry value="1">1 Coin</entry>
+      <entry value="10">10-Coin</entry>
+      <entry value="14">Mushroom (if small)</entry>
+      <entry value="3">Fire Flower</entry>
+      <entry value="15">Ice Flower</entry>
+      <entry value="4">Propeller Shroom</entry>
+      <entry value="5">Penguin Suit</entry>
+      <entry value="2">Hammer Suit</entry>
+      <entry value="6">Mini Mushroom</entry>
+      <entry value="7">Star</entry>
+      <entry value="8">Continuous Star</entry>
+      <entry value="9">Yoshi Egg</entry>
+      <entry value="11">1-Up</entry>
+      <entry value="12">Vine</entry>
+      <entry value="13">Spring</entry>
+    </list>
+  </sprite> <!-- #255: Rotation Controlled ? Block -->
+
+  <sprite id="256" name="Rotation Controlled Brick Block" notes="A Brick Block that can either be moved by rotation controllers or manually angled.">
+    <dependency notes="A rotation controller is not required for this sprite to function. You can, instead, set a manual angle for the block.">
+      <suggested sprite="96"/>
+      <suggested sprite="149"/>
+    </dependency>
+    <value nybble="11-12" title="Rotation ID" comment="This pairs the Brick Block to a matching rotation controller." requirednybble="9" requiredval="0" idtype="Rotation"/>
+    <list nybble="9" title="Tilt Angle" comment="This determines the angle the block will be tilted. Tilted blocks can not be rotation controlled.">
+      <entry value="0">0°</entry>
+      <entry value="1">3°</entry>
+      <entry value="2">6°</entry>
+      <entry value="3">9°</entry>
+      <entry value="4">12°</entry>
+      <entry value="5">15°</entry>
+      <entry value="6">18°</entry>
+      <entry value="7">21°</entry>
+      <entry value="8">24°</entry>
+      <entry value="9">27°</entry>
+      <entry value="10">30°</entry>
+      <entry value="11">33°</entry>
+      <entry value="12">36°</entry>
+      <entry value="13">39°</entry>
+      <entry value="14">42°</entry>
+      <entry value="15">45°</entry>
+    </list>
+    <dualbox nybble="8.4" title1="Tilts Right" title2="Tilts Left"/>
+    <list nybble="10" title="Block Contains" comment="This determines what item the block contains. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" comment2="This block will only release one power-up item. Some items, such as the Spring, won't appear if the player strikes the Block while it is actively rotating.">
+      <entry value="0">Empty</entry>
+      <entry value="1">1 Coin</entry>
+      <entry value="10">10-Coin</entry>
+      <entry value="14">Mushroom (if small)</entry>
+      <entry value="3">Fire Flower</entry>
+      <entry value="15">Ice Flower</entry>
+      <entry value="4">Propeller Shroom</entry>
+      <entry value="5">Penguin Suit</entry>
+      <entry value="2">Hammer Suit</entry>
+      <entry value="6">Mini Mushroom</entry>
+      <entry value="7">Star</entry>
+      <entry value="8">Continuous Star</entry>
+      <entry value="9">Yoshi Egg</entry>
+      <entry value="11">1-Up</entry>
+      <entry value="12">Vine</entry>
+      <entry value="13">Spring</entry>
+    </list>
+  </sprite> <!-- #256: Rotation Controlled Brick Block -->
+
+  <sprite id="276" name="Ghost House Door" noyoshi="True" notes="A Ghost House door that can have an Entrance placed on it." advancednotes="The door can also be paired with a Rotation Controller, but the results are moderately glitchy with many combinations not functioning and several restrictions on getting them to work as actual doors.">
+    <value nybble="6" title="Model ID" comment="This determines the model used by the ghost house door. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" advancedcomment="If the Model ID is set to 0, the model that will be used will be &quot;obj_obake_door.mdl0&quot;.&lt;br&gt;Otherwise, say x is the Model ID, the model that will be used will be &quot;obj_obake_door_x.mdl0&quot;."/>
+    <checkbox nybble="8.4" title="Fake Door" comment="When enabled, when the player attempt to enter the door, it will vanish and disperse into 4 harmless Boos."/>
+    <list nybble="9.3-9.4" title="Orientation" comment="This determines which direction the door will be facing." comment2="A door can only be entered if it is upright." advancedcomment="As decoration, this is fine. Actually making it properly associate its corresponding Entrance is either impossible or very functionally strange.">
+      <entry value="0">Upright</entry>
+      <entry value="1">Left</entry>
+      <entry value="2">Down</entry>
+      <entry value="3">Right</entry>
+    </list>
+    <checkbox nybble="10.4" title="Rotation Controlled (Buggy)" comment="When enabled, the door will only function when paired with a Rotation ID." advanced="True" advancedcomment="'Function' is perhaps misleading. There are only a few ways you can successfully utilize a Rotation Controller door. For starters, you can only enter the door while it is almost fully upright. There is also a peculiarity with how the Entrance is placed. The most reliable way to use a Rotation Controlled Door is to place it with an already activated Spinning controller that returns to its original position when deactivated."/>
+    <value nybble="11-12" title="Rotation ID" comment="This pairs the Door to a matching rotation controller." advanced="True" idtype="Rotation"/>
+  </sprite> <!-- #276: Ghose House Door -->
+
+  <sprite id="246" name="Special Event" notes="This sprite can do all sorts of special functions, such as freezing actors, changing the size of sprites, editing the game Timer, and changing the gravity. This function is restricted to the active Zone. The settings available to each type will appear when selecting that option. Be sure to reset the Sprite Settings when switching between different types in order to prevent any bugs. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+    <value nybble="5-6" title="Triggering Event ID" comment="The Special Event is on as long as this Event is activated." idtype="Triggering Event"/>
+    <list nybble="12" title="Type" comment="This determines the effect of the Special Event." comment2="Time Stop: Freezes some Actors/Elements. &lt;br&gt;Pause Timer: Pauses the Level's Clock, different from Time Stop. &lt;br&gt;Set Timer: Changes the time on the Level's Clock. &lt;br&gt;Change Gravity: Changes player physics to simulate a different type of gravity. &lt;br&gt;Resizer: Changes the size of all sprites affected by this function. &lt;br&gt;Selective Resizer: Changes the size of sprites affected by this function to their specified sizes. &lt;br&gt;Background Resizer: Changes the Background settings. &lt;br&gt;Disable Z-Order Fixes: Deactivates all Z-Order modifications while the Special Event is activated. &lt;br&gt;Disable MP Bubbling: Deactivates the ability to 'bubble' yourself during Multiplayer.">
+      <entry value="0">None</entry>                  <!-- 0000 -->
+      <entry value="1">Time Stop</entry>             <!-- 0001 -->
+      <entry value="2">Pause Timer</entry>           <!-- 0010 -->
+      <entry value="4">Set Timer</entry>             <!-- 0100 -->
+      <entry value="3">Change Gravity</entry>        <!-- 0011 -->
+      <entry value="5">Resizer</entry>               <!-- 0101 -->
+      <entry value="6">Selective Resizer</entry>     <!-- 0110 -->
+      <entry value="9">Background Resizer</entry>    <!-- 1001 -->
+      <entry value="7">Disable Z-Order Fixes</entry> <!-- 0111 -->
+      <entry value="8">Disable MP Bubbling</entry>   <!-- 1000 --> <!-- 45-48 -->
+    </list>
+    <checkbox nybble="11.4" title="Time Stop: Platforms" comment="When enabled, the Special Event will freeze all Platforms that support this function." requirednybble="12" requiredval="1"/> <!-- Appears if [Type] = 1 -->
+    <checkbox nybble="11.3" title="Time Stop: Players" comment="When enabled, the Special Event will freeze all Players." comment2="Remember to deactivate the Special Event or else Mario and the other Players will remain frozen. Forever~" requirednybble="12" requiredval="1"/> <!-- Appears if [Type] = 1 -->
+    <checkbox nybble="11.2" title="Time Stop: Terrain" comment="When enabled, the Special Event will freeze all Terrain Animations." requirednybble="12" requiredval="1"/> <!-- Appears if [Type] = 1 -->
+    <checkbox nybble="11.1" title="Time Stop: Enemies" comment="When enabled, the Special Event will freeze all Enemies that support this function." requirednybble="12" requiredval="1"/> <!-- Appears if [Type] = 1 -->
+    <list nybble="11" title="Gravity Type" comment="This determines what the altered state of gravity will be while the Special Event is activated." comment2="Anti Gravity is a little strange, not fully documented, and definitely not recommended for normal use." requirednybble="12" requiredval="3"> <!-- Appears if [Type] = 3 -->
+      <entry value="0">Low Gravity</entry>
+      <entry value="1">Anti Gravity</entry>
+    </list>
+    <value nybble="7-10" title="Set Time to..." comment="This determines what the Level's Clock will be set to when the Special Event is activated." comment2="Do not use a value higher than 999." requirednybble="12" requiredval="4"/> <!-- Appears if [Type] = 4 -->
+    <list nybble="11" title="Scale / Size (Global)" comment="The Special Event will resize all affected sprites in the Zone that support this function." requirednybble="12" requiredval="5"> <!-- Appears if [Type] = 5 -->
+      <entry value="0">x1.0 (normal)</entry>
+      <entry value="1">x0.25</entry>
+      <entry value="2">x0.5</entry>
+      <entry value="3">x0.75</entry>
+      <entry value="4">x1.25</entry>
+      <entry value="5">x1.5</entry>
+      <entry value="6">x1.75</entry>
+      <entry value="7">x2.0</entry>
+      <entry value="8">x2.5</entry>
+      <entry value="9">x3.0</entry>
+      <entry value="10">x4.0</entry>
+      <entry value="11">x5.0</entry>
+      <entry value="12">x6.0</entry>
+      <entry value="13">x7.0</entry>
+      <entry value="14">x8.0</entry>
+      <entry value="15">x10.0</entry>
+    </list>
+    <list nybble="11" title="Scale / Size (Selective)" comment="The Special Event will resize all affected sprites in the Zone following the list below using nybble 5 or 7. Keep in mind that these nybbles may control other functions in the sprites themselves.&lt;br&gt;4 = x0.25&lt;br&gt;5 = x0.5&lt;br&gt;6 = x0.75&lt;br&gt;0-3 = x1.0&lt;br&gt;7 = x1.25&lt;br&gt;8 = x1.5&lt;br&gt;9 = x2.0&lt;br&gt;10 = x2.5&lt;br&gt;11 = x3.0&lt;br&gt;12 = x4.0&lt;br&gt;13 = x5.0&lt;br&gt;14 = x6.0&lt;br&gt;15 = x10.0" requirednybble="12" requiredval="6"> <!-- Appears if [Type] = 6 -->
+      <entry value="0">Use Nybble 5</entry>
+      <entry value="1">Use Nybble 7</entry>
+    </list>
+    <!-- 1001 -->
+    <list nybble="7" title="bgA (Scenery) X Size" comment="The Special Event will resize the 'Scenery' background picture horizontally. Higher Values = Bigger Size" requirednybble="12" requiredval="9"> <!-- Appears if [Type] = 9 -->
+      <entry value="0">x0.1</entry>
+      <entry value="1">x0.15</entry>
+      <entry value="2">x0.25</entry>
+      <entry value="3">x0.375</entry>
+      <entry value="4">x0.5</entry>
+      <entry value="5">x0.625</entry>
+      <entry value="6">x0.75</entry>
+      <entry value="7">x0.9</entry>
+      <entry value="8">x1.0 (Normal)</entry>
+      <entry value="9">x1.125</entry>
+      <entry value="10">x1.25</entry>
+      <entry value="11">x1.5</entry>
+      <entry value="12">x1.75</entry>
+      <entry value="13">x2</entry>
+      <entry value="14">x2.25</entry>
+      <entry value="15">x2.5</entry>
+    </list>
+    <list nybble="8" title="bgA (Scenery) Y Size" comment="The Special Event will resize the 'Scenery' background picture vertically. Higher Values = Bigger Size" requirednybble="12" requiredval="9"> <!-- Appears if [Type] = 9 -->
+      <entry value="0">x0.1</entry>
+      <entry value="1">x0.15</entry>
+      <entry value="2">x0.25</entry>
+      <entry value="3">x0.375</entry>
+      <entry value="4">x0.5</entry>
+      <entry value="5">x0.625</entry>
+      <entry value="6">x0.75</entry>
+      <entry value="7">x0.9</entry>
+      <entry value="8">x1.0 (Normal)</entry>
+      <entry value="9">x1.125</entry>
+      <entry value="10">x1.25</entry>
+      <entry value="11">x1.5</entry>
+      <entry value="12">x1.75</entry>
+      <entry value="13">x2</entry>
+      <entry value="14">x2.25</entry>
+      <entry value="15">x2.5</entry>
+    </list>
+    <list nybble="9" title="bgB (Backdrop) X Size" comment="The Special Event will resize the 'Backdrop' background picture horizontally. Higher Values = Bigger Size" requirednybble="12" requiredval="9"> <!-- Appears if [Type] = 9 -->
+      <entry value="0">x0.1</entry>
+      <entry value="1">x0.15</entry>
+      <entry value="2">x0.25</entry>
+      <entry value="3">x0.375</entry>
+      <entry value="4">x0.5</entry>
+      <entry value="5">x0.625</entry>
+      <entry value="6">x0.75</entry>
+      <entry value="7">x0.9</entry>
+      <entry value="8">x1.0 (Normal)</entry>
+      <entry value="9">x1.125</entry>
+      <entry value="10">x1.25</entry>
+      <entry value="11">x1.5</entry>
+      <entry value="12">x1.75</entry>
+      <entry value="13">x2</entry>
+      <entry value="14">x2.25</entry>
+      <entry value="15">x2.5</entry>
+    </list>
+    <list nybble="10" title="bgB (Backdrop) Y Size" comment="The Special Event will resize the 'Backdrop' background picture vertically. Higher Values = Bigger Size" requirednybble="12" requiredval="9"> <!-- Appears if [Type] = 9 -->
+      <entry value="0">x0.1</entry>
+      <entry value="1">x0.15</entry>
+      <entry value="2">x0.25</entry>
+      <entry value="3">x0.375</entry>
+      <entry value="4">x0.5</entry>
+      <entry value="5">x0.625</entry>
+      <entry value="6">x0.75</entry>
+      <entry value="7">x0.9</entry>
+      <entry value="8">x1.0 (Normal)</entry>
+      <entry value="9">x1.125</entry>
+      <entry value="10">x1.25</entry>
+      <entry value="11">x1.5</entry>
+      <entry value="12">x1.75</entry>
+      <entry value="13">x2</entry>
+      <entry value="14">x2.25</entry>
+      <entry value="15">x2.5</entry>
+    </list>
+  </sprite> <!-- #246: Special Event -->
+
+  <sprite id="283" name="Power Star" notes="Acts as the level ending sprite. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+    <value nybble="3-4" title="Triggering Event ID" comment="The star will appear when this event is triggered. If it is set to 0, the star will be there by default." idtype="Triggering Event"/>
+    <checkbox nybble="12.4" title="No Camera Shift" comment="If this is checked, the camera won't be moved when the star appears" requirednybble="3-4" requiredval="1-255"/>
+    <checkbox nybble="12.3" title="Castle Star" comment="If this is checked, collecting the star will play the boss clear fanfare, and rendering will be forced" comment2="Not recommended for use, internally used for koopalings"/>
+    <checkbox nybble="12.2" title="Grand Star" comment="If this is checked, the Power Star's model will be changed to a Grand Star's, and the glowing effect will be twice as big."/>
+    <checkbox nybble="12.1" title="No music" comment="If this is checked, no music will play after the Power Star is donne appearing." requirednybble="3-4" requiredval="1-255"/>
+    <value nybble="11" title="Camera center Y padding" comment="When being triggered; the camera will center on the star by default. However, you can make it center a set number of tiles higher using this setting." requirednybble="3-4, 12.4" requiredval="1-255, 0   "/>
+  </sprite> <!-- #283: Power Star -->
+
+  <sprite id="290" name="Cosmic Clone" asmhack="true" notes="&lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+    <value nybble="11-12" title="Delay" comment="The Cosmic Clone with spawn with a Delay of this number of frames."/>
+    <checkbox nybble="10.4" title="Plays Sound Upon Dying" comment=""/>
+  </sprite> <!-- #290: Cosmic Clone -->
+
+  <sprite id="301" name="4-Way Large Cannon with Pipe" noyoshi="True" notes="A large 4-way rotating cannonball launcher that has a pipe in place of one of the four cannons.">
+    <list nybble="7" title="Camera Influence" comment="This determines how the cannonball moves relative to the camera.">
+      <entry value="0">Unaffected by Camera</entry>
+      <entry value="1">Affected by All Camera Movements</entry>
+      <entry value="2">Affected by Vertical Camera Movements</entry>
+      <entry value="3">Affected by Horizontal Camera Movements</entry>
+    </list>
+    <dualbox nybble="10.4" title1="Rotates Clockwise" title2="Rotates Counter-Clockwise" comment="This determines which direction the cannon and pipe will rotate."/>
+    <list nybble="12" title="Pipe Position at Load" comment="This determines the pipe's position when the cannon first loads on the screen.">
+      <entry value="0">0°</entry>
+      <entry value="1">45°</entry>
+      <entry value="2">90°</entry>
+      <entry value="3">135°</entry>
+      <entry value="4">180°</entry>
+      <entry value="5">225°</entry>
+      <entry value="6">270°</entry>
+      <entry value="7">315°</entry>
+    </list>
+    <value nybble="5" title="Pipe BRRES ID" comment="This determines the BRRES file used by the pipe. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" advancedcomment="If the BRRES ID is set to 0, the BRRES file that will be used will be &quot;g3d/obj_dokan.brres&quot;.&lt;br&gt;Otherwise, say x is the BRRES ID, the BRRES file that will be used will be &quot;g3d/obj_dokan_x.brres&quot;."/>
+    <value nybble="8-9" title="Entrance ID" comment="This determines the Entrance ID that the pipe will connect with." comment2="It does not have to be placed on the pipe. It can only be used as an exit." idtype="Entrance"/>
+    <checkbox nybble="11.4" title="Upside-Down" comment="When enabled, the cannon is upside-down and can be placed against the ceiling." advanced="True" advancedcomment="The pipe will load on the opposite side alongside a cannon, leaving a hole on one side. As such, this option should not be used."/>
+  </sprite> <!-- #301: 4-Way Large Cannon with Pipe -->
+
+  <!-- Check if you can use the Z-Order to place the signboard behind Chainlink. -->
+  <sprite id="310" name="Signboard - Arrow" notes="A signboard with a red arrow on it, useful for suggesting a player travel in a specific direction.">
+    <list nybble="12" title="Direction" comment="This determines which direction the arrow will point in.">
+      <entry value="0">Right</entry>
+      <entry value="1">Up + Right</entry>
+      <entry value="2">Up</entry>
+      <entry value="3">Up + Left</entry>
+      <entry value="4">Left</entry>
+      <entry value="5">Down + Left</entry>
+      <entry value="6">Down</entry>
+      <entry value="7">Down + Right</entry>
+    </list>
+    <checkbox nybble="11.4" title="Place Behind Other Sprites" comment="When enabled, this changes the relative Z-Order of the Signboard placing it further behind other sprites."/>
+    <value nybble="6" title="Model ID" comment="This determines the model used by the arrow signboard. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" advancedcomment="If the Model ID is set to 0, the model that will be used will be &quot;kanban_yajirushi.mdl0&quot;.&lt;br&gt;Otherwise, say x is the Model ID, the model that will be used will be &quot;kanban_yajirushi_x.mdl0&quot;."/>
+    <value nybble="5" title="Text ID" comment="If >0, a text of the entered ID (see in the code) will display if a player gets close to the arrow signboard. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;"/>
+  </sprite> <!-- #310: Signboard - Arrow -->
+
+  <sprite id="319" name="Chimp House Minigame - Item Bowling" notes="&lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" >
+    <value nybble="11-12" title="Room Length" comment="This determines the length of the room"/>
+  </sprite> <!-- #319: Chimp House Minigame - Item Bowling -->
+
+  <sprite id="322" name="Chimp House Minigame - Item Balloon" notes="&lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+    <list nybble="12" title="Item" comment="This determines which item does the balloon correspond to.">
+      <entry value="0">Mushroom</entry>
+      <entry value="1">Fire Flower</entry>
+      <entry value="2">Propeller</entry>
+      <entry value="3">Penguin</entry>
+      <entry value="4">Mini Shroom</entry>
+      <entry value="5">Ice Flower</entry>
+      <entry value="6">Star</entry>
+      <entry value="7">Hammer [Incomplete]</entry>
+    </list>
+  </sprite> <!-- #322: Item Bowling Minigame - Item Balloon -->
+
+  <sprite id="323" name="Boo Circle" notes="A circle of Boos that can rotate along a central point. It will always have one opening for the player to pass through.">
+    <list nybble="8" title="# of Boos">
+      <entry value="0">1 Boo</entry>
+      <entry value="1">2 Boos</entry>
+      <entry value="2">3 Boos</entry>
+      <entry value="3">4 Boos</entry>
+      <entry value="4">5 Boos</entry>
+      <entry value="5">6 Boos</entry>
+      <entry value="6">7 Boos</entry>
+      <entry value="7">8 Boos</entry>
+      <entry value="8">9 Boos</entry>
+      <entry value="9">10 Boos</entry>
+      <entry value="10">11 Boos</entry>
+      <entry value="11">12 Boos</entry>
+      <entry value="12">13 Boos</entry>
+      <entry value="13">14 Boos</entry>
+      <entry value="14">15 Boos</entry>
+      <entry value="15">16 Boos</entry>
+    </list>
+    <value nybble="6" title="Greater Radius Distance" comment="This determines the maximum radius of the Boo Circle. It must be larger or equal to the Lesser Radius."/>
+    <value nybble="7" title="Lesser Radius Distance" comment="This determines the minimum radius of the Boo Circle. It must be smaller or equal to the Greater Radius."/>
+    <value nybble="9" title="Shrink/Expand Delay" comment="This determines the delay between shrinking/expanding, if the Radius Distances are not equal. A value of 1 is approximately equal to one game second."/>
+    <list nybble="10" title="Shrink/Expand Effects" comment="This determines the speed (or other effects used) when shrinking/expanding. This speed is not influenced by the distance of the radius they travel." comment2="&lt;br&gt;Instant: The boos will flicker instantly between the greater and lesser radius distance. &lt;br&gt;Vanish: On load, the boos will fade out from their greater radius distance and will not return. &lt;br&gt;Go Offscreen: On load, the boos will fly from their greater radius distance through the middle of the circle and through the other side until they are completely off screen and will not return.">
+      <entry value="5">Very Slow</entry>
+      <entry value="9">Slower</entry>
+      <entry value="0">Slow</entry>
+      <entry value="1">Normal</entry>
+      <entry value="2">Fast</entry>
+      <entry value="8">*Instant</entry>
+      <entry value="11">*Vanish</entry>
+      <entry value="15">*Go Offscreen</entry>
+    </list>
+    <list nybble="11" title="Rotation Speed">
+      <entry value="3">Stopped</entry>
+      <entry value="0">Slow</entry>
+      <entry value="1">Normal</entry>
+      <entry value="2">Fast</entry>
+      <entry value="4">Very Fast</entry>
+    </list>
+    <dualbox nybble="12.4" title1="Rotates Clockwise" title2="Rotates Counterclockwise"/>
+    <checkbox nybble="5.4" title="Place over other sprites" comment="If checked, 300 units will be added to each Boo's position. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;"/>
+  </sprite> <!-- #323: Boo Circle -->
+
+  <sprite id="355" name="Rolling Hill - 1 Pipe" noyoshi="True" yoshinotes="Yoshi cannot enter the pipe." notes="A rotating circle with one pipe in it that has the same general appearance as the standard Grass or Underground tilesets.">
+    <dependency notes="A functioning entrance is required to be associated with the Rolling Hill or the game will crash. Also, the underside of a Rolling Hill does NOT have collision. Do not place a Rolling Hill in any situation where the player would have contact with the bottom 50% of the hill."/>
+    <dualbox nybble="7.4" title1="Grassland" title2="Underground" comment="This determines which texture the Rolling Hill will use."/>
+    <value nybble="5" title="Pipe BRRES ID" comment="This determines the BRRES file used by the pipe. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" advancedcomment="If the BRRES ID is set to 0, the BRRES file that will be used will be &quot;g3d/obj_dokan.brres&quot;.&lt;br&gt;Otherwise, say x is the BRRES ID, the BRRES file that will be used will be &quot;g3d/obj_dokan_x.brres&quot;."/>
+    <list nybble="6" title="Starting Rotation" comment="This determines the initial angle the hill spawns at before spinning. It measures clockwise.">
+      <entry value="0">0.0°</entry>
+      <entry value="1">22.5°</entry>
+      <entry value="2">45.0°</entry>
+      <entry value="3">67.5°</entry>
+      <entry value="4">90.0°</entry>
+      <entry value="5">112.5°</entry>
+      <entry value="6">135.0°</entry>
+      <entry value="7">157.5°</entry>
+      <entry value="8">180.0°</entry>
+      <entry value="9">202.5°</entry>
+      <entry value="10">225.0°</entry>
+      <entry value="11">247.5°</entry>
+      <entry value="12">270.0°</entry>
+      <entry value="13">292.5°</entry>
+      <entry value="14">315.0°</entry>
+      <entry value="15">337.5°</entry>
+    </list>
+    <value nybble="11" title="Speed" comment="This determines the rotation speed of the Rolling Hill. A value of 5 matches Mario's running speed, so use of higher values isn't recommended."/>
+    <dualbox nybble="12.4" title1="Rotates Counter-Clockwise" title2="Rotates Clockwise" comment="This determines which direction the Rolling Hill rolls."/>
+    <value nybble="8" title="Z-Order" comment="This will adjust the Z-Order of the Rolling Hill in relation to other Rolling Hills." comment2="If you have multiple Rolling Hills overlapping each other, you must use this setting to prevent graphical glitches. Rolling Hills with a higher Z-Order number will show behind those with a lower number."/>
+    <value nybble="10" title="Entrance ID" comment="This determines the Entrance ID that the pipe will connect with." comment2="It does not have to be placed on the pipe. It can only be used as an exit." idtype="Entrance"/>
+  </sprite> <!-- #355: Rolling Hill - 1 Pipe -->
+
+  <sprite id="360" name="Rolling Hill - 8 Pipes" noyoshi="True" yoshinotes="Yoshi cannot enter the pipes." notes="A rotating circle with eight pipes in it that only has the same general appearance of the standard Grass tilesets.">
+    <dependency notes="A functioning entrance is required to be associated with the Rolling Hill or the game will crash. Also, the underside of a Rolling Hill does NOT have collision. Do not place a Rolling Hill in any situation where the player would have contact with the bottom 50% of the hill."/>
+    <value nybble="5" title="Pipe BRRES ID" comment="This determines the BRRES file used by the pipe. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" advancedcomment="If the BRRES ID is set to 0, the BRRES file that will be used will be &quot;g3d/obj_dokan.brres&quot;.&lt;br&gt;Otherwise, say x is the BRRES ID, the BRRES file that will be used will be &quot;g3d/obj_dokan_x.brres&quot;."/>
+    <list nybble="6" title="Starting Rotation" comment="This determines the initial angle the hill spawns at before spinning. It measures clockwise. Keep in mind that odd values will set the pipes to be invisible.">
+      <entry value="0">0.0°</entry>
+      <entry value="1">22.5°</entry>
+      <entry value="2">45.0°</entry>
+      <entry value="3">67.5°</entry>
+      <entry value="4">90.0°</entry>
+      <entry value="5">112.5°</entry>
+      <entry value="6">135.0°</entry>
+      <entry value="7">157.5°</entry>
+      <entry value="8">180.0°</entry>
+      <entry value="9">202.5°</entry>
+      <entry value="10">225.0°</entry>
+      <entry value="11">247.5°</entry>
+      <entry value="12">270.0°</entry>
+      <entry value="13">292.5°</entry>
+      <entry value="14">315.0°</entry>
+      <entry value="15">337.5°</entry>
+    </list>
+    <value nybble="11" title="Speed" comment="This determines the rotation speed of the Rolling Hill. A value of 5 matches Mario's running speed, so use of higher values isn't recommended."/>
+    <dualbox nybble="12.4" title1="Rotates Counter-Clockwise" title2="Rotates Clockwise" comment="This determines which direction the Rolling Hill rolls."/>
+    <value nybble="8" title="Z-Order" comment="This will adjust the Z-Order of the Rolling Hill in relation to other Rolling Hills." comment2="If you have multiple Rolling Hills overlapping each other, you must use this setting to prevent graphical glitches. Rolling Hills with a higher Z-Order number will show behind those with a lower number."/>
+    <value nybble="10" title="Entrance ID" comment="This determines the Entrance ID that the pipe will connect with." comment2="It does not have to be placed on the pipe. It can only be used as an exit." idtype="Entrance"/>
+    <checkbox nybble="6.4" title="Invisible Pipes" advanced="True" advancedcomment="When enabled, the Pipes will be invisible, but still able to be entered. It was likely meant to be another texture, but was never actually added in. Do not use this setting."/>
+  </sprite> <!-- #360: Rolling Hill - 8 Pipes -->
+
+  <sprite id="363" name="Boss Controller - Tower Boss" yoshinotes="Yoshi plays an unused animation when he enters the area from a Boss Entrance. However, he lacks proper compatibility with the bosses themselves." notes="This controls the level completion for the World 1-7 Tower battles, as well as the listed Koopaling's initial movements. Koopalings function without this controller, but they won't move until hit, and the level won't end when they are defeated.">
+    <dependency notes="An appropriate loose Koopaling is required in order for the controller to do what it needs to. It's also required to place the sprite on a spot without terrain. See Retail X-22 for suggested room builds for Tower bosses.">
+      <suggested sprite="436"/>
+      <suggested sprite="189"/>
+      <suggested sprite="347"/>
+      <suggested sprite="340"/>
+      <suggested sprite="336"/>
+      <suggested sprite="337"/>
+      <suggested sprite="344"/>
+      <suggested sprite="348"/>
+    </dependency>
+    <list nybble="12" title="Tower Boss" comment="This determines which Koopaling you will be fighting. When that Koopaling is defeated, the level will end.">
+      <entry value="0">Larry</entry>
+      <entry value="1">Roy</entry>
+      <entry value="2">Lemmy</entry>
+      <entry value="3">Wendy</entry>
+      <entry value="4">Iggy</entry>
+      <entry value="5">Morton</entry>
+      <entry value="6">Ludwig von</entry>
+    </list>
+    <checkbox nybble="10.4" title="Don't look at the boss when it dies" comment="When enabled, the player won't look at the boss after they kill the boss. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;"/>
+  </sprite> <!-- #363: Boss Controller - Tower Boss -->
+
+  <!-- Test if 90 continues to function (at all? / correctly?) if Falling Objects is set to something other than Snow. -->
+  <!-- Test if 374 is required for 90 to generate pushback (90 Only). Test if 90 is required for 374 to generate sandstorm graphics (374 Only). -->
+  <!-- Clean up 90 after finishing research on these questions -->
+  <sprite id="374" name="Effect - Snow and Wind" notes="This effect controller will either create falling snow, or it will create a Sandstorm.">
+    <dependency notes="If this sprite is placed more than once in the same Zone, the game will crash. If Sandstorm is selected, you must include [90] Wind Physics and Sound.">
+      <suggested sprite="90"/>
+    </dependency>
+    <dualbox nybble="12.4" title1="Snow" title2="Sandstorm" comment="This determines the functionality of the sprite."/>
+    <list nybble="10" title="Color" comment="This determines the color of the Sandstorm. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" requirednybble="12.4" requiredval="1">
+      <entry value="0">Yellow</entry>
+      <entry value="1">White</entry>
+    </list>
+  </sprite> <!-- #374: Effect - Falling Objects and Wind -->
+
+  <sprite id="377" name="Warp Pipe - Up" notes="A non-tileset pipe that cannot be entered. To enter Blue pipes, create a tileset pipe underneath the sprite.">
+    <value nybble="6" title="BRRES ID" comment="This determines the BRRES file used by the pipe. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" advancedcomment="If the BRRES ID is set to 0, the BRRES file that will be used will be &quot;g3d/obj_dokan.brres&quot;.&lt;br&gt;Otherwise, say x is the BRRES ID, the BRRES file that will be used will be &quot;g3d/obj_dokan_x.brres&quot;."/>
+    <list nybble="11.3-11.4" title="Color" comment="This determines the color of the Pipe." requirednybble="6" requiredval="0">
+      <entry value="0">Green</entry>
+      <entry value="1">Red</entry>
+      <entry value="2">Yellow</entry>
+      <entry value="3">Blue</entry>
+    </list>
+    <value nybble="11.3-11.4" title="Color" comment="This determines the color of the Pipe." requirednybble="6" requiredval="1-15"/>
+    <value nybble="12" title="Length" comment="This determines the length of the Pipe."/>
+  </sprite> <!-- #377: Warp Pipe - Up -->
+
+  <sprite id="378" name="Warp Pipe - Down" notes="A non-tileset pipe that cannot be entered. To enter Blue pipes, create a tileset pipe underneath the sprite.">
+    <value nybble="6" title="BRRES ID" comment="This determines the BRRES file used by the pipe. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" advancedcomment="If the BRRES ID is set to 0, the BRRES file that will be used will be &quot;g3d/obj_dokan.brres&quot;.&lt;br&gt;Otherwise, say x is the BRRES ID, the BRRES file that will be used will be &quot;g3d/obj_dokan_x.brres&quot;."/>
+    <list nybble="11.3-11.4" title="Color" comment="This determines the color of the Pipe." requirednybble="6" requiredval="0">
+      <entry value="0">Green</entry>
+      <entry value="1">Red</entry>
+      <entry value="2">Yellow</entry>
+      <entry value="3">Blue</entry>
+    </list>
+    <value nybble="11.3-11.4" title="Color" comment="This determines the color of the Pipe." requirednybble="6" requiredval="1-15"/>
+    <value nybble="12" title="Length" comment="This determines the length of the Pipe."/>
+  </sprite> <!-- #378: Warp Pipe - Down -->
+
+  <sprite id="379" name="Warp Pipe - Right" notes="A non-tileset pipe that cannot be entered. To enter Blue pipes, create a tileset pipe underneath the sprite.">
+    <value nybble="6" title="BRRES ID" comment="This determines the BRRES file used by the pipe. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" advancedcomment="If the BRRES ID is set to 0, the BRRES file that will be used will be &quot;g3d/obj_dokan.brres&quot;.&lt;br&gt;Otherwise, say x is the BRRES ID, the BRRES file that will be used will be &quot;g3d/obj_dokan_x.brres&quot;."/>
+    <list nybble="11.3-11.4" title="Color" comment="This determines the color of the Pipe." requirednybble="6" requiredval="0">
+      <entry value="0">Green</entry>
+      <entry value="1">Red</entry>
+      <entry value="2">Yellow</entry>
+      <entry value="3">Blue</entry>
+    </list>
+    <value nybble="11.3-11.4" title="Color" comment="This determines the color of the Pipe." requirednybble="6" requiredval="1-15"/>
+    <value nybble="12" title="Length" comment="This determines the length of the Pipe."/>
+  </sprite> <!-- #379: Warp Pipe - Right -->
+
+  <sprite id="380" name="Warp Pipe - Left" notes="A non-tileset pipe that cannot be entered. To enter Blue pipes, create a tileset pipe underneath the sprite.">
+    <value nybble="6" title="BRRES ID" comment="This determines the BRRES file used by the pipe. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" advancedcomment="If the BRRES ID is set to 0, the BRRES file that will be used will be &quot;g3d/obj_dokan.brres&quot;.&lt;br&gt;Otherwise, say x is the BRRES ID, the BRRES file that will be used will be &quot;g3d/obj_dokan_x.brres&quot;."/>
+    <list nybble="11.3-11.4" title="Color" comment="This determines the color of the Pipe." requirednybble="6" requiredval="0">
+      <entry value="0">Green</entry>
+      <entry value="1">Red</entry>
+      <entry value="2">Yellow</entry>
+      <entry value="3">Blue</entry>
+    </list>
+    <value nybble="11.3-11.4" title="Color" comment="This determines the color of the Pipe." requirednybble="6" requiredval="1-15"/>
+    <value nybble="12" title="Length" comment="This determines the length of the Pipe."/>
+  </sprite> <!-- #380: Warp Pipe - Left -->
+
+  <sprite id="393" name="Propeller Block" notes="A grabbable propeller block that is affected by gravity. It can be picked up and thrown by shaking the controller next to it. It can also boost the player into the air like a Propeller Cap if the player shakes their controller a second time while holding it. If it is thrown and it hits the ground, it will bounce slightly.">
+    <checkbox nybble="12.4" title="Do not despawn" comment="If ticked, the glow block does not despawn once it has gone off-screen. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" comment2="Every nonzero value has the same effect." />
+  </sprite> <!-- #393: Propeller Block -->
+
+  <sprite id="402" name="Line Controlled ? Block" notes="A variant of the ? Block that will ride along Line objects.">
+    <dependency notes="Use the Group Controller [236] for spawn synchronization with other Group controlled sprites.">
+      <suggested sprite="236"/>
+    </dependency>
+    <value nybble="5-6" title="Group ID" comment="This pairs the block to a matching Group Controller for spawn synchronization with other Group controlled sprites." idtype="Group"/>
+    <list nybble="7" title="Speed" comment="Line Controlled sprites use the same speed setting across all of them.">
+      <entry value="4">Very Slow</entry>
+      <entry value="5">Slow</entry>
+      <entry value="6">Slow+</entry>
+      <entry value="0">Medium</entry>
+      <entry value="1">Medium+</entry>
+      <entry value="2">Fast</entry>
+      <entry value="7">Faster</entry>
+      <entry value="3">Very Fast</entry>
+    </list>
+    <dualbox nybble="12.4" title1="Start Right/Up" title2="Start Left/Down" comment="This determines which direction the block will move based on the Line that it is connected to."/>
+    <list nybble="12" title="Block Contains" comment="This determines what item the block contains. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" comment2="This block will release as many items as there are players.">
+      <entry value="0">Empty</entry>
+      <entry value="1">1 Coin</entry>
+      <entry value="10">10-Coin</entry>
+      <entry value="12">Mushroom</entry>
+      <entry value="14">Mushroom (if small)</entry>
+      <entry value="3">Fire Flower</entry>
+      <entry value="15">Ice Flower</entry>
+      <entry value="4">Propeller Shroom</entry>
+      <entry value="5">Penguin Suit</entry>
+      <entry value="2">Hammer Suit</entry>
+      <entry value="6">Mini Mushroom</entry>
+      <entry value="7">Star</entry>
+      <entry value="8">Continuous Star</entry>
+      <entry value="9">Yoshi Egg</entry>
+      <entry value="11">1-Up</entry>
+      <entry value="13">Spring</entry>
+    </list>
+  </sprite> <!-- #402: Line Controlled ? Block -->
+
+  <sprite id="403" name="Line Controlled Brick Block" notes="A variant of the Brick Block that will ride along Line objects.">
+    <dependency notes="Use the Group Controller [236] for spawn synchronization with other Group controlled sprites.">
+      <suggested sprite="236"/>
+    </dependency>
+    <value nybble="5-6" title="Group ID" comment="This pairs the block to a matching Group Controller for spawn synchronization with other Group controlled sprites." idtype="Group"/>
+    <list nybble="7" title="Speed" comment="Line Controlled sprites use the same speed setting across all of them.">
+      <entry value="4">Very Slow</entry>
+      <entry value="5">Slow</entry>
+      <entry value="6">Slow+</entry>
+      <entry value="0">Medium</entry>
+      <entry value="1">Medium+</entry>
+      <entry value="2">Fast</entry>
+      <entry value="7">Faster</entry>
+      <entry value="3">Very Fast</entry>
+    </list>
+    <dualbox nybble="12.4" title1="Start Right/Up" title2="Start Left/Down" comment="This determines which direction the block will move based on the Line that it is connected to."/>
+    <list nybble="12" title="Block Contains" comment="This determines what item the block contains. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" comment2="This block will release only one power-up item.">
+      <entry value="0">Empty</entry>
+      <entry value="1">1 Coin</entry>
+      <entry value="10">10-Coin</entry>
+      <entry value="12">Mushroom</entry>
+      <entry value="14">Mushroom (if small)</entry>
+      <entry value="3">Fire Flower</entry>
+      <entry value="15">Ice Flower</entry>
+      <entry value="4">Propeller Shroom</entry>
+      <entry value="5">Penguin Suit</entry>
+      <entry value="2">Hammer Suit</entry>
+      <entry value="6">Mini Mushroom</entry>
+      <entry value="7">Star</entry>
+      <entry value="8">Continuous Star</entry>
+      <entry value="9">Yoshi Egg</entry>
+      <entry value="11">1-Up</entry>
+      <entry value="13">Spring</entry>
+    </list>
+  </sprite> <!-- #403: Line Controlled Brick Block -->
+
+  <sprite id="407" name="Boss Controller - Castle Boss" yoshinotes="Yoshi plays an unused animation when he enters the area from a Boss Entrance. However, he lacks proper compatibility with the bosses themselves." notes="This controls the various boss fight mechanics for the corresponding Koopaling boss fight, such as the cutscenes, boss movement, shutter doors, camera options, and boss collision when the fight begins.">
+    <dependency notes="For help in placement of the Boss Controller and Koopaling Castle Boss, see the desired Castle Boss' room in the retail level.">
+      <required sprite="408"/>
+      <suggested sprite="192"/>
+      <suggested sprite="364"/>
+      <suggested sprite="381"/>
+      <suggested sprite="375"/>
+      <suggested sprite="372"/>
+      <suggested sprite="349"/>
+      <suggested sprite="365"/>
+    </dependency>
+    <list nybble="12" title="Boss" comment="Select the boss that matches the setup you are creating.">
+      <entry value="0">Larry</entry>
+      <entry value="1">Roy</entry>
+      <entry value="2">Lemmy</entry>
+      <entry value="3">Wendy</entry>
+      <entry value="4">Iggy</entry>
+      <entry value="5">Morton</entry>
+      <entry value="6">Ludwig</entry>
+    </list>
+    <checkbox nybble="5.4" title="Use Star" comment="When enabled, the boss will drop a power star instead of a key. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;"/>
+  </sprite> <!-- #407: Boss Controller - Castle Boss -->
+
+  <sprite id="433" name="Floating ? Block" notes="A slightly-larger-than-normal ? Block that floats on the surface of the Zone's non-Location Water, Raft Water, Poisoned Water, or Lava.">
+    <dependency notes="Place this block at the horizontal position you want it to load, and it will spawn floating at the surface line of the body of liquid. It only works with the non-Location liquid sprites listed below.">
+      <suggested sprite="138"/>
+      <suggested sprite="139"/>
+      <suggested sprite="216"/>
+      <suggested sprite="373"/>
+    </dependency>
+    <list nybble="12" title="Block Contains" comment="This determines what item the block contains. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" comment2="This block will release as many items as there are players.">
+      <entry value="0">Empty</entry>
+      <entry value="1">1 Coin</entry>
+      <entry value="10">10-Coin</entry>
+      <entry value="12">Mushroom</entry>
+      <entry value="14">Mushroom (if small)</entry>
+      <entry value="3">Fire Flower</entry>
+      <entry value="15">Ice Flower</entry>
+      <entry value="4">Propeller Shroom</entry>
+      <entry value="5">Penguin Suit</entry>
+      <entry value="2">Hammer Suit</entry>
+      <entry value="6">Mini Mushroom</entry>
+      <entry value="7">Star</entry>
+      <entry value="8">Continuous Star</entry>
+      <entry value="9">Yoshi Egg</entry>
+      <entry value="11">1-Up</entry>
+      <entry value="13">Spring</entry>
+    </list>
+  </sprite> <!-- #433: Floating ? Block -->
+
+  <sprite id="447" name="Lighting - Underwater Lamp" notes="A decorative aquatic lamp that generates light around it. It has no collision by default. It does not have to be used with water, it just happens to have a ship motif.">
+    <value nybble="11" title="Model ID" comment="This determines the model used by the lamp. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" advancedcomment="If the Model ID is set to 0, the model that will be used will be &quot;shinkai_light.mdl0&quot;.&lt;br&gt;Otherwise, say x is the Model ID, the model that will be used will be &quot;shinkai_light_x.mdl0&quot;."/>
+    <list nybble="12" title="Power" comment="This determines the power of the light emmited by the sprite. 100% = 266 units = 16.625 tiles. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+      <entry value="0">100%</entry>
+      <entry value="1">25%</entry>
+      <entry value="2">50%</entry>
+      <entry value="3">75%</entry>
+      <entry value="4">125%</entry>
+      <entry value="5">150%</entry>
+      <entry value="6">175%</entry>
+      <entry value="7">200%</entry>
+      <entry value="8">250%</entry>
+      <entry value="9">300%</entry>
+      <entry value="10">350%</entry>
+      <entry value="11">400%</entry>
+      <entry value="12">500%</entry>
+      <entry value="13">600%</entry>
+      <entry value="14">700%</entry>
+      <entry value="15">800%</entry>
+    </list>
+  </sprite> <!-- #447: Lighting - Underwater Lamp -->
+
+  <sprite id="450" name="Enterable Warp Pipe - Up" notes="A non-tileset pipe that can be entered or exited from. Only one facing upwards exists. It does not have to be placed exactly on the grid.">
+    <value nybble="6" title="BRRES ID" comment="This determines the BRRES file used by the pipe. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" advancedcomment="If the BRRES ID is set to 0, the BRRES file that will be used will be &quot;g3d/obj_dokan.brres&quot;.&lt;br&gt;Otherwise, say x is the BRRES ID, the BRRES file that will be used will be &quot;g3d/obj_dokan_x.brres&quot;."/>
+    <list nybble="11.3-11.4" title="Color" comment="This determines the color of the Pipe." requirednybble="6" requiredval="0">
+      <entry value="0">Green</entry>
+      <entry value="1">Red</entry>
+      <entry value="2">Yellow</entry>
+      <entry value="3">Blue</entry>
+    </list>
+    <value nybble="11.3-11.4" title="Color" comment="This determines the color of the Pipe." requiredybble="6" requiredval="1-15"/>
+    <value nybble="12" title="Length" comment="This determines the length of the Pipe."/>
+    <value nybble="9-10" title="Entrance ID" comment="This determines which Entrance is paired with the pipe." idtype="Entrance"/>
+  </sprite> <!-- #450: Enterable Warp Pipe - Up -->
+
+  <sprite id="459" name="Crowd Clapping Controller for Coin Collection #1" notes="A controller that generates a clapping sound when the player collects the listed number of coins of both types from the Collection ID group.">
+    <dependency notes="You cannot use tileset coins for this to function."/>
+      <suggested sprite="147"/>
+      <suggested sprite="237"/>
+    <value nybble="7-8" title="# of Blue Coins Required" comment="This determines the number of paired blue coins required to trigger the Crowd Clapper."/>
+    <value nybble="9-10" title="# of Yellow Coins Required" comment="This determines the number of paired standard coins required to trigger the Crowd Clapper."/>
+    <value nybble="5-6" title="# of Purple Coins Required" comment="This determines the number of paired purple coins required to trigger the Crowd Clapper. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;"/>
+    <value nybble="12" title="Collection ID" comment="This pairs matching Coins with the Crowd Clapper to track their collection." idtype="Collection"/>
+    <value nybble="1-2" title="Target Event ID" comment="When the Crowd Clapping Controller claps, this Event ID will be triggered. Leaving to 0 disables this function. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" idtype="Target Event"/>
+    <value nybble="3-4" title="Triggering Event ID" comment="When this Event ID is activated, the Crowd Clapping Controller will clap. Leaving to 0 disables this function. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" idtype="Triggering Event"/>
+    <checkbox nybble="11.4" title="Disable SFX" comment="Prevents the Crowd Clapping sounds from being played. Useful if you only want to use the Event part. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;"/>
+  </sprite> <!-- #459: Crowd Clapping Controller for Coin Collection #1 -->
+
+  <sprite id="461" name="Crowd Clapping Controller for Coin Collection #2" notes="A controller that generates a clapping sound when the player collects the listed number of coins of both types from the Collection ID group. Seems to be identical to #1.">
+    <dependency notes="You cannot use tileset coins for this to function."/>
+      <suggested sprite="147"/>
+      <suggested sprite="237"/>
+    <value nybble="7-8" title="# of Blue Coins Required" comment="This determines the number of paired blue coins required to trigger the Crowd Clapper."/>
+    <value nybble="9-10" title="# of Yellow Coins Required" comment="This determines the number of paired standard coins required to trigger the Crowd Clapper."/>
+    <value nybble="5-6" title="# of Purple Coins Required" comment="This determines the number of paired purple coins required to trigger the Crowd Clapper. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;"/>
+    <value nybble="12" title="Collection ID" comment="This pairs matching Coins with the Crowd Clapper to track their collection." idtype="Collection"/>
+    <value nybble="1-2" title="Target Event ID" comment="When the Crowd Clapping Controller claps, this Event ID will be triggered. Leaving to 0 disables this function. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" idtype="Target Event"/>
+    <value nybble="3-4" title="Triggering Event ID" comment="When this Event ID is activated, the Crowd Clapping Controller will clap. Leaving to 0 disables this function. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" idtype="Triggering Event"/>
+    <checkbox nybble="11.4" title="Disable SFX" comment="Prevents the Crowd Clapping sounds from being played. Useful if you only want to use the Event part. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;"/>
+  </sprite> <!-- #461: Crowd Clapping Controller for Coin Collection #2 -->
+
+  <sprite id="482" name="Final Boss - Pre-Boss Camera Effects" notes="A set of special elements utilized by the sections of level leading up to the final Bowser Boss fight.">
+    <list nybble="12" title="Effect" comment="This determines the type of effect used. Other values not listed here crash the game.">
+      <entry value="0">Door Room Darkness</entry>
+      <entry value="1">Corridor Darkness</entry>
+      <entry value="2">Corridor Wall BG</entry>
+    </list>
+    <value nybble="6" title="Model ID" comment="This determines the model used by the corridor darkness. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;" advancedcomment="If the Model ID is set to 0, the model that will be used will be &quot;FrontDoor.mdl0&quot;.&lt;br&gt;Otherwise, say x is the Model ID, the model that will be used will be &quot;FrontDoor_x.mdl0&quot;." requirednybble="12.3-12.4" requiredval="1"/>
+  </sprite> <!-- #482: Final Boss - Pre-Boss Camera Effects -->
+
+  <sprite id="483" name="Flip Block" notes="A yellow block with two eyes that cannot be destroyed. When struck, it will spin, allowing passage through it for a limited time. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+  </sprite> <!-- #483: Flip Block -->
+
+  <sprite id="484" name="Sound/Graphic Effects Spawner" phonebook="Effects" notes="&lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;&lt;br&gt;Enables event-driven spawning of Sound Effects and Graphic Effects.&lt;br&gt;&lt;u&gt;Limitations:&lt;/u&gt;&lt;br&gt; 1) Do not use 1000 or more sounds/effects per area.&lt;br&gt; 2) A single Event ID can only trigger one sound/effect per area&lt;br&gt; 3) Only a specific number of sounds/effects can be active at the same time&lt;br&gt; 4) Only two BRSTMs can be active at the same time.">
+    <value nybble="5-6" title="Triggering Event ID" comment="When this Event ID is activated, the associated sound or affect will be played." idtype="Triggering Event"/>
+    <external type="sfx" nybble="10-12" title="Sfx ID" comment="Use this external window to select your Sound Effect." requirednybble="8.4" requiredval="0"/>
+    <external type="gfx" nybble="10-12" title="Gfx ID" comment="Use this external window to select your Graphic Effect." requirednybble="8.4" requiredval="1"/>
+    <dualbox nybble="8.4" title1="Sound Effect" title2="Graphical Effect*" comment="This determines if you are spawning a sound effect or a graphical effect. The list of graphical effects is limited to the entries used by Newer. The volume of the sound effect is relative to the distance of the placement of the spawner."/>
+    <list nybble="7" title="Effect Scale" requirednybble="8.4">
+      <entry value="1">x0.25 (25%)</entry>
+      <entry value="2">x0.5 (50%)</entry>
+      <entry value="3">x0.75 (75%)</entry>
+      <entry value="0">x1.0 (100%)</entry>
+      <entry value="5">x1.25</entry>
+      <entry value="6">x1.5</entry>
+      <entry value="7">x1.75</entry>
+      <entry value="8">x2.0 (200%)</entry>
+      <entry value="9">x2.25</entry>
+      <entry value="10">x2.5</entry>
+      <entry value="11">x2.75</entry>
+      <entry value="12">x3.0 (300%)</entry>
+      <entry value="13">x3.25</entry>
+      <entry value="14">x3.5</entry>
+      <entry value="15">x3.75</entry>
+    </list>
+    <dualbox nybble="8.3" title1="Plays at position" title2="Plays globally" comment="This determines if the sound will play at the position of the sprite, or if it will play globally." requirednybble="8.4" requiredval="0"/>
+    <value nybble="9" title="Loop Delay" comment="This determines the number of seconds between activations of the sound or graphic effect." comment2="The effect will only activate once if the delay is left at 0."/>
+  </sprite> <!-- #484: Effect/Sound Spawner -->
+
+
+  <sprite id="485" name="Actor Spawner" asmhacks="True" phonebook="Actors" notes="Use this to spawn any actor into the game! Anything spawned by the Actor Spawner will need to be respawned each time the player changes Zones. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+
+    <dependency notes="When not using compatibility mode, this Actor Spawner requires a linked &lt;b&gt;[485] Actor Spawner&lt;/b&gt; in Data Bank Mode to store the settings that will be used by the spawned actor.&lt;br&gt;&lt;br&gt;Additionally, the actor that will be spawned must be placed as a sprite somewhere else in the level in order for the game to know to load the required assets. When trying to spawn an actor without an equivalent sprite, place a sprite that can create that actor into the level." />
+
+    <!-- Colors taken from the comment button colors. -->
+    <dualbox nybble="3.1" title1="&lt;font color=&quot;#dd4f2e&quot;&gt;NewerSMBW Compatibility Mode&lt;/font&gt;" title2="&lt;font color=&quot;#55acee&quot;&gt;Better Actor Spawner Mode&lt;/font&gt;" comment="This option exists for compatibility with the original NewerSMBW levels. Choose the second option to access new and improved settings!" requirednybble="15.1" requiredval="0" />
+
+    <!-- COMPATIBILITY MODE -->
+    <value nybble="5" title="Triggering Event ID" comment="When this event is activated, the Actor Spawner will create a copy of the actor at the location of the spawner." comment2="The Triggering Event ID is limited to only the first 15 Event IDs." idtype="Triggering Event" requirednybble="3.1, 15.1" requiredval="0, 0"/>
+    <checkbox nybble="6.1" title="Automatically Respawn" comment="When the actor spawned by this spawner is deleted or missing and the event is triggered, another actor with the same settings will be spawned. This also stops the spawned actor from despawning when the event is deactivated." requirednybble="3.1, 15.1" requiredval="0, 0"/>
+    <external type="actors" nybble="6.2-8.4" title="Actor ID" comment="Enter the Actor ID of the actor you wish to spawn here. If you don't know the ID, use the selection box."  requirednybble="3.1, 15.1" requiredval="0, 0"/>
+    <value nybble="9.1-9.2" title="Nybble 5" requirednybble="3.1, 15.1" requiredval="0, 0" />
+    <value nybble="9.3-9.4" title="Nybble 6" requirednybble="3.1, 15.1" requiredval="0, 0" />
+    <value nybble="10.1-10.2" title="Nybble 7" requirednybble="3.1, 15.1" requiredval="0, 0" />
+    <value nybble="10.3-10.4" title="Nybble 8" requirednybble="3.1, 15.1" requiredval="0, 0" />
+    <value nybble="11.1-11.2" title="Nybble 9" requirednybble="3.1, 15.1" requiredval="0, 0" />
+    <value nybble="11.3-11.4" title="Nybble 10" requirednybble="3.1, 15.1" requiredval="0, 0" />
+    <value nybble="12.1-12.2" title="Nybble 11" requirednybble="3.1, 15.1" requiredval="0, 0" />
+    <value nybble="12.3-12.4" title="Nybble 12" requirednybble="3.1, 15.1" requiredval="0, 0" />
+    <!-- END COMPATIBILIY MODE -->
+
+
+
+    <dualbox nybble="15.1" title1="Spawner Mode" title2="Data Bank Mode" comment="A version of this sprite in Spawner Mode will pull data from another version of this sprite in Data Bank Mode with a matching Search ID. Nybbles 1-12 of the Data Bank will be used by the actor spawned by the Actor Spawner." requirednybble="3.1" requiredval="1" />
+    <dualbox nybble="15.1" title1="Spawner Mode" title2="Data Bank Mode" comment="A version of this sprite in Spawner Mode will pull data from another version of this sprite in Data Bank Mode with a matching Search ID. Nybbles 1-12 of the Data Bank will be used by the actor spawned by the Actor Spawner." requirednybble="3.1, 15.1" requiredval="0, 1" />
+
+    <value nybble="15.2-16.4" title="Search ID" comment="Match this ID with a corresponding &lt;b&gt;[485] Actor Spawner&lt;/b&gt;.  The Actor Spawner will pull nybbles 1-12 from the Data Bank for use when spawning an actor." comment2="Works with values 00 through FF." requirednybble="3.1, 15.1" requiredval="1, 0" />
+
+    <value nybble="1-2" title="Triggering Event ID" comment="When this event is activated, the Actor Spawner will create the specified actor at its location." idtype="Triggering Event" requirednybble="3.1, 15.1" requiredval="1, 0" />
+
+    <external type="actors" nybble="5-7" title="Actor ID" comment="Enter the Actor ID of the actor you wish to spawn here. If you don't know the ID, use the selection box." requirednybble="3.1, 15.1" requiredval="1, 0" />
+
+    <checkbox nybble="8.4" title="Multi-Spawn Mode" comment="When checked, the Actor Spawner will not keep track of the actors it spawns, meaning the event can be toggled on and off to spawn more actors." requirednybble="3.1, 15.1" requiredval="1, 0" />
+
+    <checkbox nybble="8.1" title="Respawn Automatically" comment="When checked, the Actor Spawner will automatically respawn the actor if it is deleted or missing." requirednybble="3.1, 15.1, 8.4" requiredval="1, 0, 0" />
+
+    <checkbox nybble="8.2" title="Despawn Without Event" comment="When checked, the Actor Spawner will despawn the actor it spawned when its event is turned off." requirednybble="3.1, 15.1, 8.4" requiredval="1, 0, 0" />
+
+    <checkbox nybble="8.3" title="Save Despawn Position" comment="When checked, when the Actor Spawner despawns an actor due to its event being turned off it will move to the position the actor was just in. If the event is turned back on, the new actor will be spawned at that position." requirednybble="3.1, 15.1, 8.2, 8.4" requiredval="1, 0, 1, 0" />
+
+    <list nybble="9" title="Spawn Delay" comment="When not set to Manual, this option will cause the Actor Spawner to wait the specified number of frames after initially spawning an actor before spawning another one. The event will stay on the whole time." comment2="When set to Manual, this option will cause the Actor Spawner to disable its triggering event after spawning an actor so that it can be manually turned back on." advancedcomment="Using Manual will not work when trying to use two Actor Spawners triggered by the same event, because one will disable the event before the other can execute." requirednybble="3.1, 15.1, 8.4" requiredval="1, 0, 1">
+      <entry value="0">Manual (Infinite Delay)</entry>
+      <entry value="1">1 Frame</entry>
+      <entry value="2">10 Frames</entry>
+      <entry value="3">20 Frames</entry>
+      <entry value="4">30 Frames (0.5 Seconds)</entry>
+      <entry value="5">60 Frames (1 Second)</entry>
+      <entry value="6">90 Frames (1.5 Seconds)</entry>
+      <entry value="7">120 Frames (2 Seconds)</entry>
+      <entry value="8">150 Frames (2.5 Seconds)</entry>
+      <entry value="9">180 Frames (3 Seconds)</entry>
+      <entry value="10">210 Frames (3.5 Seconds)</entry>
+      <entry value="11">240 Frames (4 Seconds)</entry>
+      <entry value="12">270 Frames (4.5 Seconds)</entry>
+      <entry value="13">300 Frames (5 Seconds)</entry>
+      <entry value="14">330 Frames (5.5 Seconds)</entry>
+      <entry value="15">360 Frames (6 Seconds)</entry>
+    </list>
+
+
+    <value nybble="15.2-16.4" title="Search ID" comment="Match this ID with a corresponding &lt;b&gt;[485] Actor Spawner&lt;/b&gt;.  The Actor Spawner will pull nybbles 1-12 from the Data Bank for use when spawning an actor." comment2="Works with values 00 through FF." requirednybble="15.1" requiredval="1" />
+
+    <value nybble="1" title="Nybble 1" comment="Edit the value of nybble 1 in the spawned actor. For easier edits, use the Modify Raw Data box." requirednybble="15.1" requiredval="1" />
+    <value nybble="2" title="Nybble 2" comment="Edit the value of nybble 2 in the spawned actor. For easier edits, use the Modify Raw Data box." requirednybble="15.1" requiredval="1" />
+    <value nybble="3" title="Nybble 3" comment="Edit the value of nybble 3 in the spawned actor. For easier edits, use the Modify Raw Data box." requirednybble="15.1" requiredval="1" />
+    <value nybble="4" title="Nybble 4" comment="Edit the value of nybble 4 in the spawned actor. For easier edits, use the Modify Raw Data box." requirednybble="15.1" requiredval="1" />
+
+    <value nybble="5" title="Nybble 5" comment="Edit the value of nybble 5 in the spawned actor. For easier edits, use the Modify Raw Data box." requirednybble="15.1" requiredval="1" />
+    <value nybble="6" title="Nybble 6" comment="Edit the value of nybble 6 in the spawned actor. For easier edits, use the Modify Raw Data box." requirednybble="15.1" requiredval="1" />
+    <value nybble="7" title="Nybble 7" comment="Edit the value of nybble 7 in the spawned actor. For easier edits, use the Modify Raw Data box." requirednybble="15.1" requiredval="1" />
+    <value nybble="8" title="Nybble 8" comment="Edit the value of nybble 8 in the spawned actor. For easier edits, use the Modify Raw Data box." requirednybble="15.1" requiredval="1" />
+    <value nybble="9" title="Nybble 9" comment="Edit the value of nybble 9 in the spawned actor. For easier edits, use the Modify Raw Data box." requirednybble="15.1" requiredval="1" />
+    <value nybble="10" title="Nybble 10" comment="Edit the value of nybble 10 in the spawned actor. For easier edits, use the Modify Raw Data box." requirednybble="15.1" requiredval="1" />
+    <value nybble="11" title="Nybble 11" comment="Edit the value of nybble 11 in the spawned actor. For easier edits, use the Modify Raw Data box." requirednybble="15.1" requiredval="1" />
+    <value nybble="12" title="Nybble 12" comment="Edit the value of nybble 12 in the spawned actor. For easier edits, use the Modify Raw Data box." requirednybble="15.1" requiredval="1" />
+
+  </sprite>
+
+
+  <!-- Double check Moving Direction, value 0 with ASM. - Grop says Value 0 should be Right and the list should repeat. Why is 0 'Does Not Move'? -->
+  <sprite id="486" name="Magic Platform" notes="Magic Platforms are created by assigning tileset data on Layer 1 to an invisible block as a new texture, and moving that texture around. While it functions best as a moving platform, the Magic Platform does not have to move in order to perform its function. It can also simply create terrain chunks with a different type of collision than normal. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+    <dependency notes="It should be noted that the Magic Platform can only create rectangular shapes. It cannot have slopes, and it cannot have 'unused space' within the location. All tiles will turn into solid blocks."/>
+    <value nybble="11-12" title="Location ID" comment="This determines what the Magic Platform looks like. It will clone the Layer 1 tiles as it sees them within the given Location. This Location does not have to be within the current Zone boundaries." idtype="Location"/>
+    <list nybble="6" title="Collision" comment="This determines the type of collision.">
+      <entry value="0">Solid Block</entry>
+      <entry value="1">Permeable (Solid on Top)</entry>
+      <entry value="7">Fully Permeable (Layer 0)</entry>
+      <entry value="2">Fully Permeable (Layer 1)</entry>
+      <entry value="3">Collision Line on Right Side</entry>
+      <entry value="4">Collision Line on Left Side</entry>
+      <entry value="5">Collision Line on Top Edge</entry>
+      <entry value="6">Collision Line on Bottom Edge</entry>
+    </list>
+    <value nybble="5.1-5.3" title="Z-Order" comment="Changes the Z-Order of the Magic Platform to place it behind Layer 2." comment2="Higher values are further behind other Magic Platforms."/>
+    <value nybble="3-4" title="Triggering Event ID" comment="When this Event is activated, the Magic Platform will move as specified. When the Event is deactivated, the Magic Platform will return to its starting position." idtype="Triggering Event"/>
+    <list nybble="9.3-9.4" title="Direction" comment="This determines which direction the Magic Platform will move." requirednybble="2.4-4.4">
+      <entry value="0">Right</entry>
+      <entry value="1">Left</entry>
+      <entry value="2">Up</entry>
+      <entry value="3">Down</entry>
+    </list>
+    <value nybble="10" title="Speed" comment="This determines the speed at which the Magic Platform will move." comment2="The speed increases by a factor of .2 per increment. It must be set greater than 0 for the Magic Platform to move at all." requirednybble="2.4-4.4"/>
+    <checkbox nybble="5.4" title="Move Forever" comment="When enabled, the Magic Platform will move in the assigned direction while the Triggering Event is activated, and will move in the opposite direction while the Triggering Event is deactivated." requirednybble="2.4-4.4"/>
+    <list nybble="8" title="Distance" comment="This determines how far the Magic Platform will be moved when the Triggering Event is activated." requirednybble="2.4-4.4,5.4" requiredval="1-255, 0">
+      <entry value="0">1 Block</entry>
+      <entry value="1">2 Blocks</entry>
+      <entry value="2">3 Blocks</entry>
+      <entry value="3">4 Blocks</entry>
+      <entry value="4">5 Blocks</entry>
+      <entry value="5">6 Blocks</entry>
+      <entry value="6">7 Blocks</entry>
+      <entry value="7">8 Blocks</entry>
+      <entry value="8">9 Blocks</entry>
+      <entry value="9">10 Blocks</entry>
+      <entry value="10">11 Blocks</entry>
+      <entry value="11">12 Blocks</entry>
+      <entry value="12">13 Blocks</entry>
+      <entry value="13">14 Blocks</entry>
+      <entry value="14">15 Blocks</entry>
+      <entry value="15">16 Blocks</entry>
+    </list>
+  </sprite> <!-- #486: Magic Platform -->
+
+  <sprite id="487" name="BA" notes="&lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+  </sprite> <!-- #487: BA -->
+
+  <!-- Determine the scope of this event controller with a video showcasing its behavior with a delay of 6 and 10 Red Coins. Create a Zone that the player will stand in and an IF controller that governs the Looper. Stand in it until the coins have come on, and all gone off, at least twice (assuming they turn off). If they do not turn off, exit the location and observe the behavior. If they do turn off, exit the location after half of the coins have come on and observe the behavior. -->
+  <!-- My descriptions here are operating under the assumption that it proceeds to disable each event after having activated it before it proceeds to the next. It also assumes that it must complete the full sequence before deactivating even when the Triggering Event ID is deactivated. -->
+  <sprite id="488" name="Event Controller - Looper (While X, do Y THEN Z+, Repeat)" notes="Similar to the Multi-Chainer, this controller will activate a sequence of Events ranging from [Target Event ID Start] through [Target Event ID End]. However, it will only activate one event at a time. After activating one event, it will deactivate it and activate the next event. Once it has done this for all events, if the [Triggering Event ID] is still activated, it will return to [Target Event ID Start] and begin again. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+    <value nybble="9-10" title="Triggering Event ID" comment="This event will activate the Event Looper going from the Start ID to the End ID, and back again so long as this event is still active." idtype="Triggering Event"/>
+    <value nybble="5-6" title="Target Event ID Start" comment="When the Triggering Event is activated, this Event ID will be activated first. It will then run until it reaches [Target Event ID End]." idtype="Target Event"/>
+    <value nybble="7-8" title="Target Event ID End" comment="After enabling and disabling this event, if the Triggering Event is still activated, the Looper will return to [Target Event ID Start] and repeat the loop."/>
+    <value nybble="11-12" title="Delay" comment="This determines the amount of frames the Looper will wait between activating/deactivating each event. &lt;br&gt; &lt;br&gt; The code for this specifically is a bit messy. The entered value is multiplied by 10, and then 10 is added. However, it can only be a value from 0-255, and any number past that loops. For example, value 24 would be 250 frames of delay.&lt;br&gt;It's easier to follow these expressions:&lt;br&gt;&lt;br&gt;0-24 is 'value * 10 + 10' frames&lt;br&gt;25-50 is (value - 25) * 10 + 4 frames&lt;br&gt;51-101 is (value - 51) * 10 + 8 frames&lt;br&gt;102-126 is (value - 102) * 10 + 6.&lt;br&gt; &lt;br&gt;Finally, value 127 would be 0 frames of delay, and values 128-255 are essentially the same as 0-127."/>
+  </sprite> <!-- #488: Event Looper -->
+
+  <sprite id="489" name="Talk Balloon Manager" notes="Place in the zone if you want to use text boxes. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+  </sprite> <!-- #489: Talk Balloon Manager -->
+
+  <sprite id="490" name="Purple Coin Checker" notes="Triggers an event you've got at least a set amount of purple coins. &lt;font color=&quot;blue&quot;&gt;For use with &quot;New Super Mario Bros. Wii: The Prankster Comets&quot; Only!&lt;/font&gt;">
+    <value nybble="1-2" title="Target Event ID" comment="This event will be triggered once the player has collected at least the number of coins indicated in [Number of coins]." idtype="Target Event"/>
+    <value nybble="11-12" title="Number of coins" comment="And event will be triggered once the player has collected at least the number of coins indicated here."/>
+  </sprite> <!-- #490: Purple Coin Checker -->
+
+
+</sprites>
+<!-- Thank you so much for a-playing my game! -->

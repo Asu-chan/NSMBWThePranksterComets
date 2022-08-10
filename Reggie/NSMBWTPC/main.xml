@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<game name="New Super Mario Bros. Wii: The Prankster Comets" version="1.0" description="No one said prankster comets couldn't fall on the mushroom kingdom, right?[br]Made by Asu-chan, unreleased to this day.">
+
+    <!-- Folders -->
+    <folder name="bga" path="bga" />
+    <folder name="bgb" path="bgb" />
+    <folder name="sprites" path="sprites" />
+    <folder name="external" path="external" />
+
+    <!-- Files -->
+    <file name="bga" path="bga.txt" />
+    <file name="bgb" path="bgb.txt" />
+    <file name="levelnames" path="levelnames.xml" patch="False" />
+    <file name="music" path="music.txt" patch="False" />
+    <file name="spritedata" path="spritedata.xml" />
+    <file name="spritecategories" path="spritecategories.xml" />
+    <file name="sprites" path="sprites.py" />
+    <file name="tilesets" path="tilesets.xml" />
+    <file name="tilesetinfo" path="tilesetinfo.xml" />
+
+</game>
