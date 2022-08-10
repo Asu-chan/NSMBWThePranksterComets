@@ -25,11 +25,27 @@ While I can't really do anything to prevent people from doing so, if someone doe
 
 ### Compiling / Assembling
 
-To compile the game's source code (`Kamek` folder), download tool binaries [here](https://drive.google.com/file/d/1v1Qg7yv8ss3fTHtvBvGh8plukPmq_ptB/view?usp=sharing), unzip them and place them in the `Kamek`'s `tools` folder. Then, if you want to compile only the PALv1 region of the game for obvious playtesting and debugging purposes, run the `#makeNewerKP.bat` script. Otherwise, run the `#makeNewerKP-release.bat` script. You'll find your compiled code in the `Build` folder.
+#### Compiling the game's source code (`Kamek` folder)
 
-To assemble the game's code loader (`Loader` folder), run the `compile.bat` script in the `Loader` folder and it'll assemble all `.S` files in the folder.
+* Install [Python 2.7](https://www.python.org/download/releases/2.7/) with the modules [`pyyaml`](https://github.com/yaml/pyyaml/tree/702b1767bf632d5bae390ec1f855173d256bb52f) and [`pyelftools`](https://github.com/eliben/pyelftools) in your `C:\` directory, so the path `C:\Python27\python.exe` is valid.
 
-To compile the Prankster Toolbox, open the `PranksterToolbox.sln` solution file in the `PranksterToolbox` folder using [`Visual Studio 2019`](https://visualstudio.microsoft.com/older-downloads/) (Only version 2019 has been tested, however newer versions should work just fine) and generate the whole solution, as Debug or Release depending of your needs. If you need the tool's exe without bothering with visual studio, you can find it in [`PranksterToolbox/PranksterToolbox/bin/Release`](https://github.com/Asu-chan/NSMBWThePranksterComets/tree/clang-no-translations/PranksterToolbox/PranksterToolbox/bin/Release)
+* If you're struggling with that, [here's a direct link](https://drive.google.com/file/d/19SXhD7GiSNXLqYpC8_DKudwZ5et_RM6b/view?usp=sharing) to an installed Python 2.7 with said modules, though it's bad practice to download this kind of thing directly as it could contain malware.
+
+* Download the tool binaries [here](https://drive.google.com/file/d/1v1Qg7yv8ss3fTHtvBvGh8plukPmq_ptB/view?usp=sharing), unzip them and place them in `Kamek`'s `tools` folder.
+
+* Now, if you want to compile only the PALv1 region of the game for obvious playtesting and debugging purposes, run the `#makeNewerKP.bat` script. Otherwise, run the `#makeNewerKP-release.bat` script. You'll find your compiled code in the `Build` folder.
+
+#### Assembling the game's code loader (`Loader` folder)
+
+* In the `Loader` folder, run the `compile.bat` script and it'll assemble all `.S` files in the folder.
+
+#### Compiling the Prankster Toolbox
+
+* Install [`Visual Studio 2019`](https://visualstudio.microsoft.com/older-downloads/) (Only version 2019 has been tested, however newer versions should work just fine)
+
+* Open the `PranksterToolbox.sln` solution file in the `PranksterToolbox` folder with Visual Studio and generate the whole solution, as Debug or Release depending of your needs.
+
+* If you need the tool's `.exe` file without bothering with Visual Studio, you can find it in [`PranksterToolbox/PranksterToolbox/bin/Release`](https://github.com/Asu-chan/NSMBWThePranksterComets/tree/clang-no-translations/PranksterToolbox/PranksterToolbox/bin/Release)
 
 ### Game files
 
