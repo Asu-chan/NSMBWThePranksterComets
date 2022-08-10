@@ -53,7 +53,14 @@ If you're looking for the game's files, you can find them [here](https://drive.g
 
 ### Art & Project files
 
-If you're looking for non-downscaled pieces of art made for the game, or project files for anything that may be used for it, please ask me on discord at Asu-chan#2929.
+The following resources are available:
+
+* [The game's Logo](https://horizon.miraheze.org/wiki/FD:NSMBW:TPC_Logo)
+* [The game's Box Art](https://horizon.miraheze.org/wiki/FD:NSMBW:TPC_Box_Art)
+* [The game's Disc Art](https://horizon.miraheze.org/wiki/FD:NSMBW:TPC_Disc_Art)
+* [The game's (Unfinished) Manual](https://horizon.miraheze.org/wiki/FD:NSMBW:TPC_Manual)
+
+If you're looking for other non-downscaled pieces of art made for the game, or any project files (art-related or not) for anything that may have been used during the mod's creation, please ask me on discord at Asu-chan#2929.
 
 ### Licensing
 
