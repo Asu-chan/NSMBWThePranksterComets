@@ -23,6 +23,14 @@ HOWEVER, please do NOT try to "finish" the [**New Super Mario Bros. Wii: The Pra
 
 While I can't really do anything to prevent people from doing so, if someone does try to revive the mod I will publicly state that it was done without my consent and that I encourage not to play said mod.
 
+### Compiling / Assembling
+
+To compile the game's source code (`Kamek` folder), download tool binaries [here](https://drive.google.com/file/d/1v1Qg7yv8ss3fTHtvBvGh8plukPmq_ptB/view?usp=sharing), unzip them and place them in the `Kamek`'s `tools` folder. Then, if you want to compile only the PALv1 region of the game for obvious playtesting and debugging purposes, run the `#makeNewerKP.bat` script. Otherwise, run the `#makeNewerKP-release.bat` script. You'll find your compiled code in the `Build` folder.
+
+To assemble the game's code loader (`Loader` folder), run the `compile.bat` script in the `Loader` folder and it'll assemble all `.S` files in the folder.
+
+To compile the Prankster Toolbox, open the `PranksterToolbox.sln` solution file in the `PranksterToolbox` folder using [`Visual Studio 2019`](https://visualstudio.microsoft.com/older-downloads/) (Only version 2019 has been tested, however newer versions should work just fine) and generate the whole solution, as Debug or Release depending of your needs. If you need the tool's exe without bothering with visual studio, you can find it in [`PranksterToolbox/PranksterToolbox/bin/Release`](https://github.com/Asu-chan/NSMBWThePranksterComets/tree/clang-no-translations/PranksterToolbox/PranksterToolbox/bin/Release)
+
 ### Game files
 
 If you're looking for the game's files, you can find them [here](https://drive.google.com/file/d/11UPNLxT45MTsbRYdXjAEgHRMXuQ9SKNd/view?usp=sharing)
