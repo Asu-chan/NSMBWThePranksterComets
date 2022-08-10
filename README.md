@@ -33,6 +33,7 @@ If you're looking for non-downscaled pieces of art made for the game, or project
 ### Licensing
 
 The [**New Super Mario Bros.Wii: The Prankster Comets**](https://youtu.be/5QI8ACl1E9c) source code, loader and tools, along with [**Newer Super Mario Bros. Wii**](https://newerteam.com/wii/)'s, are released under the MIT license.
+
 See the `LICENSE` file in this repository for full details.
 
 Copyright (c) 2021-2022 Asu-chan; 2010-2013 Treeki, Tempus, megazig
@@ -43,6 +44,9 @@ While most of the credits goes to me (Asu-chan) and the [Newer Team](https://new
 
 If you contributed to any of the work that is featured in this repo and you weren't credited, feel free to contact me on discord at Asu-chan#2929.
 
+
 **Usage of any of the game's source code requires crediting Asu-chan, Treeki, Tempus, megazig, CLF78 and Nin0.**
+
 **Usage of any of the game's code loader's code requires crediting Asu-chan and CLF78.**
+
 **Usage of any of the Prankster Toolbox's source code requires crediting Asu-chan.**
