@@ -639,11 +639,11 @@ int daShyGuy::onCreate() {
 		HitMeBaby.yDistToEdge = 9.0f;
 	}
 
-	HitMeBaby.category1 = 0x3;
-	HitMeBaby.category2 = 0x0;
-	HitMeBaby.bitfield1 = 0x6F;
-	HitMeBaby.bitfield2 = 0xffbafffe;
-	HitMeBaby.unkShort1C = 0;
+	HitMeBaby.category = 0x3;
+	HitMeBaby.attack = 0x0;
+	HitMeBaby.categoryBitfield = 0x6F;
+	HitMeBaby.attackBitfield = 0xffbafffe;
+	HitMeBaby.miscFlags = 0;
 	HitMeBaby.callback = &shyCollisionCallback;
 
 	this->aPhysics.initWithStruct(this, &HitMeBaby);

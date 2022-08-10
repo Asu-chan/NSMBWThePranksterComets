@@ -1,0 +1,64 @@
+---
+#Replaces Actor 340 WALLINSECT_MGR (Sprite 283)
+
+
+source_files: [../src/powerStar.S, ../src/powerStar.cpp]
+hooks:
+  - name: PowerStarBuild
+    type: add_func_pointer
+    src_addr_pal: 0x8097F730
+    target_func: 'dPowerStar_c::build()'
+
+  - name: PowerStarSpriteFileInfo
+    type: add_func_pointer
+    src_addr_pal: 0x8031afb8
+    target_func: 'PSarcNameList'
+    # 0x8031AB4C + sprite num * 0x4 == offset
+
+  - name: UpdatePowerStarSpriteInfo
+    type: patch
+    # 0x8030A340 + sprite num * 0x28 == offset
+    addr_pal: 0x8030a660
+    #      -ID- ----  -X Offs- -Y Offs-  -RectX1- -RectY1- -RectX2- -RectY2-  -1C- -1E- -20- -22-  Flag ----
+    data: '0033 0000  00000000 00000000  00000000 00000000 00000000 00000000  0000 0000 0000 0000  0002 0000'
+
+  - name: COURSECLEARCreate
+    type: add_func_pointer
+    src_addr_pal: 0x80940F78
+    target_func: 'dCourseClear_c::newOnCreate()'
+
+  - name: daEnGlpole_cExecute
+    type: add_func_pointer
+    src_addr_pal: 0x80AEC0D8
+    target_func: 'daEnGlpole_c::newOnExecute()'
+
+  - name: PatchHook
+    type: patch
+    addr_pal: 0x8077BB08
+    data: '3860038C' # Orig: 38600388
+
+  - name: TimeUpTextChange
+    type: branch_insn
+    src_addr_pal: 0x8077C20C
+    branch_type: b
+    target_func: 'TimeUpTextChange'
+
+  - name: TowerEventTrigger
+    type: branch_insn
+    src_addr_pal:  [0x80B52AC0, 0x80B61850, 0x80B69FF0, 0x80B655C0, 0x80B57E10, 0x80B5CFF0, 0x80B37270] #Larry, Morton, Wendy, Roy, Lemmy & Ludwig, Iggy
+    branch_type: b
+    target_func: 'TowerBosses::DemoFallEd()'
+
+  - name: NoLookAtTowerBoss
+    type: branch_insn
+    src_addr_pal: 0x808B1AD8
+    branch_type: bl
+    target_func: 'NoLookAtTowerBoss'
+
+  - name: TowerExitNop
+    type: nop_insn
+    area_pal: 0x808B1B68
+
+  - name: TowerNoScoreDecrease
+    type: nop_insn
+    area_pal: 0x808B1A74

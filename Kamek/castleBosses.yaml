@@ -1,0 +1,52 @@
+---
+# Very funny hacks to make castle boss use power stars
+
+source_files: [../src/castleBosses.cpp, ../src/castleBosses.S]
+hooks: 
+  - name: CastleBossesSpriteFileInfo
+    type: add_func_pointer
+    src_addr_pal: 0x8031b1a8
+    target_func: 'CBarcNameList'
+    # 0x8031AB4C + sprite num * 0x4 == offset
+
+  - name: SpawnStarInsteadOfKey
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x807DB038
+    target_func: 'SpawnStarInsteadOfKey'
+
+  - name: CheckForStarState
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x807DC09C
+    target_func: 'CheckForStarState'
+
+  - name: UseR31ForStar
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x807DBFD8
+    target_func: 'UseR31ForStar'
+
+  - name: UseFallStarState
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x807DBFEC
+    target_func: 'UseFallStarState'
+
+  - name: UseFloatStarState
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x807DC0C0
+    target_func: 'UseFloatStarState'
+
+  - name: UseInvisibleStarState
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x807DC388
+    target_func: 'UseInvisibleStarState'
+
+  - name: UseInvisibleStarState2
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x807DB070
+    target_func: 'UseInvisibleStarState2'

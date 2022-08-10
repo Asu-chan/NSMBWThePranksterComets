@@ -1,0 +1,68 @@
+---
+source_files: [../src/profile.S, ../src/profile.cpp]
+hooks:
+  - name: ReplaceSpriteDataList1
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80068440
+    target_func: 'ReplaceSpriteDataList1'
+
+  - name: ReplaceSpriteDataList2
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80068E18
+    target_func: 'ReplaceSpriteDataList2'
+    
+  - name: ReplaceSpriteDataList3
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80068F50
+    target_func: 'ReplaceSpriteDataList3'
+    
+  - name: ReplaceSpriteDataList4
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x807FC8D8
+    target_func: 'ReplaceSpriteDataList4'
+    
+  - name: ReplaceSpriteDataList5
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x8006894C
+    target_func: 'ReplaceSpriteDataList5'
+    
+  - name: ProfileListHook1
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x8006C7C8
+    target_func: 'ProfileListHook1'
+    
+  - name: ProfileListHook2
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80161CF4
+    target_func: 'ProfileListHook2'
+    
+  - name: ProfileListHook3
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80162BC8
+    target_func: 'ProfileListHook3'
+    
+  - name: ProfileListHook4
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80162BE4
+    target_func: 'ProfileListHook4'
+    
+  - name: FileListHook
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x8091FD3C
+    target_func: 'FileListHook'
+    
+  - name: ProfileNamesHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x801018CC
+    target_func: 'ProfileNamesHook(unsigned short, char const**)'

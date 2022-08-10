@@ -175,11 +175,11 @@ int dGoombaPie::onCreate() {
 	HitMeBaby.xDistToEdge = 8.0;
 	HitMeBaby.yDistToEdge = 14.0;
 
-	HitMeBaby.category1 = 0x3;
-	HitMeBaby.category2 = 0x0;
-	HitMeBaby.bitfield1 = 0x01;
-	HitMeBaby.bitfield2 = 0x820A0;
-	HitMeBaby.unkShort1C = 0;
+	HitMeBaby.category = 0x3;
+	HitMeBaby.attack = 0x0;
+	HitMeBaby.categoryBitfield = 0x01;
+	HitMeBaby.attackBitfield = 0x820A0;
+	HitMeBaby.miscFlags = 0;
 	HitMeBaby.callback = &pieCollisionCallback;
 
 	this->aPhysics.initWithStruct(this, &HitMeBaby);

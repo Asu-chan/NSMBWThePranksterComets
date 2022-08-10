@@ -115,6 +115,10 @@ daEnFlipBlock_c *daEnFlipBlock_c::build() {
 	return c;
 }
 
+#include <profile.h>
+const SpriteData flipblockData = {ProfileId::FLIPBLOCK, 8, -8, 0, 0, 0x100, 0x100, 0, 0, 0, 0, 0};
+Profile FlipblockProfile = Profile((buildFunc)&daEnFlipBlock_c::build, SpriteId::FLIPBLOCK, &flipblockData, ProfileId::FLIPBLOCK, ProfileId::FLIPBLOCK, 0x12, "FLIPBLOCK", FlipBlockFileList);
+
 
 void daEnFlipBlock_c::blockWasHit(bool isDown) {
 	pos.y = initialY;

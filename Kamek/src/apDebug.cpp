@@ -1,19 +1,135 @@
 #include <game.h>
+// #include <sdk/gx/GXEnum.h>
+// #include <sdk/gx/GXGeometry.h>
+// #include <sdk/gx/GXLighting.h>
+// #include <sdk/gx/GXStruct.h>
+// #include <sdk/gx/GXTev.h>
+// #include <sdk/gx/GXVert.h>
 
 class APDebugDrawer : public m3d::proc_c {
 	public:
 		APDebugDrawer();
 
-		bool amISetUp;
-		mHeapAllocator_c allocator;
+		// bool amISetUp;
+		// mHeapAllocator_c allocator;
 
-		void setMeUp();
+		// void setMeUp();
 
-		void drawMe();
+		// void drawMe();
 
 		void drawOpa();
 		void drawXlu();
 };
+
+
+// Drawing helper functions
+void DrawQuad(float tlX, float tlY, float trX, float trY, float blX, float blY, float brX, float brY, float z, u8 r, u8 g, u8 b, u8 a, u8 addDiagonal) {
+
+    // Setup drawing
+    GXBegin(GXPrimitive::LINES, 0, 8 + (addDiagonal > 0) * 2);
+
+    // Draw top
+    GXPosition3f32(tlX, tlY, z);
+    GXColor4u8(r,g,b,a);
+    GXPosition3f32(trX, trY, z);
+    GXColor4u8(r,g,b,a);
+
+    // Draw left
+    GXPosition3f32(tlX, tlY, z);
+    GXColor4u8(r,g,b,a);
+    GXPosition3f32(blX, blY, z);
+    GXColor4u8(r,g,b,a);
+
+    // Draw right
+    GXPosition3f32(trX, trY, z);
+    GXColor4u8(r,g,b,a);
+    GXPosition3f32(brX, brY, z);
+    GXColor4u8(r,g,b,a);
+
+    // Draw bottom
+    GXPosition3f32(blX, blY, z);
+    GXColor4u8(r,g,b,a);
+    GXPosition3f32(brX, brY, z);
+    GXColor4u8(r,g,b,a);
+
+    // Draw diagonal if enabled
+    if (addDiagonal == 1) {
+        GXPosition3f32(trX, trY, z);
+        GXColor4u8(r,g,b,a);
+        GXPosition3f32(blX, blY, z);
+        GXColor4u8(r,g,b,a);
+    }
+    else if (addDiagonal == 2) {
+        GXPosition3f32(tlX, tlY, z);
+        GXColor4u8(r,g,b,a);
+        GXPosition3f32(brX, brY, z);
+        GXColor4u8(r,g,b,a);
+    }
+
+    GXEnd();
+}
+
+// Credits to Ismy for helping me with this one
+void DrawCircle(float centreX, float centreY, float radiusX, float radiusY, float z, u8 r, u8 g, u8 b, u8 a) {
+
+    // Define a few variables
+    const int numVert = 64;
+    const float step = 256.0f/numVert;
+    float sin, cos, xDist, yDist;
+
+    // Initialize the prev variables
+    float prevSin = 0.0f;
+    float prevCos = 1.0f;
+    float prevXDist = radiusX;
+    float prevYDist = 0.0f;
+
+    // Begin drawing
+    GXBegin(GXPrimitive::LINES, 0, numVert * 2);
+
+    // Draw each line
+    for (int i = 1; i <= numVert / 4; i++) {
+
+        // Calculate sin and cos for the current angle
+        nw4r::math::SinCosFIdx(&sin, &cos, step * i);
+
+        // Calculate the distances from the center
+        xDist = radiusX * cos;
+        yDist = radiusY * sin;
+
+        // Draw on the first quadrant
+        GXPosition3f32(centreX + prevXDist, centreY + prevYDist, z);
+        GXColor4u8(r,g,b,a);
+        GXPosition3f32(centreX + xDist, centreY + yDist, z);
+        GXColor4u8(r,g,b,a);
+
+        // Draw on the second quadrant
+        GXPosition3f32(centreX - prevYDist, centreY + prevXDist, z);
+        GXColor4u8(r,g,b,a);
+        GXPosition3f32(centreX - yDist, centreY + xDist, z);
+        GXColor4u8(r,g,b,a);
+
+        // Draw on the third quadrant
+        GXPosition3f32(centreX - prevXDist, centreY - prevYDist, z);
+        GXColor4u8(r,g,b,a);
+        GXPosition3f32(centreX - xDist, centreY - yDist, z);
+        GXColor4u8(r,g,b,a);
+
+        // Draw on the fourth quadrant
+        GXPosition3f32(centreX + prevYDist, centreY - prevXDist, z);
+        GXColor4u8(r,g,b,a);
+        GXPosition3f32(centreX + yDist, centreY - xDist, z);
+        GXColor4u8(r,g,b,a);
+
+        // Override the "previous" values
+        prevSin = sin;
+        prevCos = cos;
+        prevXDist = xDist;
+        prevYDist = yDist;
+    }
+
+    // End drawing
+    GXEnd();
+}
 
 
 static APDebugDrawer defaultInstance;
@@ -21,49 +137,50 @@ bool enableDebugMode = false;
 
 int APDebugDraw() {
 	if (enableDebugMode)
-		defaultInstance.drawMe();
+		defaultInstance.scheduleForDrawing();
 	return 1;
 }
 
 
 APDebugDrawer::APDebugDrawer() {
-	amISetUp = false;
+	// amISetUp = false;
+	this->setup(NULL, NULL);
 }
 
-void APDebugDrawer::setMeUp() {
-	allocator.setup(GameHeaps[0], 0x20);
-	setup(&allocator);
-}
+// void APDebugDrawer::setMeUp() {
+// 	allocator.setup(GameHeaps[0], 0x20);
+// 	setup(&allocator);
+// }
 
-void APDebugDrawer::drawMe() {
-	if (!amISetUp) {
-		setMeUp();
-		amISetUp = true;
-	}
+// void APDebugDrawer::drawMe() {
+// 	if (!amISetUp) {
+// 		setMeUp();
+// 		amISetUp = true;
+// 	}
 
-	scheduleForDrawing();
-}
+// 	scheduleForDrawing();
+// }
 
 void APDebugDrawer::drawOpa() {
-	drawXlu();
+	// drawXlu();
 }
 void APDebugDrawer::drawXlu() {
 	GXClearVtxDesc();
 
-	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
-	GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
+	GXSetVtxDesc(GXAttr::POS, GXAttrType::DIRECT);
+	GXSetVtxDesc(GXAttr::CLR0, GXAttrType::DIRECT);
 
-	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
+	GXSetVtxAttrFmt(GX_VTXFMT0, GXAttr::POS, GXCompCnt::POS_XYZ, GXCompType::F32, 0);
+	GXSetVtxAttrFmt(GX_VTXFMT0, GXAttr::CLR0, GXCompCnt::CLR_RGBA, GXCompType::RGBA8, 0);
 
 	GXSetNumIndStages(0);
 	for (int i = 0; i < 0x10; i++)
 		GXSetTevDirect(i);
 
 	GXSetNumChans(1);
-	GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_REG, GX_SRC_VTX, GX_LIGHTNULL, GX_DF_NONE, GX_AF_NONE);
-	GXSetChanAmbColor(GX_COLOR0A0, (GXColor){255,255,255,255});
-	GXSetChanMatColor(GX_COLOR0A0, (GXColor){255,255,255,255});
+	GXSetChanCtrl(GXChannelID::COLOR0A0, GX_DISABLE, GXColorSrc::REG, GXColorSrc::VTX, GXLightID::NONE, GXDiffuseFn::OFF, GXAttnFn::NONE);
+	GXSetChanAmbColor(GXChannelID::COLOR0A0, (GXColor){255,255,255,255});
+	GXSetChanMatColor(GXChannelID::COLOR0A0, (GXColor){255,255,255,255});
 	GXSetNumTexGens(0);
 
 	GXSetNumTevStages(1);
@@ -71,25 +188,25 @@ void APDebugDrawer::drawXlu() {
 
 	GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
 
-	GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORDNULL, GX_TEXMAP_NULL, GX_COLOR0A0);
-	GXSetTevOp(GX_TEVSTAGE0, GX_PASSCLR);
+	GXSetTevOrder(GX_TEVSTAGE0, GXTexCoordID::NONE, GXTexMapID::NONE, GXChannelID::COLOR0A0);
+	GXSetTevOp(GX_TEVSTAGE0, GXTevMode::PASSCLR);
 //	GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_C1, GX_CC_C0, GX_CC_RASC, GX_CC_ZERO);
 //	GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
 //	GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_A0, GX_CA_RASA, GX_CA_ZERO);
 //	GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
 
 	GXSetZCompLoc(GX_FALSE);
-	GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_SET);
-	GXSetZMode(GX_TRUE, GX_ALWAYS, GX_FALSE);
-	GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
+	GXSetBlendMode(GXBlendMode::BLEND, GXBlendFactor::SRCALPHA, GXBlendFactor::INVSRCALPHA, GXLogicOp::SET);
+	GXSetZMode(GX_TRUE, GXCompare::ALWAYS, GX_FALSE);
+	GXSetAlphaCompare(GXCompare::ALWAYS, 0, GX_AOP_OR, GXCompare::ALWAYS, 0);
 
 	GXSetFog(GX_FOG_NONE, 0, 0, 0, 0, (GXColor){0,0,0,0});
 	GXSetFogRangeAdj(GX_FALSE, 0, 0);
 
-	GXSetCullMode(GX_CULL_NONE);
+	GXSetCullMode(GXCullMode::NONE);
 
 	GXSetDither(GX_TRUE);
-	GXSetLineWidth(18, GX_TO_ZERO);
+	GXSetLineWidth(18, GXTexOffset::TO_ZERO);
 
 	GXSetTevColor(GX_TEVREG0, (GXColor){255,255,255,255});
 	GXSetTevColor(GX_TEVREG1, (GXColor){0,0,0,255});
@@ -100,138 +217,98 @@ void APDebugDrawer::drawXlu() {
 	GXLoadPosMtxImm(matrix, 0);
 	GXSetCurrentMtx(0);
 
-	ActivePhysics *ap = ActivePhysics::globalListHead;
+    ActivePhysics* currCc = ActivePhysics::globalListHead;
+    while (currCc) {
 
-	while (ap) {
-//		if (ap->owner->name == PLAYER)
-//			OSReport("Player has : DistToC=%f,%f DistToEdge=%f,%f Pos=%f,%f Scale=%f,%f\n",
-//					ap->info.xDistToCenter, ap->info.yDistToCenter,
-//					ap->info.xDistToEdge, ap->info.yDistToEdge,
-//					ap->owner->pos.x, ap->owner->pos.y,
-//					ap->owner->scale.x, ap->owner->scale.y);
+        // Make sure the actor isn't dead and that its owner exists
+        if (currCc->isDead != 2 && currCc->owner != nullptr) {
 
-		u32 uptr = (u32)ap;
+            u32 uptr = (u32)currCc;
+            u8 r = (uptr >> 16) & 0xFF;
+            u8 g = (uptr >> 8) & 0xFF;
+            u8 b = uptr & 0xFF;
+            u8 a = 0xFF;
+
+            float centreX = currCc->getCenterPosX();
+            float centreY = currCc->getCenterPosY();
+            float edgeDistX = currCc->info.xDistToEdge;
+            float edgeDistY = currCc->info.yDistToEdge;
+            u8 collType = currCc->collisionType;
+
+            // Call DrawCircle for circles
+            if (collType == ccCollType::Circle)
+                DrawCircle(centreX, centreY, edgeDistX, edgeDistY, 9000.0f, r, g, b, a);
+
+            // Else call DrawQuad
+            else {
+                float tlX, tlY, trX, trY, blX, blY, brX, brY;
+                bool addDiagonal = true;
+
+                // Use trapezoidDist for Y coordinates if collType is 2
+                // Else edge distance
+                if (collType == ccCollType::TrapezoidUD) {
+                    tlY = centreY + currCc->trapezoidDist1;
+                    trY = centreY + currCc->trapezoidDist3;
+                    blY = centreY + currCc->trapezoidDist2;
+                    brY = centreY + currCc->trapezoidDist4;
+                    addDiagonal = false;
+                } else {
+                    tlY = centreY + edgeDistY;
+                    trY = centreY + edgeDistY;
+                    blY = centreY - edgeDistY;
+                    brY = centreY - edgeDistY;
+                }
+
+                // Use trapezoidDist for X coordinates if collType is 3
+                // Else edge distance
+                if (collType == ccCollType::TrapezoidLR) {
+                    tlX = centreX + currCc->trapezoidDist1;
+                    trX = centreX + currCc->trapezoidDist2;
+                    blX = centreX + currCc->trapezoidDist3;
+                    brX = centreX + currCc->trapezoidDist4;
+                    addDiagonal = false;
+                } else {
+                    tlX = centreX - edgeDistX;
+                    trX = centreX + edgeDistX;
+                    blX = centreX - edgeDistX;
+                    brX = centreX + edgeDistX;
+                }
+
+                // Draw the quad
+                DrawQuad(tlX, tlY, trX, trY, blX, blY, brX, brY, 9000.0f, r, g, b, a, addDiagonal);
+            }
+        }
+
+        currCc = currCc->listPrev;
+    }
+
+	Physics *currBgCtr = Physics::globalListHead;
+
+	while (currBgCtr) {
+		u32 uptr = (u32)currBgCtr;
 		u8 r = (uptr>>16)&0xFF;
 		u8 g = (uptr>>8)&0xFF;
 		u8 b = uptr&0xFF;
 		u8 a = 0xFF;
 
-		GXBegin(GX_LINES, GX_VTXFMT0, 10);
+        // If round, draw a circle
+        if (currBgCtr->isRound)
+            DrawCircle(currBgCtr->lastPos.x, currBgCtr->lastPos.y, currBgCtr->radius, currBgCtr->radius, 9000.0f, r, g, b, a);
 
-		float centreX = ap->owner->pos.x + ap->info.xDistToCenter;
-		float centreY = ap->owner->pos.y + ap->info.yDistToCenter;
-		float edgeDistX = ap->info.xDistToEdge;
-		float edgeDistY = ap->info.yDistToEdge;
+        // Else draw a quad
+        else {
+            float tlX = currBgCtr->calcedPos[0].x;
+            float tlY = currBgCtr->calcedPos[0].y;
+            float trX = currBgCtr->calcedPos[3].x;
+            float trY = currBgCtr->calcedPos[3].y;
+            float blX = currBgCtr->calcedPos[1].x;
+            float blY = currBgCtr->calcedPos[1].y;
+            float brX = currBgCtr->calcedPos[2].x;
+            float brY = currBgCtr->calcedPos[2].y;
+            DrawQuad(tlX, tlY, trX, trY, blX, blY, brX, brY, 9000.0f, r, g, b, a, 2);
+        }
 
-		float tlX = centreX - edgeDistX, tlY = centreY + edgeDistY;
-		float trX = centreX + edgeDistX, trY = centreY + edgeDistY;
-
-		float blX = centreX - edgeDistX, blY = centreY - edgeDistY;
-		float brX = centreX + edgeDistX, brY = centreY - edgeDistY;
-
-		switch (ap->collisionCheckType) {
-			case 2: // vert trapezoid
-				tlY = centreY + ap->trpValue0;
-				trY = centreY + ap->trpValue1;
-				blY = centreY + ap->trpValue2;
-				brY = centreY + ap->trpValue3;
-				break;
-			case 3: // horz trapezoid
-				tlX = centreX + ap->trpValue0;
-				trX = centreX + ap->trpValue1;
-				blX = centreX + ap->trpValue2;
-				brX = centreX + ap->trpValue3;
-				break;
-		}
-
-		// Top
-		GXPosition3f32(tlX, tlY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-		GXPosition3f32(trX, trY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-
-		// Left
-		GXPosition3f32(tlX, tlY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-		GXPosition3f32(blX, blY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-
-		// Right
-		GXPosition3f32(trX, trY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-		GXPosition3f32(brX, brY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-
-		// Bottom
-		GXPosition3f32(blX, blY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-		GXPosition3f32(brX, brY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-
-		// Diagonal
-		GXPosition3f32(trX, trY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-		GXPosition3f32(blX, blY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-
-		GXEnd();
-
-		ap = ap->listPrev;
-	}
-
-	Physics *p = Physics::globalListHead;
-
-	while (p) {
-		u32 uptr = (u32)p;
-		u8 r = (uptr>>16)&0xFF;
-		u8 g = (uptr>>8)&0xFF;
-		u8 b = uptr&0xFF;
-		u8 a = 0xFF;
-
-		GXBegin(GX_LINES, GX_VTXFMT0, 10);
-
-		float tlX = p->unkArray[0].x;
-		float tlY = p->unkArray[0].y;
-		float trX = p->unkArray[3].x;
-		float trY = p->unkArray[3].y;
-		float blX = p->unkArray[1].x;
-		float blY = p->unkArray[1].y;
-		float brX = p->unkArray[2].x;
-		float brY = p->unkArray[2].y;
-
-		// Top
-		GXPosition3f32(tlX, tlY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-		GXPosition3f32(trX, trY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-
-		// Left
-		GXPosition3f32(tlX, tlY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-		GXPosition3f32(blX, blY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-
-		// Right
-		GXPosition3f32(trX, trY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-		GXPosition3f32(brX, brY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-
-		// Bottom
-		GXPosition3f32(blX, blY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-		GXPosition3f32(brX, brY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-
-		// Diagonal
-		GXPosition3f32(trX, trY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-		GXPosition3f32(blX, blY, 9000.0f);
-		GXColor4u8(r,g,b,a);
-
-		GXEnd();
-
-		p = p->next;
+		currBgCtr = currBgCtr->next;
 	}
 
 
@@ -246,7 +323,7 @@ void APDebugDrawer::drawXlu() {
 
 		switch (bc->type) {
 			case 0: case 2:
-				GXBegin(GX_LINES, GX_VTXFMT0, 2);
+    			GXBegin(GXPrimitive::LINES, 0, 2);
 				GXPosition3f32(bc->leftX, bc->leftY, 9000.0f);
 				GXColor4u8(r,g,b,a);
 				GXPosition3f32(bc->rightX, bc->rightY, 9000.0f);
@@ -287,7 +364,7 @@ void APDebugDrawer::drawXlu() {
 
 			switch (s->flags & SENSOR_TYPE_MASK) {
 				case SENSOR_POINT:
-					GXBegin(GX_POINTS, GX_VTXFMT0, 1);
+    				GXBegin(GXPrimitive::POINTS, 0, 1);
 					GXPosition3f32(
 							ac->pos.x + (mult * (s->asPoint()->x / 4096.0f)),
 							ac->pos.y + (s->asPoint()->y / 4096.0f),
@@ -296,7 +373,7 @@ void APDebugDrawer::drawXlu() {
 					GXEnd();
 					break;
 				case SENSOR_LINE:
-					GXBegin(GX_LINES, GX_VTXFMT0, 2);
+    				GXBegin(GXPrimitive::LINES, 0, 2);
 					if (i < 2) {
 						GXPosition3f32(
 								ac->pos.x + (s->asLine()->lineA / 4096.0f),
@@ -326,3 +403,68 @@ void APDebugDrawer::drawXlu() {
 		}
 	}
 }
+
+/*
+// Patches to allow tracking instances of dBc_c
+static collisionMgr_c* firstBc = NULL;
+static collisionMgr_c* lastBc = NULL;
+
+extern "C" {
+void addBcToList(collisionMgr_c* self);
+void removeBcFromList(collisionMgr_c* self);
+}
+
+void addBcToList(collisionMgr_c* self) {
+
+    // If the bc was already initialized, bail
+    if (self->next || lastBc == self)
+        return;
+
+    // If first is NULL, set this bc as both first and last
+    if (firstBc == NULL) {
+        firstBc = self;
+        lastBc = self;
+
+    // Else set the next field of the previous one, and set this one as last
+    } else {
+        lastBc->next = self;
+        lastBc = self;
+    }
+}
+
+void removeBcFromList(collisionMgr_c* self) {
+
+    // If no bcs are initialized, bail
+    if (!firstBc)
+        return;
+
+    // If this bc has no "next" and isn't the last bc it was never initialized, so bail
+    if (!self->next && lastBc != self)
+        return;
+
+    // If this bc is the only initialized one, set both first and last to NULL
+    if (firstBc == lastBc) {
+        firstBc = NULL;
+        lastBc = NULL;
+        return;
+    }
+
+    // If this bc is the first one, set the next one as the first one
+    if (firstBc == self) {
+        firstBc = self->next;
+        return;
+    }
+
+    // Find the previous bc
+    collisionMgr_c* prevBc = firstBc;
+    while (prevBc->next != self)
+        prevBc = prevBc->next;
+
+    // Remove this bc from the list
+    prevBc->next = self->next;
+
+    // If this was the last bc, set the previous one as the new last
+    if (lastBc == self)
+        lastBc = prevBc;
+}
+*/

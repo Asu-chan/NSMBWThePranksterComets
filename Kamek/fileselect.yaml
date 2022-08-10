@@ -1,5 +1,5 @@
 ---
-source_files: [../src/fileselect.S]
+source_files: [../src/fileselect.cpp, ../src/fileselect.S]
 hooks:
   - name: FSDisBrlan1 # inMulti
     type: add_func_pointer

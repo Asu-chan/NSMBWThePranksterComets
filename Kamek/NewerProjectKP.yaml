@@ -2,71 +2,78 @@ output_dir: "NewerASM"
 code_address: 0x808D9000
 modules:
   - processed/prolog.yaml
-  - processed/corseClear.yaml
   - processed/apDebug.yaml
-  - processed/hardMode.yaml
-#  - processed/layoutDebug.yaml
-  - processed/creditsMgr.yaml
-  - processed/endingMgr.yaml
-  - processed/chestnut.yaml
-  - processed/flipblock.yaml
-  - processed/fileselect.yaml
-  - processed/magicplatform.yaml
-  - processed/cutScene.yaml
-  - processed/bonepiece.yaml
+  - processed/profile.yaml
+  # - processed/hardMode.yaml
   - processed/bugfixes.yaml
-  - processed/koopatlas.yaml
+  - processed/spriteFixes.yaml
+  - processed/spriteTex.yaml
+  - processed/tagProcessor.yaml
+  - processed/lyt.yaml
+  # - processed/defaultsave.yaml
+  # - processed/creditsMgr.yaml
+  # - processed/fileselect.yaml
+  - processed/fsel.yaml
   - processed/pregame.yaml
-  - processed/layouthax.yaml
+  # - processed/layouthax.yaml
+  # - processed/NWC24.yaml
   - processed/animtiles.yaml
-  - processed/soundPlayer.yaml
-  - processed/bowserKey.yaml
-  - processed/levelspecial.yaml
-  - processed/mrsun.yaml
-  - processed/firelaser.yaml
-  - processed/spritetex.yaml
-#  - processed/gakenoko.yaml
+  # - processed/newactors.yaml
+  # - processed/YoshiHacks.yaml       # https://wuffs.org/downloads - Ported here for fun
+  # - processed/yoshivore.yaml        # Yoshi can eat anything
+  - processed/lyttests.yaml           # Layout tests
+  - processed/worldmapPause.yaml      # WM_TREASURESHIP - Worldmap Settings Menu
+  - processed/settings.yaml           # Make settings actually do something
   - processed/poweruphax.yaml
-  - processed/heapbar.yaml
+  - processed/soundPlayer.yaml
   - processed/randtiles.yaml
-  - processed/objkinoko.yaml
-  - processed/tilegod.yaml
-  - processed/linegod.yaml
-  - processed/tilesetfixer.yaml
-  - processed/switchblock.yaml
-  - processed/eventblock.yaml
-  - processed/msgbox.yaml
-  - processed/replay.yaml
-  - processed/growup.yaml
-  - processed/eventlooper.yaml
-  - processed/spritespawner.yaml
-  - processed/spriteswapper.yaml
-  - processed/compression.yaml
-#  - processed/crowdclapper.yaml
-  - processed/blocksnake.yaml
+  - processed/stage.yaml
+  - processed/opening.yaml            # EN_TARZANROPE - Opening Cutscene, based on cutScene.yaml/cpp/h
+  - processed/soundtest.yaml          # TARZAN_ROPE - Sound Test, based on cutScene.yaml/cpp/h
+  - processed/bonusLevels.yaml        # EN_WALLINSECT - Bonus Level Selector, based on cutScene.yaml/cpp/h
+  - processed/credits.yaml            # STAFFCREDITS - New actor, literally staff credits, based on cutScene.yaml/cpp/h
+  - processed/multiChooser.yaml       # WM_GRID - Multiplayer player chooser for singleplayer-only levels
+  - processed/minecart.yaml
+  - processed/doubleDate.yaml
+  - processed/singleplayer.yaml
+  - processed/languageAsk.yaml        # Non-english warning for v1.0
+  - processed/gameDisplay.yaml
+  - processed/purpleCoin.yaml         # MIST_INTERMITTENT
+  - processed/cosmicClone.yaml        # EN_IWAO
+  - processed/raceRecorder.yaml       # EN_BOYON
+  - processed/cosmicMario.yaml        # EN_HELPOS
+  - processed/cosmicDestructor.yaml   # AC_LIFT_OBJBG_HMOVE_BIG
+  - processed/testSprite.yaml         # BRANCH
+  - processed/worldSelect.yaml        # TIME_UP
+  - processed/cobCourse.yaml
+  - processed/fastFoe.yaml
+  # - processed/daredevil.yaml        # Now in settings.yaml
+  - processed/speedy.yaml
+  - processed/plusClock.yaml          # RIVER_MGR
+  - processed/bonusWorld.yaml
+  - processed/powerStar.yaml          # WALLINSECT_MGR
+  - processed/silverStar.yaml         # AC_BLOCK_GROUP
+  - processed/chimpChallenges.yaml    # REMO_DOOR, EN_GHOST_JUGEM, SHIP_WINDOW
   - processed/classic_controller.yaml
-  - processed/topman.yaml
-  - processed/bossMegaGoomba.yaml
-  - processed/bossFuzzyBear.yaml
-  - processed/bossThwompaDomp.yaml
-  - processed/bossRamboo.yaml
-  - processed/bossBalboaWrench.yaml
-  - processed/bossWrenchThrow.yaml
-  - processed/bossSamurshai.yaml
-  - processed/bossPodouble.yaml
-  - processed/bossTopman.yaml
-  - processed/bossCaptainBowser.yaml
-  - processed/bossBridgeBowser.yaml
-  - processed/effectVideo.yaml
+  - processed/whiteWind.yaml
+  - processed/castleBosses.yaml
+  - processed/crowdClapper.yaml
+  - processed/starSign.yaml
+  - processed/underwaterLamp.yaml
+  - processed/propellerBlock.yaml
+  - processed/arrowSignboard.yaml
+  - processed/boos.yaml
+  - processed/hintMovies.yaml
+  - processed/growup.yaml
+  - processed/flipblock.yaml
+  - processed/sfxGfxSpawner.yaml       # NEWER_SFXGFXSPAWNER
+  - processed/actorSpawner.yaml        # NEWER_ACTORSPAWNER
+  - processed/magicplatform.yaml       # NEWER_MAGICPLATFORM
+  - processed/specialEvent.yaml        # TAG_THUNDER
+  - processed/badApple.yaml            # BAD_APPLE
+  - processed/eventLooper.yaml         # NEWER_EVENTLOOPER
+  - processed/talkBalloon.yaml         # TALKBALLOON
+  # - processed/snakeblock.yaml
+  - processed/tilegod.yaml
+  # - processed/replay.yaml
   - processed/fakeStarCoin.yaml
-  - processed/shyguy.yaml
-  - processed/shyguyGiants.yaml
-  - processed/meteor.yaml
-  - processed/electricLine.yaml
-  - processed/thundercloud.yaml
-  - processed/makeYourOwn.yaml
-  - processed/challengeStar.yaml
-  - processed/singAlong.yaml
-  - processed/pumpkinGoomba.yaml
-  # - processed/pengi.yaml
-#  - processed/actorlog.yaml

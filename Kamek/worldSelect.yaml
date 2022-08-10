@@ -1,0 +1,87 @@
+---
+
+source_files: [../src/worldSelect.S, ../src/worldSelect.cpp, ../src/loading.S]
+hooks:
+  - name: WorldSelectCreate
+    type: add_func_pointer
+    src_addr_pal: 0x8098E3C0
+    target_func: 'dWorldSelect_c::newOnCreate()'
+
+  - name: WorldSelectExecute
+    type: add_func_pointer
+    src_addr_pal: 0x8098E3D8
+    target_func: 'dWorldSelect_c::newOnExecute()'
+
+  - name: WorldSelectDelete
+    type: add_func_pointer
+    src_addr_pal: 0x8098E3CC
+    target_func: 'dWorldSelect_c::newOnDelete()'
+
+  - name: ExpandWorldSelectStruc
+    type: patch
+    addr_pal: 0x80928818
+    data: '386002E4' # Orig: 386002BC
+
+  # - name: WorldSelectGuideCreate
+  #   type: add_func_pointer
+  #   src_addr_pal: 0x8098EAF8
+  #   target_func: 'dWorldSelectGuide_c::newOnCreate()'
+
+  # - name: WorldSelectGuideExecute
+  #   type: add_func_pointer
+  #   src_addr_pal: 0x8098EB10
+  #   target_func: 'dWorldSelectGuide_c::newOnExecute()'
+
+  - name: CometModelBuild
+    type: add_func_pointer
+    src_addr_pal: 0x80950768
+    target_func: 'daCometModel_c::build()'
+
+    #Load Comet Arc
+
+  - name: LoadCometArc
+    type: branch_insn
+    src_addr_pal: 0x80926C30
+    branch_type: b
+    target_func: 'LoadCometArc'
+
+  - name: ExtendWorldmapObjectList
+    type: patch
+    addr_pal: 0x80926C4C
+    data: '281C0008' # Orig: 281C0007
+
+  - name: WorldmapObjectListResetR31
+    type: patch
+    addr_pal: 0x80926C28
+    data: '3be00000' # Orig: 3bfe00d0
+
+    #Free Comet Arc
+
+  - name: FreeCometArc
+    type: branch_insn
+    src_addr_pal: 0x80927920
+    branch_type: b
+    target_func: 'FreeCometArc'
+
+  - name: ExtendWorldmapObjectList2
+    type: patch
+    addr_pal: 0x80927934
+    data: '281B0008' # Orig: 281B0007
+
+  - name: WorldmapObjectListResetR26
+    type: patch
+    addr_pal: 0x80927918
+    data: '3b400000' # Orig: 3b5c00d0
+
+    #LostThisShit
+
+  - name: LoadThisShit
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8091EC74
+    target_func: 'LoadThisShit'
+
+  - name: LoadThisShittyCount
+    type: patch
+    addr_pal: 0x8091EC6C
+    data: '38c00027' # Orig: 38c00023

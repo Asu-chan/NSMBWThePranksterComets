@@ -2,7 +2,7 @@
 #define __KAMEK_GAME_H
 
 #include <common.h>
-#include <sdk/gx.h>
+#include <sdk/gx2.h>
 #include <sdk/tpl.h>
 #define offsetof(type, member)	((u32) &(((type *) 0)->member))
 
@@ -18,22 +18,11 @@ inline T clamp(T value, T one, T two) { return (value < one) ? one : ((value > t
 #define M_PI 3.14159265358979323846
 #define M_PI_2 (M_PI / 2)
 
-extern "C" {
-int wcslen(const wchar_t *str);
-wchar_t *wcscpy(wchar_t *dest, const wchar_t *src);
-int strlen(const char *str);
-char *strcpy(char *dest, const char *src);
-char *strncpy(char *dest, const char *src, int num);
-int strncmp(const char *str1, const char *str2, int num);
-
-float atan(float x);
-float atan2(float y, float x);
-
-float cos(float x);
-float sin(float x);
-float ceil(float x);
-float floor(float x);
+inline s16 RADtoS16(float val) {
+	return (s16)(val * 0xFFFF / (2.0f * M_PI));
 }
+
+
 enum Direction {
 	RIGHT = 0,
 	LEFT = 1,
@@ -92,9 +81,9 @@ class GMgr8 {
 		virtual ~GMgr8();
 
 		int _4;
-		float _8, _C;
+		float checkpointEntranceXPos, checkpointEntranceYPos;
 		u32 _10, _14;
-		u8 _18, _19, _1A, _1B, _1C;
+		u8 checkpointWorldID, checkpointLevelID, _1A, checkpointEntranceID, _1C;
 		u32 _20, _24, _28, _2C, _30;
 };
 
@@ -204,6 +193,13 @@ bool IsWideScreen();
 
 #define SAVE_BIT_NO_SUPER_GUIDE 0x40
 
+#define SAVE_CHIMP_VISITED 0x1
+#define SAVE_CHIMP_ITEMBOWLING 0x2
+#define SAVE_CHIMP_PENGUINSLIDE 0x4
+#define SAVE_CHIMP_SANDSLIDE 0x8
+#define SAVE_CHIMP_GEARMO 0x10
+#define SAVE_CHIMP_BULLETBILLPARKOUR 0x20
+
 
 class SaveFirstBlock {
 public:
@@ -280,6 +276,8 @@ public:
 	void SetLevelCondition(int world, int level, int cond);
 	void UnsetLevelCondition(int world, int level, int cond);
 	bool CheckIfCoinCollected(int world, int level, int num);
+	void OrR5AgaginstByteFromWorldAvailableArrayAt0x32ofWorldData(u32 unk1, u32 unk2);
+	void ClearR5FromByteInWorldAvailableArrayAt0x32ofWorldData(u32 unk1, u32 unk2);
 };
 
 class SaveFile {
@@ -302,6 +300,10 @@ public:
 	SaveBlock *GetQSBlock(int id);
 
 	bool CheckIfWriting(); // 0x800E0540
+
+	void SaveCurrentData_Maybe();
+	void create_hash_for_savefile();
+	void WriteSavefileToRegularBuffer();
 };
 
 class SaveHandler {
@@ -422,6 +424,7 @@ u32 QueryGlobal5758(u32 check);
 void SaveGame(void *classDoesntMatter, bool isQuick);
 
 #include <actors.h>
+void *CreateObject(short classID, int settings, char something);
 void *CreateParentedObject(short classID, void *parent, int settings, char something);
 void *CreateChildObject(short classID, void *parent, int settings, int unk1, int unk2);
 
@@ -500,7 +503,9 @@ public:
 	u32 _0;
 	u32 _4;
 	u32 _8;
-	u32 _otherDatum[38];
+	u32 _C;
+	u32 flags;
+	u32 _otherDatum[36];
 
 	static WLClass *instance;
 
@@ -596,6 +601,11 @@ class mMtx {
 };
 
 
+enum HTxtAlignment {
+	HALIGN_LEFT,
+	HALIGN_MID,
+	HALIGN_RIGHT,
+};
 
 namespace nw4r {
 	namespace math {
@@ -627,6 +637,20 @@ namespace ut {
 				*((u32*)this) = *((u32*)&other);
 				return *this;
 			}
+
+			// GXColor& operator!=(const GXColor &other) {
+			// 	return this->r != other.r
+			// 		|| this->g != other.g
+			// 		|| this->b != other.b
+			// 		|| this->a != other.a;
+			// }
+
+			// GXColor& operator==(const GXColor &other) {
+			// 	return this->r == other.r
+			// 		&& this->g == other.g
+			// 		&& this->b == other.b
+			// 		&& this->a == other.a;
+			// }
 	};
 
 	class Rect {
@@ -739,9 +763,19 @@ namespace lyt {
 		virtual ~Material();
 
 		// cheating a bit here
-		u8 _[0x3C];
+		u32 _0[3]; //0
+		u16 blackBlendingR; //10
+		u16 blackBlendingG;	//12
+		u16 blackBlendingB;	//14
+		u16 blackBlendingA;	//16
+		u16 whiteBlendingR;	//18
+		u16 whiteBlendingG;	//1A
+		u16 whiteBlendingB;	//1C
+		u16 whiteBlendingA;	//1D
+		u8 _1F[0x1D]; //1F
+
 		// this is actually a pointer to more stuff, not just texmaps
-		TexMap *texMaps;
+		TexMap *texMaps; //3C
 	};
 
 	class Pane {
@@ -857,19 +891,31 @@ namespace lyt {
 
 		wchar_t *stringBuf;
 
-		ut::Color colour1, colour2;
-		void *font; // actually a ut::ResFont or whatever
+		ut::Color colour1, colour2;		// 0xDC, 0xE0
+		void *font; // actually a ut::ResFont or whatever	// 0xE4
 
-		float fontSizeX, fontSizeY;
-		float lineSpace, charSpace;
+		float fontSizeX, fontSizeY;		// 0xE8, 0xEC
+		float lineSpace, charSpace;		// 0xF0, 0xF4
 
-		void *tagProc; // actually a TagProcessor
+		void *tagProc; // actually a TagProcessor 	// 0xF8
 
-		u16 bufferLength;
-		u16 stringLength;
+		u16 bufferLength;				// 0xFC
+		u16 stringLength;				// 0xFE
 
-		u8 alignment;
-		u8 flags;
+		u8 alignment;					// 0xFF
+		u8 flags; 						// 0x100
+
+		// u8 pad[3];
+
+		float textLen; // New
+
+		inline u8 GetHorizontalTextAlignment() {
+			return (this->alignment % 3);
+		}
+
+		inline bool IsHAlignment(HTxtAlignment align) {
+			return (this->alignment % 3) == align;
+		}
 	};
 
 	class Picture : public Pane {
@@ -1176,6 +1222,25 @@ namespace EGG {
 			Vec camPos, target, camUp;
 	};
 
+
+	class SomeRectangle {
+		public:
+			float left;
+			float bottom;
+			float right;
+			float top;
+	};
+
+
+	class SimpleViewport {
+		public:
+			SomeRectangle rect;
+			float width;
+			float height;
+			float aspectRatio;
+	};
+	
+
 	class ProjectOrtho /* : public something? */ {
 		public:
 			virtual u32 getProjectionType();
@@ -1276,11 +1341,13 @@ public:
 	u32 _3C;
 	void *otherCallback1, *otherCallback2, *otherCallback3;
 	void *callback1, *callback2, *callback3;
-	float lastX, lastY;
-	Unknown unkArray[4];
-	float x, y;
-	float _88, _8C;
-	float diameter;
+	Vec2 lastPos;
+	Vec2 calcedPos[4];
+	float offsetLeft; // used for circles as well
+	float offsetTop; // used for circles as well
+	float offsetRight;
+	float offsetBottom;
+	float radius;
 	Vec lastActorPosition;
 	float _A0, _A4, last_A0, last_A4, _B0, _B4;
 	u32 _B8;
@@ -1338,6 +1405,15 @@ public:
 };
 
 
+struct ccCollType {
+    enum Value {
+        Normal,
+        Circle,
+        TrapezoidUD,
+        TrapezoidLR,
+    };
+};
+
 class ActivePhysics {
 public:
 	struct Info; // forward declaration
@@ -1348,11 +1424,11 @@ public:
 		float yDistToCenter;
 		float xDistToEdge;
 		float yDistToEdge;
-		u8 category1;
-		u8 category2;
-		u32 bitfield1;
-		u32 bitfield2;
-		u16 unkShort1C;
+		u8 category;
+		u8 attack;
+		u32 categoryBitfield;
+		u32 attackBitfield;
+		u16 miscFlags;
 		Callback callback;
 	};
 
@@ -1360,23 +1436,25 @@ public:
 	virtual ~ActivePhysics();
 
 	dStageActor_c *owner;
-	u32 _8;
+	dStageActor_c* ignoreActor; // collisions with this actor are ignored in dCc_c::checkCollision
 	u32 _C;
 	ActivePhysics *listPrev, *listNext;
-	u32 _18;
+	u32 canBounce; // set to 1 on Giant Wiggler body parts, if 0 Mario/Yoshi will not bounce and get hit instead
 	Info info;
-	float trpValue0, trpValue1, trpValue2, trpValue3;
-	float firstFloatArray[8];
-	float secondFloatArray[8];
+	float trapezoidDist1, trapezoidDist2, trapezoidDist3, trapezoidDist4;
+	float displacementX[8];
+	float displacementY[8];
 	Vec2 positionOfLastCollision;
-	u16 result1;
-	u16 result2;
-	u16 result3;
-	u8 collisionCheckType;
+
+	u16 selfCatCheckResult;
+	u16 otherAtkCheckResult;
+	u16 selfAtkCheckResult;
+
+	u8 collisionType;
 	u8 chainlinkMode;
 	u8 layer;
-	u8 someFlagByte;
-	u8 isLinkedIntoList;
+	u8 isDead; // set to 2 if actor is killed, 0 otherwise
+	bool isLinkedIntoList;
 
 	void clear();
 	void addToList();
@@ -1394,6 +1472,13 @@ public:
 	float right();
 	float left();
 	float xCenter();
+
+    float getCenterPosX();
+    float getCenterPosY();
+    float getLeftPos();
+    float getRightPos();
+    float getTopPos();
+    float getUnderPos();
 
 	// Plus more stuff that isn't needed in the public API, I'm pretty sure.
 	
@@ -1662,6 +1747,7 @@ class collisionMgr_c {
 	public:
 		collisionMgr_c();
 		virtual ~collisionMgr_c();
+		// collisionMgr_c* next; // custom field, originally an unused vtable
 
 		dStageActor_c *owner;
 		sensorBase_s *pBelowInfo, *pAboveInfo, *pAdjacentInfo;
@@ -2086,14 +2172,23 @@ public:
 	u8 _34A, _34B;
 	u8 *spriteByteStorage;
 	u16 *spriteShortStorage;
-	u16 spriteFlagNum;
+
+	union {
+		u16 spriteFlagNum;
+
+		struct {
+			u8 eventId2; // nybble 1-2
+			u8 eventId1; // nybble 3-4
+		};
+	};
+	
 	u64 spriteFlagMask;
 	u32 _360;
 	u16 spriteSomeFlag;
 	u8 _366, _367;
 	u32 _368;
 	u8 eatenState;	// 0=normal,2=eaten,4=spit out
-	u8 _36D;
+	u8 edible;
 	Vec scaleBeforeBeingEaten;
 	u32 _37C, lookAtMode, _384, _388;
 	u8 stageActorType;
@@ -2275,7 +2370,9 @@ class daPlBase_c : public dStageActor_c {
 		// Can't be assed to build full headers right now
 		u8 data[0x45C - 0x394];
 		float demoMoveSpeed;
-		u8 data3[0xEA4 - 0x460];
+		u8 data3[0x6F0 - 0x460];
+		u32 _6F0;
+		u8 data4[0xEA4 - 0x6F4];
 		dPlayerInput_c input;
 		// We're at 0x1008 now
 		u8 data2[0x1418 - 0x1008];
@@ -2284,6 +2381,8 @@ class daPlBase_c : public dStageActor_c {
 		u32 _1458, _145C;
 		u8 _1460;
 		dStateWrapper_c<daPlBase_c> states2;
+
+		u8 data6[0x14D4 - 0x14A0];
 
 		void justFaceSpecificDirection(int direction);
 		void moveInDirection(float *targetX, float *speed);
@@ -2305,6 +2404,17 @@ class dAcPy_c : public daPlBase_c {
 		void *getYoshi(); // 80139A90
 
 		static dAcPy_c *findByID(int id);
+
+		u32 characterID;
+		u8 data5[0x2A60 - 0x14D8];
+		u32 *modelHandler;
+		u32 *modelClass;
+
+		int onCreate_orig();
+		int newOnCreate();
+
+		USING_STATES(dAcPy_c);
+		REF_NINTENDO_STATE(Throw);
 };
 
 daPlBase_c *GetPlayerOrYoshi(int id);
@@ -2777,8 +2887,12 @@ public:
 	mHeapAllocator_c allocator;
 	u32 _20;
 	u32 _24;
-	char someAnimation[2][0x38]; // actually PlayerAnim's
-	char yetAnotherAnimation[40]; // actually m3d::banm_c afaics -- is it even 40 bytes?
+	// char someAnimation[2][0x38]; // actually PlayerAnim's
+	// char yetAnotherAnimation[40]; // actually m3d::banm_c afaics -- is it even 40 bytes?
+	m3d::fanm_c SomeAnimation_0;
+	m3d::fanm_c SomeAnimation_1;
+	m3d::banm_c anmChrPart;
+
 	Vec HeadPos; // maybe not an array
 	Vec HatPos; // maybe not an array
 	Mtx finalMatrix;
@@ -3169,6 +3283,8 @@ namespace m2d {
 			// too lazy to list the methods for this atm
 			// after IDA reverted all the changes I made to the DB this
 			// afternoon ...
+
+			void updateAssociatedElements(); // 0x80164610
 	};
 
 	class EmbedLayoutBase_c : public Base_c {
@@ -3235,6 +3351,7 @@ namespace m2d {
 		void enableNonLoopAnim(int num, bool goToLastFrame = false);
 		void enableLoopAnim(int num);
 		void resetAnim(int num, bool goToLastFrame = false);
+		void resetAnim(int num, int whatToDo);
 		void disableAnim(int num);
 		void disableAllAnimations();
 
@@ -3337,6 +3454,7 @@ public:
 	// Size: 0x17C
 	
 	void PlaySoundAtPosition(int id, Vec2 *pos, u32 flags); // 80198D70
+	void sub_801994D0(int soundId, u32 actorId, Vec2 *pos, u32 flags); // 801994D0
 	
 	static SoundPlayingClass *instance1; // 8042A03C
 	static SoundPlayingClass *instance2; // 8042A03C
@@ -3598,6 +3716,7 @@ namespace mHeap {
 };
 
 void WriteNumberToTextBox(int *number, const int *fieldLength, nw4r::lyt::TextBox *textBox, bool unk); // 800B3B60
+void WriteNumberToTextBox(u32 *number, u32 *fieldLength, nw4r::lyt::TextBox *textBox, bool unk); // 800B3B60
 void WriteNumberToTextBox(int *number, nw4r::lyt::TextBox *textBox, bool unk); // 800B3BE0
 
 namespace EGG {
@@ -3648,6 +3767,7 @@ class MessageClass {
 };
 
 dScript::Res_c *GetBMG(); // 800CDD50
+const wchar_t *GetBMGMessage(int category, int message);
 void WriteBMGToTextBox(nw4r::lyt::TextBox *textBox, dScript::Res_c *res, int category, int message, int argCount, ...); // 0x800C9B50
 
 // My version ignores the Font and Font Scale fields in BMG
@@ -3714,6 +3834,7 @@ extern "C" void Stop__Q44nw4r3snd6detail10BasicSoundFi(void *_this, int unk);
 extern "C" void StrmSound_SetTrackVolume(void *_this, u32 mask, int count, float value);
 extern "C" void SetPitch__Q44nw4r3snd6detail10BasicSoundFf(void *_this, float value);
 extern "C" void SetVolume__Q44nw4r3snd6detail10BasicSoundFfi(void *_this, float value, int count);
+extern "C" long StrmPlayer_GetPlaySamplePosition(void *_this);
 
 namespace nw4r {
 	namespace snd {
@@ -3740,6 +3861,11 @@ namespace nw4r {
 		class StrmSoundHandle : public SoundHandle {
 			public:
 				void SetTrackVolume(u32 mask, int count, float value) { StrmSound_SetTrackVolume(data, mask, count, value); }
+
+				long GetPlaySamplePosition() const {
+					// if ( ! IsAttachedSound() ) return -1;
+					return StrmPlayer_GetPlaySamplePosition((void*)((u32)data + 0x110));
+				}
 		};
 	}
 }
@@ -3872,8 +3998,53 @@ inline int Player_VF3D4(void *self) {
 	VF_END;
 }
 
+#define SFX_PRANKSTER_COMET 2000
+#define SFX_PURPLE_COIN 2001
+#define SFX_COSMICMARIO_APPEAR 2002
+#define SFX_COSMICMARIO_DIE 2003
+#define SFX_COSMICMARIO_PROVOKE 2004
+#define SFX_COSMICMARIO_LETSGO 2005
+#define SFX_COUNTDOWN 2006
+#define SFX_TIMERSIGNAL 2007
+#define SFX_TIMERLASTSIGNAL 2008
+#define SFX_TIMERALARM1 2009
+#define SFX_TIMERALARM2 2010
+#define SFX_TIMERALARM3 2011
+#define SFX_PLUS_CLOCK 2012
+#define SFX_STAR_APPEAR 2013
+#define SFX_STAR_WAIT 2014
+#define SFX_COSMICMARIO_LAUGH 2015
+#define SFX_PAGEFLIP 2016
+#define SFX_BUTTONPRESS 2017
+#define SFX_OPENING_CHARACTERS_WOOO 2018
+#define SFX_OPENING_CHARACTERS_HAPPY 2019
+#define SFX_OPENING_BOWSER_THUNDER 2020
+#define SFX_OPENING_CHARACTERS_GO 2021
+#define SFX_CHIMP_AWFULNOISE 2022
+#define SFX_CHIMP_DISSATISFIED 2023
+#define SFX_CHIMP_FAILCLAP 2024
+#define SFX_CHIMP_FAILFULL 2025
+#define SFX_CHIMP_HANDCLAP 2026
+#define SFX_CHIMP_LAUGH 2027
+#define SFX_CHIMP_SURPRISED 2028
+#define SFX_CHIMP_TALK 2029
+#define SFX_RHDD_BEAT 2030
+#define SFX_RHDD_KICK_SLAP 2031
+#define SFX_RHDD_KICK_SUCCESS 2032
+#define SFX_RHDD_KICK_RUGBY 2033
+#define SFX_RHDD_KICK_MISS 2034
+#define SFX_RHDD_BOUNCE_FOOTBALL 2035
+#define SFX_RHDD_BOUNCE_BASKETBALL 2036
+#define SFX_RHDD_BOUNCE_RUGBY 2037
+#define SFX_RHDD_BOUNCE_GRASS1 2038
+#define SFX_RHDD_BOUNCE_GRASS2 2039
+#define SFX_RHDD_BOUNCE_GRASS3 2040
+#define SFX_RHDD_SQUIRREL 2041
+#define SFX_RHDD_GET_REKT 2042
+
 extern "C" void PlaySoundWithFunctionB4(void *src, nw4r::snd::SoundHandle *handle, int id, int unk);
 extern "C" void CheckIfPlayingSound(void *src, int id);
+extern "C" void *MapSoundPlayer(void *SoundRelatedClass, int soundID, int unk);
 extern void *SoundRelatedClass;
 
 void GetPosForLayoutEffect(VEC3 *pos, bool quack);

@@ -1,0 +1,28 @@
+---
+#Replaces Actor 50 RIVER_MGR (Sprite 244)
+
+
+source_files: [../src/plusClock.cpp]
+hooks:
+  - name: PlusClockBuild
+    type: add_func_pointer
+    src_addr_pal: 0x80979558
+    target_func: 'dPlusClock_c::build()'
+
+  - name: PlusClockSpriteFileInfo
+    type: add_func_pointer
+    src_addr_pal: 0x8031af1c
+    target_func: 'TACarcNameList'
+    # 0x8031AB4C + sprite num * 0x4 == offset
+
+  - name: ChangePointThingie
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80015968
+    target_func: 'newPointThingie(nw4r::lyt::TextBox*, unsigned int, unsigned int, unsigned int, unsigned int)' 
+
+  - name: StarCoinPointThingie
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80AAA348
+    target_func: 'StarCoinPointThingie(unsigned int*, unsigned int*, unsigned int, unsigned int, float, float)' 

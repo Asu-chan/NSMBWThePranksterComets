@@ -235,11 +235,11 @@ int daBalboa_c::onCreate() {
 	HitMeBaby.xDistToEdge = 18.0;
 	HitMeBaby.yDistToEdge = 24.0;
 
-	HitMeBaby.category1 = 0x3;
-	HitMeBaby.category2 = 0x0;
-	HitMeBaby.bitfield1 = 0x4F;
-	HitMeBaby.bitfield2 = 0xFFBAFFFE;
-	HitMeBaby.unkShort1C = 0;
+	HitMeBaby.category = 0x3;
+	HitMeBaby.attack = 0x0;
+	HitMeBaby.categoryBitfield = 0x4F;
+	HitMeBaby.attackBitfield = 0xFFBAFFFE;
+	HitMeBaby.miscFlags = 0;
 	HitMeBaby.callback = &balbieCollisionCallback;
 
 

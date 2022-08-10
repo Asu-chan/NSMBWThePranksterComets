@@ -246,11 +246,11 @@ int daFuzzyBear_c::onCreate() {
 		HitMeBaby.xDistToEdge = 35.0;
 		HitMeBaby.yDistToEdge = 35.0; }
 
-	HitMeBaby.category1 = 0x3;
-	HitMeBaby.category2 = 0x0;
-	HitMeBaby.bitfield1 = 0x4F;
-	HitMeBaby.bitfield2 = 0x8028E;
-	HitMeBaby.unkShort1C = 0;
+	HitMeBaby.category = 0x3;
+	HitMeBaby.attack = 0x0;
+	HitMeBaby.categoryBitfield = 0x4F;
+	HitMeBaby.attackBitfield = 0x8028E;
+	HitMeBaby.miscFlags = 0;
 	HitMeBaby.callback = &dEn_c::collisionCallback;
 
 

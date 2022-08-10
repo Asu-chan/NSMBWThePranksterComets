@@ -1,0 +1,37 @@
+---
+
+source_files: [../src/settings.S, ../src/settings.cpp]
+hooks: 
+  # - name: FPointerHook
+  #   type: add_func_pointer
+  #   src_addr_pal: 0xDEADBEEF
+  #   target_func: 'Whatever'
+
+  # - name: PatchHook
+  #   type: patch
+  #   addr_pal: 0xDEADBEEF
+  #   data: 'YYYYYYYY' # Orig: XXXXXXXX
+
+  # - name: BranchHook
+  #   type: branch_insn
+  #   src_addr_pal: 0xDEADBEEF
+  #   branch_type: b
+  #   target_func: 'Whatever'
+
+  - name: QuickRestart
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x8013D8EC # Thanks to the New Luigi Team
+    target_func: 'QuickRestart()'
+
+  - name: NoPowerupFreeze
+    type: branch_insn
+    src_addr_pal: 0x8004E044 # Thanks to CLF78
+    branch_type: b
+    target_func: 'NoPowerupFreeze()'
+
+  - name: HardMode
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x801465DC # Thanks to the Newer Team
+    target_func: 'HardMode'

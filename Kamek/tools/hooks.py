@@ -83,6 +83,29 @@ class BasicPatchHook(Hook):
 
 
 
+class WriteAddrHook(Hook):
+	"""Hook that patches an address to an address"""
+	
+	required_data = ['addr_%BUILD%', 'data_%BUILD%']
+	
+	def __init__(self, builder, module, data):
+		Hook.__init__(self, builder, module, data)
+	
+	def create_patches(self):
+		addr = self.data['addr_%s' % self.builder.current_build_name]
+
+		hex_data = format(self.data['data_%s' % self.builder.current_build_name], 'X')
+		
+		whitespace = ' \n\r\t'
+		for char in whitespace:
+			hex_data = hex_data.replace(char, '')
+		
+		patch = binascii.unhexlify(hex_data)
+		
+		self.builder.add_patch(addr, patch)
+
+
+
 class BranchInsnHook(Hook):
 	"""Hook that replaces the instruction at a specific address with a branch"""
 	
@@ -103,15 +126,27 @@ class BranchInsnHook(Hook):
 		if is_symbol_name:
 			target_func = self.builder.find_func_by_symbol(target_func)
 
-		if is_symbol_name and self.builder.dynamic_link:
-			branch_insn = make_branch_insn(src_addr, -1, self.data['branch_type'])
-			self.builder.add_patch(src_addr, u32.pack(branch_insn))
+		if isinstance(src_addr, list):
+			for index, item in enumerate(src_addr):
+				if is_symbol_name and self.builder.dynamic_link:
+					branch_insn = make_branch_insn(src_addr[index], -1, self.data['branch_type'])
+					self.builder.add_patch(src_addr[index], u32.pack(branch_insn))
 
-			dylink = self.builder.dynamic_link
-			dylink.add_reloc(dylink.R_PPC_REL24, src_addr, target_func)
+					dylink = self.builder.dynamic_link
+					dylink.add_reloc(dylink.R_PPC_REL24, src_addr[index], target_func)
+				else:
+					branch_insn = make_branch_insn(src_addr[index], target_func, self.data['branch_type'])
+					self.builder.add_patch(src_addr[index], u32.pack(branch_insn))
 		else:
-			branch_insn = make_branch_insn(src_addr, target_func, self.data['branch_type'])
-			self.builder.add_patch(src_addr, u32.pack(branch_insn))
+			if is_symbol_name and self.builder.dynamic_link:
+				branch_insn = make_branch_insn(src_addr, -1, self.data['branch_type'])
+				self.builder.add_patch(src_addr, u32.pack(branch_insn))
+
+				dylink = self.builder.dynamic_link
+				dylink.add_reloc(dylink.R_PPC_REL24, src_addr, target_func)
+			else:
+				branch_insn = make_branch_insn(src_addr, target_func, self.data['branch_type'])
+				self.builder.add_patch(src_addr, u32.pack(branch_insn))
 
 
 
@@ -132,14 +167,25 @@ class AddFunctionPointerHook(Hook):
 		src_addr = self.data['src_addr_%s' % self.builder.current_build_name]
 		is_symbol_name = isinstance(target_func, str)
 
-		if is_symbol_name:
-			target_func = self.builder.find_func_by_symbol(target_func)
+		if isinstance(src_addr, list):
+			for index, item in enumerate(src_addr):
+				if is_symbol_name:
+					target_func = self.builder.find_func_by_symbol(target_func)
 
-		if is_symbol_name and self.builder.dynamic_link:
-			dylink = self.builder.dynamic_link
-			dylink.add_reloc(dylink.R_PPC_ADDR32, src_addr, target_func)
+				if is_symbol_name and self.builder.dynamic_link:
+					dylink = self.builder.dynamic_link
+					dylink.add_reloc(dylink.R_PPC_ADDR32, src_addr[index], target_func)
+				else:
+					self.builder.add_patch(src_addr[index], u32.pack(target_func))
 		else:
-			self.builder.add_patch(src_addr, u32.pack(target_func))
+			if is_symbol_name:
+				target_func = self.builder.find_func_by_symbol(target_func)
+
+			if is_symbol_name and self.builder.dynamic_link:
+				dylink = self.builder.dynamic_link
+				dylink.add_reloc(dylink.R_PPC_ADDR32, src_addr, target_func)
+			else:
+				self.builder.add_patch(src_addr, u32.pack(target_func))
 
 
 
@@ -168,6 +214,7 @@ class NopInsnHook(Hook):
 
 HookTypes = {
 	'patch': BasicPatchHook,
+	'write_addr': WriteAddrHook,
 	'branch_insn': BranchInsnHook,
 	'add_func_pointer': AddFunctionPointerHook,
 	'nop_insn': NopInsnHook,

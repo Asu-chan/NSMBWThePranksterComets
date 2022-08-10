@@ -1,0 +1,35 @@
+---
+#Replaces Actor 384 AC_BLOCK_GROUP (Sprite 410)
+
+
+source_files: [../src/silverStar.cpp, ../src/silverStar.S]
+hooks:
+  - name: SilverStarBuild
+    type: add_func_pointer
+    src_addr_pal: 0x80952E10
+    target_func: 'dSilverStar_c::build()'
+
+  - name: SilverStarSpriteFileInfo
+    type: add_func_pointer
+    src_addr_pal: 0x8031b1b4
+    target_func: 'SSarcNameList'
+    # 0x8031AB4C + sprite num * 0x4 == offset
+
+  - name: UpdateSilverStarSpriteInfo
+    type: patch
+    # 0x8030A340 + sprite num * 0x28 == offset
+    addr_pal: 0x8030e350
+    #      -ID- ----  -X Offs- -Y Offs-  -RectX1- -RectY1- -RectX2- -RectY2-  -1C- -1E- -20- -22-  Flag ----
+    data: '0180 0000  00000000 00000000  00000000 00000000 00000000 00000000  0000 0000 0000 0000  0002 0000'
+
+  - name: SetPowerupPauseFlag
+    type: branch_insn
+    src_addr_pal: 0x801410C0
+    branch_type: b
+    target_func: 'SetPowerupPauseFlag'
+
+  - name: UnsetPowerupPauseFlag
+    type: branch_insn
+    src_addr_pal: 0x8004E110
+    branch_type: b
+    target_func: 'UnsetPowerupPauseFlag'

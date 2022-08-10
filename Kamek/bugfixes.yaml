@@ -1,8 +1,16 @@
 ---
 # This has kind of turned into the "random stuff that we don't want to make a yaml for"
 # yaml, hasn't it...
-source_files: [../src/randomcrap.S, ../src/music.cpp, ../src/fix38.S, ../src/nullsub.S, ../src/newer.cpp]#, ../src/anmconstruct.S]
+source_files: [../src/randomcrap.S, ../src/music.S, ../src/music.cpp, ../src/fix38.S, ../src/nullsub.S, ../src/boss.cpp]#, ../src/anmconstruct.S]
 hooks:
+
+
+  - name: Stars
+    type: patch
+    addr_pal: 0x809431c4
+    data: '6F6F7053 74617273'
+
+
   - name: TryAndFixScoreGlitch
     type: branch_insn
     branch_type: bl
@@ -36,20 +44,20 @@ hooks:
     addr_pal: 0x8008E6F8
     data: '38600000'
 
-  - name: TitleScreenFucker
-    type: branch_insn
-    branch_type: bl
-    src_addr_pal: 0x8010191C
-    target_func: 'TitleScreenFucker'
+  # - name: TitleScreenFucker
+  #   type: branch_insn
+  #   branch_type: bl
+  #   src_addr_pal: 0x8010191C
+  #   target_func: 'TitleScreenFucker'
   - name: AnotherTSThing
     type: patch
     addr_pal: 0x8015D850
     data: '38600000'
 
-  - name: TitleReplayLevels
-    type: patch
-    addr_pal: 0x802F4CD0
-    data: '0402 0002 0101 0104 0202 0002 0301 0306 0400 0402 0501 0503 0104 0900 0900'
+  # - name: TitleReplayLevels
+  #   type: patch
+  #   addr_pal: 0x802F4CD0
+  #   data: '0402 0002 0101 0104 0202 0002 0301 0306 0400 0402 0501 0503 0104 0900 0900'
 
   - name: NoTitleScreenMovie
     type: nop_insn
@@ -120,12 +128,6 @@ hooks:
     branch_type: bl
     src_addr_pal: 0x801334E4
     target_func: 'newClimbSoundsAttack'
-
-  - name: MusicHax
-    type: branch_insn
-    src_addr_pal: 0x8008E5E4
-    branch_type: b
-    target_func: 'after_course_getMusicForZone'
 
   # IDs to nuke: 1, 2, 4, 10
   - name: MusicNukeBahpsNormal1
@@ -220,10 +222,10 @@ hooks:
     addr_pal: 0x807E16D0
     data: '88D2038F'
     
-  - name: EN_BIGPILEFix
-    type: patch
-    addr_pal: 0x8001F93C
-    data: '48000014'
+  # - name: EN_BIGPILEFix
+  #   type: patch
+  #   addr_pal: 0x8001F93C
+  #   data: '48000014'
 
   - name: RockyWrenchFix
     type: patch
@@ -378,3 +380,89 @@ hooks:
     branch_type: bl
     src_addr_pal: 0x80816370
     target_func: 'JrFloorFireHax'
+
+  # Worldmap stuff
+
+  - name: DisableQuickSave
+    type: nop_insn
+    area_pal: 0x8077AA7C
+
+  - name: DisableQuickSave
+    type: nop_insn
+    area_pal: 0x8092FD08
+
+  - name: DisableToadLetter
+    type: nop_insn
+    area_pal: [0x80903DB8, 0x80903DCC]
+
+  - name: DisableToadLetter
+    type: patch
+    addr_pal: 0x800FCB04
+    data: '4E800020'
+
+  - name: DisableToadLetter
+    type: nop_insn
+    area_pal: [0x80927064, 0x80927074]
+
+  - name: DisableToadBalloon
+    type: patch
+    addr_pal: 0x808D8720
+    data: '4E800020'
+
+  - name: DisableToadBalloon
+    type: nop_insn
+    area_pal: [0x808E1AB8, 0x808E1AC4]
+
+  - name: DisableToadBalloon
+    type: nop_insn
+    area_pal: [0x808E1AF4, 0x808E1B00]
+
+  - name: DisableToadBalloon
+    type: nop_insn
+    area_pal: [0x808E1B5C, 0x808E1B68]
+
+  - name: DisableToadBalloon
+    type: nop_insn
+    area_pal: [0x808E1C1C, 0x808E1C68]
+
+  - name: DisableToadBalloon
+    type: nop_insn
+    area_pal: [0x8090542C, 0x80905454]
+
+  # Music stuff
+
+  - name: MusicHax
+    type: branch_insn
+    src_addr_pal: 0x8008E5E4
+    branch_type: b
+    target_func: 'after_course_getMusicForZone'
+
+  - name: SFXHax
+    type: branch_insn
+    src_addr_pal: 0x801951D0
+    branch_type: b
+    target_func: 'SFXHax'
+
+  - name: NewSFXHax
+    type: branch_insn
+    src_addr_pal: 0x80283CE0
+    branch_type: b
+    target_func: 'NewSFXHax'
+
+  - name: LoadAllSFXs
+    type: branch_insn
+    src_addr_pal: 0x802D4D50
+    branch_type: bl
+    target_func: 'LoadAllSFXs'
+
+  - name: YoshiSFXFix1
+    type: branch_insn
+    src_addr_pal: 0x8014FBAC
+    branch_type: bl
+    target_func: 'fuckingYoshiStuff()'
+
+  - name: YoshiSFXFix2
+    type: branch_insn
+    src_addr_pal: 0x8014FC6C
+    branch_type: bl
+    target_func: 'fuckingYoshiStuff()'

@@ -1,0 +1,21 @@
+---
+
+source_files: [../src/whiteWind.S]
+hooks:
+  - name: WindColor
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80887F88
+    target_func: 'WindColor'
+
+  - name: LavaParticlesColor
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80888CD4
+    target_func: 'LavaParticlesColor'
+
+  # - name: InvertedCoinRotation
+  #   type: branch_insn
+  #   branch_type: b
+  #   src_addr_pal: 0x8008DEF4
+  #   target_func: 'InvertedCoinRotation'

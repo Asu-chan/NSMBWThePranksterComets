@@ -1,0 +1,4 @@
+---
+
+source_files: [../src/NWC24/Mail_utils.S, ../src/NWC24/NWC24Main.S, ../src/NWC24/VF.S]
+hooks: []

@@ -1,0 +1,10 @@
+---
+
+source_files: [../src/newactors.S, ../src/newactors.cpp]
+hooks:
+
+  - name: ChangeProfileList
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800E1CB0
+    target_func: 'ChangeProfileList'

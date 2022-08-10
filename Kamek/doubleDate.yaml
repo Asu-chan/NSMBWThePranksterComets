@@ -1,0 +1,13 @@
+---
+source_files: 
+  - ../src/doubleDate/core.cpp
+  - ../src/doubleDate/bg.cpp
+  - ../src/doubleDate/boy.cpp
+  - ../src/doubleDate/girl.cpp
+  - ../src/doubleDate/football.cpp
+  - ../src/doubleDate/basketball.cpp
+  - ../src/doubleDate/rugby.cpp
+  - ../src/doubleDate/bench.cpp
+  - ../src/doubleDate/shadow.cpp
+  - ../src/doubleDate/leaves.cpp
+hooks: []

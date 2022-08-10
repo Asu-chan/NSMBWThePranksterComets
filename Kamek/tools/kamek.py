@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 
 # Kamek - build tool for custom C++ code in New Super Mario Bros. Wii
 # All rights reserved (c) Treeki 2010 - 2013
@@ -17,6 +17,8 @@ import subprocess
 import sys
 import tempfile
 import yaml
+
+import elftools.elf.elffile
 
 import hooks
 from linker import DyLinkCreator
@@ -65,10 +67,10 @@ def parse_cmd_options():
 			gcc_type = arg[11:]
 		
 		if arg.startswith('--gcc-path='):
-			gcc_path = arg[11:] + '/'
+			gcc_path = arg[11:] + '\\'
 		
 		if arg.startswith('--llvm-path='):
-			llvm_path = arg[12:] + '/'
+			llvm_path = arg[12:] + '\\'
 	
 	if len(only_build) == 0:
 		only_build = None
@@ -288,7 +290,7 @@ class KamekBuilder(object):
 		print_debug('Compiling modules')
 		
 		# gcc setup
-		cc_command = ['%s%s-gcc' % (gcc_path, gcc_type), '-nodefaultlibs', '-I.', '-fno-builtin', '-Os', '-fno-exceptions', '-fno-rtti', '-mno-sdata', '-c']
+		cc_command = ['%s%s-gcc.exe' % (gcc_path, gcc_type), '-nodefaultlibs', '-I.', '-fno-builtin', '-Os', '-fno-exceptions', '-fno-rtti', '-mno-sdata', '-c']
 		as_command = cc_command
 
 		if 'defines' in self._config:
@@ -300,7 +302,7 @@ class KamekBuilder(object):
 
 		if use_clang:
 			# This is just for cc
-			cc_command = ['%sclang' % llvm_path, '-cc1', '-fno-rtti', '-fno-threadsafe-statics', '-fshort-wchar', '-nobuiltininc', '-nostdsysteminc', '-nostdinc++', '-Os', '-Wall', '-std=c++11', '-I.', '-emit-obj']
+			cc_command = ['%sclang.exe' % llvm_path, '-cc1', '-fno-rtti', '-fno-threadsafe-statics', '-fshort-wchar', '-nobuiltininc', '-nostdsysteminc', '-nostdinc++', '-Os', '-Wall', '-std=c++11', '-I.', '-emit-obj']
 			if 'defines' in self._config:
 				for d in self._config['defines']:
 					cc_command.append('-D%s' % d)
@@ -313,9 +315,9 @@ class KamekBuilder(object):
 		for m in self.project.modules:
 			for normal_sourcefile in m.data['source_files']:
 				print_debug('Compiling %s : %s' % (m.moduleName, normal_sourcefile))
-				
 				objfile = os.path.join(self._configTempDir, '%d.o' % generate_unique_id())
 				sourcefile = os.path.join(m.moduleDir, normal_sourcefile)
+				print_debug('sourcefile: %s' % (sourcefile))
 				
 				if sourcefile.endswith('.o'):
 					new_command = ['cp', sourcefile, objfile]
@@ -351,15 +353,15 @@ class KamekBuilder(object):
 		print_debug('---')
 		print_debug('Linking %s (%s)...' % (short_name, script_file))
 
-		nice_name = '%s_%s' % (self._config['short_name'], short_name)
+		nice_name = '%s_%s' % (self._config['short_name2'], short_name)
 
 		print_debug('---')
 
-		self._currentMapFile = '%s/%s_linkmap.map' % (self._outDir, nice_name)
+		self._currentMapFile = '%s\\%s_linkmap.map' % (self._outDir, nice_name)
 		outname = 'object.plf' if self.dynamic_link_base else 'object.bin'
-		self._currentOutFile = '%s/%s_%s' % (self._outDir, nice_name, outname)
+		self._currentOutFile = '%s\\%s_%s' % (self._outDir, nice_name, outname)
 		
-		ld_command = ['%s%s-ld' % (gcc_path, gcc_type), '-L.']
+		ld_command = ['%s%s-ld.exe' % (gcc_path, gcc_type), '-L.']
 		ld_command.append('-o')
 		ld_command.append(self._currentOutFile)
 		if self.dynamic_link_base:
@@ -439,14 +441,14 @@ class KamekBuilder(object):
 		
 		# next up, run it through c++filt
 		print_debug('Running c++filt')
-		p = subprocess.Popen(gcc_type + '-c++filt', stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+		p = subprocess.Popen(gcc_type + '-c++filt.exe', stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 		
 		symbolNameList = [sym[1] for sym in self._symbols]
 		filtResult = p.communicate('\n'.join(symbolNameList))
 		filteredSymbols = filtResult[0].split('\n')
 		
 		for sym, filt in zip(self._symbols, filteredSymbols):
-			sym.append(filt)
+			sym.append(filt.strip())
 		
 		print_debug('Done. All symbols complete.')
 		print_debug('Generated code is at 0x%08X .. 0x%08X' % (self._codeStart, self._codeEnd - 4))
@@ -455,8 +457,9 @@ class KamekBuilder(object):
 	def find_func_by_symbol(self, find_symbol):
 		for sym in self._symbols:
 			#if show_cmd:
-			#	out = "0x%08x - %s - %s" % (sym[0], sym[1], sym[2])
-			#	print_debug(out)
+			#out = "0x%08x - %s - %s" % (sym[0], sym[1], sym[2])
+			#print_debug(out)
+			#print_debug(find_symbol)
 			if sym[2] == find_symbol:
 				return sym[0]
 		
@@ -474,7 +477,7 @@ class KamekBuilder(object):
 		print_debug('---')
 		print_debug('Creating patch')
 		
-		nice_name = '%s_%s' % (self._config['short_name'], short_name)
+		nice_name = '%s_%s' % (self._config['short_name2'], short_name)
 
 		# convert the .rel patches to KamekPatcher format
 		if len(self._rel_patches) > 0:
@@ -484,11 +487,11 @@ class KamekBuilder(object):
 		
 		if self.dynamic_link:
 			# put together the dynamic link files
-			dlcode = open('%s/%s_dlcode.bin' % (self._outDir, nice_name), 'wb')
+			dlcode = open('%s\\%s_dlcode.bin' % (self._outDir, nice_name), 'wb')
 			dlcode.write(self.dynamic_link.code)
 			dlcode.close()
 
-			dlrelocs = open('%s/%s_dlrelocs.bin' % (self._outDir, nice_name), 'wb')
+			dlrelocs = open('%s\\%s_dlrelocs.bin' % (self._outDir, nice_name), 'wb')
 			dlrelocs.write(self.dynamic_link.build_reloc_data())
 			dlrelocs.close()
 
@@ -501,21 +504,21 @@ class KamekBuilder(object):
 			self._patches.append(patch)
 
 		# generate a Riivolution patch
-		riiv = open('%s/%s_riiv.xml' % (self._outDir, nice_name), 'w')
+		riiv = open('%s\\%s_riiv.xml' % (self._outDir, nice_name), 'w')
 		for patch in self._patches:
 			riiv.write(generate_riiv_mempatch(*patch) + '\n')
 		
 		riiv.close()
 		
 		# generate an Ocarina patch
-		ocarina = open('%s/%s_ocarina.txt' % (self._outDir, nice_name), 'w')
+		ocarina = open('%s\\%s_ocarina.txt' % (self._outDir, nice_name), 'w')
 		for patch in self._patches:
 			ocarina.write(generate_ocarina_patch(*patch) + '\n')
 		
 		ocarina.close()
 		
 		# generate a KamekPatcher patch
-		kpatch = open('%s/%s_loader.bin' % (self._outDir, nice_name), 'wb')
+		kpatch = open('%s\\%s_loader.bin' % (self._outDir, nice_name), 'wb')
 		kpatch.write(generate_kamek_patches(self._patches))
 		kpatch.close()
 		

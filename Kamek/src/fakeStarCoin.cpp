@@ -16,13 +16,6 @@ class daFakeStarCoin : public dEn_c {
 	mHeapAllocator_c allocator;
 	m3d::mdl_c bodyModel;
 
-	u64 eventFlag;
-	s32 timer;
-	u32 delay;
-
-	u32 effect;
-	u8 type;
-
 	static daFakeStarCoin *build();
 
 	void updateModelMatrices();
@@ -138,11 +131,11 @@ int daFakeStarCoin::onCreate() {
 	HitMeBaby.yDistToCenter = -3.0;
 	HitMeBaby.xDistToEdge = 12.0;
 	HitMeBaby.yDistToEdge = 15.0;
-	HitMeBaby.category1 = 0x5;
-	HitMeBaby.category2 = 0x0;
-	HitMeBaby.bitfield1 = 0x4F;
-	HitMeBaby.bitfield2 = 0xFFFFFFFF;
-	HitMeBaby.unkShort1C = 0;
+	HitMeBaby.category = 0x5;
+	HitMeBaby.attack = 0x0;
+	HitMeBaby.categoryBitfield = 0x4F;
+	HitMeBaby.attackBitfield = 0xFFFFFFFF;
+	HitMeBaby.miscFlags = 0;
 	HitMeBaby.callback = &dEn_c::collisionCallback;
 
 	this->aPhysics.initWithStruct(this, &HitMeBaby);

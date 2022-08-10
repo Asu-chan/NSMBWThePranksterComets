@@ -1,0 +1,5 @@
+---
+# New actor BAD_APPLE
+
+source_files: [../src/badApple.cpp]
+hooks: []

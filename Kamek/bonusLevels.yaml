@@ -1,0 +1,67 @@
+---
+#Replaces Actor 341 EN_WALLINSECT (Sprite 282)
+
+source_files: [../src/bonusLevels.S, ../src/bonusLevels.cpp, ../src/scene.S] # Based on cutScene.yaml/cpp/h from NewerSMBW
+hooks: 
+  - name: BuildBonusLevels
+    type: add_func_pointer
+    src_addr_pal: 0x80B0DFA0
+    target_func: 'dScBonusLevels_c::build()'
+
+  - name: BonusLevelsMusic
+    type: patch
+    addr_pal: 0x80069644
+    data: '2C030155' # Orig: 2C03000B
+
+  - name: BackToBonusLevels
+    type: patch
+    addr_pal: 0x800D1248
+    data: '38600155' # Orig: 3860000B
+
+  - name: BackToBonusLevels
+    type: patch
+    addr_pal: 0x807AA844
+    data: '38600155' # Orig: 3860000B
+
+  - name: BackToBonusLevels
+    type: patch
+    addr_pal: 0x807AAAD8
+    data: '38600155' # Orig: 3860000B
+
+  - name: BackToBonusLevels
+    type: patch
+    addr_pal: 0x807AABC4
+    data: '38600155' # Orig: 3860000B
+
+  - name: BackToBonusLevels
+    type: patch
+    addr_pal: 0x809217C0
+    data: '38600155' # Orig: 3860000B
+
+  - name: CheckForBonusLevels
+    type: patch
+    addr_pal: 0x807ACCD8
+    data: '28000155' # Orig: 2800000B
+
+  - name: BackToBonusLevels
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80102488
+    target_func: 'BackToBonusLevels'
+
+  - name: MakeThisStupidMusicWork
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8006A2F0
+    target_func: 'MakeThisStupidMusicWork'
+
+  - name: FSELNewBMGPanes
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80782F9C
+    target_func: 'FSELNewBMGPanes'
+
+  - name: DontDeleteCheckpoints
+    type: patch
+    addr_pal: 0x807E215C
+    data: '48000014' # Orig: 41820014

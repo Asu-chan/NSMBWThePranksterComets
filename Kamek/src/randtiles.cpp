@@ -1,4 +1,5 @@
 #include <game.h>
+#include "levelinfo.h"
 
 class RandomTileData {
 public:
@@ -91,22 +92,54 @@ RandomTileData::Section *RandomTileData::getSection(const char *name) {
 
 RandomTileData *RandomTileData::instance = 0;
 
+dDvdLoader_c s_levelInfoLoader;
+dDvdLoader_c s_replayDataLoader;
+bool s_levelInfoLoaded = false;
+bool s_replayDataLoaded = false;
 dDvdLoader_c RandTileLoader;
 
+void* replayDataPtr = 0;
+
 // This is a bit hacky but I'm lazy
-bool LoadLevelInfo();
+bool LoadLevelInfo() {
+	if (s_levelInfoLoaded)
+		return true;
+
+	void *data = s_levelInfoLoader.load("/NewerRes/LevelInfo.bin");
+	if (data) {
+		dLevelInfo_c::s_info.load(data);
+		s_levelInfoLoaded = true;
+		return true;
+	}
+
+	return false;
+}
+
+bool LoadReplayData() {
+	if (s_replayDataLoaded)
+		return true;
+
+	replayDataPtr = s_replayDataLoader.load("/Replay/ReplayData.bin");
+	if (replayDataPtr) {
+		s_replayDataLoaded = true;
+		return true;
+	}
+
+	return false;
+}
 
 extern "C" bool RandTileLoadHook() {
 	// OSReport("Trying to load...");
 	void *buf = RandTileLoader.load("/NewerRes/RandTiles.bin");
 	bool LIresult = LoadLevelInfo();
+	bool RDresult = LoadReplayData();
 	if (buf == 0) {
 		// OSReport("Failed.\n");
 		return false;
 	} else {
 		// OSReport("Successfully loaded RandTiles.bin [%p].\n", buf);
 		RandomTileData::instance = (RandomTileData*)buf;
-		return LIresult;
+		return LIresult && RDresult;
 	}
 }
 

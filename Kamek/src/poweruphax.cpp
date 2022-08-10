@@ -113,8 +113,6 @@ void dHammerSuitRenderer_c::draw() {
 void CrapUpPositions(Vec *out, const Vec *in);
 
 void dStockItem_c::setScalesOfSomeThings() {
-	nw4r::lyt::Pane *ppos = N_forUse_PPos[playerCount];
-
 	int howManyPlayers = 0;
 	for (int i = 0; i < 4; i++) {
 		if (isPlayerActive[i]) {

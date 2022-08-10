@@ -97,8 +97,6 @@ SECTIONS {
 
 	OriginalPowBlockActivated = 0x800A0C70;
 
-	isReplayEnabled = 0x80002EEE;
-
 	UpdateSelectCursor = 0x800B44D0;
 	HideSelectCursor = 0x8010C890;
 	SelectCursorPointer = 0x8042A5A8;
@@ -141,6 +139,7 @@ SECTIONS {
 	SetPitch__Q44nw4r3snd6detail10BasicSoundFf = 0x802675F0;
 	SetVolume__Q44nw4r3snd6detail10BasicSoundFfi = 0x80267560;
 	StrmSound_SetTrackVolume = 0x8027F9D0;
+	StrmPlayer_GetPlaySamplePosition = 0x8027D580;
 
 	DontShowPreGame = 0x8042A490;
 	RESTART_CRSIN_LevelStartStruct = 0x80374060;
@@ -165,6 +164,7 @@ SECTIONS {
 	__construct_array = 0x802DCC90;
 
 	GetBMG__Fv = 0x800CDD50;
+	GetBMGMessage__Fii = 0x800CDD30;
 	findStringForMessageID__Q23EGG6MsgResCFii = 0x802D7B50;
 	WriteBMGToTextBox__FPQ34nw4r3lyt7TextBoxPQ27dScript5Res_ciiie = 0x800C9B50;
 	_Z26WriteParsedStringToTextBoxPN4nw4r3lyt7TextBoxEPKwiPA1_13__va_list_tagPN7dScript5Res_cE = 0x800C9F70; /*addAnyway*//*mi*/
@@ -179,6 +179,7 @@ SECTIONS {
 
 	InsertIntIntoTextBox1 = 0x800B3BE0;
 	WriteNumberToTextBox__FPiPCiPQ34nw4r3lyt7TextBoxb = 0x800B3B60;
+	WriteNumberToTextBox__FPUiPUiPQ34nw4r3lyt7TextBoxb = 0x800B3B60;
 	WriteNumberToTextBox__FPiPQ34nw4r3lyt7TextBoxb = 0x800B3BE0;
 
 	__ct__20daJrClownForPlayer_cFv = 0x80810480;
@@ -371,10 +372,12 @@ SECTIONS {
 	SoundRelatedClass = 0x8042A768;
 	MapSoundPlayer = 0x801954C0;
 	PlaySoundWithFunctionB4 = 0x801951D0;
+	PlaySoundWithFunctionB4_2 = 0x801951E4;
 
 	ConvertStagePositionToScreenPosition__FP4VEC2P4VEC3 = 0x8006A4B0;
 
 	PlaySoundAtPosition__17SoundPlayingClassFiP4VEC2Ui = 0x80198D70;
+	sub_801994D0__17SoundPlayingClassFiUiP4VEC2Ui = 0x801994D0;
 	instance2__17SoundPlayingClass = 0x8042A040;
 
 	ExitStage__Fiiii = 0x80102370;
@@ -863,6 +866,10 @@ SECTIONS {
 	globalListHead__13ActivePhysics = 0x8042A140;
 
 
+	getCenterPosY__13ActivePhysicsFv = 0x8008C510;
+	getCenterPosX__13ActivePhysicsFv = 0x8008C570;
+
+
 	__ct__7PhysicsFv = 0x8007F7A0;
 	__dt__7PhysicsFv = 0x8007F810;
 	baseSetup__7PhysicsFP8dActor_cPvPvPvUcUc = 0x8007F9B0;
@@ -919,6 +926,7 @@ SECTIONS {
 	ScreenSizesAndMultipliers = 0x80350820;
 
 	setOrtho__Q23EGG7FrustumFffffff = 0x802C6DD0;
+	setFovy__Q23EGG7FrustumFf = 0x802C6F60;
 
 	__ct__Q23EGG6ScreenFv = 0x802D0FB0;
 	__dt__Q23EGG6ScreenFv = 0x802D0D90;
@@ -960,6 +968,7 @@ SECTIONS {
 	DrawAllLayoutsAfterX__Fi = 0x801634D0;
 	DrawAllLayoutsAfterXandBeforeY__Fii = 0x80163560;
 
+	getRootPane__Q23m2d17EmbedLayoutBase_cFv = 0x80007220;
 	findPaneByName__Q23m2d17EmbedLayoutBase_cCFPCc = 0x80007300;
 	findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc = 0x80007320;
 	findPictureByName__Q23m2d17EmbedLayoutBase_cCFPCc = 0x800073D0;
@@ -979,7 +988,9 @@ SECTIONS {
 	enableNonLoopAnim__Q23m2d13EmbedLayout_cFib = 0x800C93E0;
 	enableLoopAnim__Q23m2d13EmbedLayout_cFi = 0x800C9470;
 	resetAnim__Q23m2d13EmbedLayout_cFib = 0x800C94C0;
+	resetAnim__Q23m2d13EmbedLayout_cFii = 0x800C94C0;
 	disableAllAnimations__Q23m2d13EmbedLayout_cFv = 0x800C95F0;
+	disableAnim__Q23m2d13EmbedLayout_cFi = 0x800C9580;
 	isAnimOn__Q23m2d13EmbedLayout_cFi = 0x800C9700;
 	isAnyAnimOn__Q23m2d13EmbedLayout_cFv = 0x800C9730;
 	free__Q23m2d13EmbedLayout_cFv = 0x800C9A20;
@@ -988,6 +999,10 @@ SECTIONS {
 	attachArc__Q23m2d8ResAcc_cFPvPCc = 0x801637A0;
 
 	setSpeed__Q23m2d11FrameCtrl_cFf = 0x80163920;
+	setCurrentFrame__Q23m2d11FrameCtrl_cFf = 0x80163910;
+	processAnim__Q23m2d11FrameCtrl_cFv = 0x80163800;
+
+	_ZN3m2d5Anm_c24updateAssociatedElementsEv = 0x80164610;/*addAnyway*/
 
 	scheduleForDrawing__Q23m2d6Base_cFv = 0x80163990;
 
@@ -1032,7 +1047,18 @@ SECTIONS {
 	free__Q23m3d9scnLeaf_cFv = 0x8016A1D0;
 	scheduleForDrawing__Q23m3d9scnLeaf_cFv = 0x8016A220;
 	getViewMatrix__Q23m3d9scnLeaf_cFPA3_A4_f = 0x8016A2D0;
+	setDrawMatrix__Q23m3d9scnLeaf_cFPA3_A4_f = 0x8016A2B0;
+	calcWorld__Q23m3d9scnLeaf_cFb = 0x8016A2E0;
+	setScale__Q23m3d9scnLeaf_cFP4VEC3 = 0x8016A290;
 	/* End preliminary section */
+
+	__vt__Q23m3d6bmdl_c = 0x8032993C;
+	__dt__Q23m3d6bmdl_cFv = 0x80168240;
+
+	__vt__Q23m3d6smdl_c = 0x803299D4;
+	__ct__Q23m3d6smdl_cFv = 0x8016A430;
+	__dt__Q23m3d6smdl_cFv = 0x8016A480;
+	_ZN3m3d6smdl_c5setupEN4nw4r3g3d6ResMdlEPvjjj = 0x8016A4E0; /*addAnyway*/
 
 	__vt__Q23m3d5mdl_c = 0x80329984;
 	__ct__Q23m3d5mdl_cFv = 0x80169E10;
@@ -1062,6 +1088,9 @@ SECTIONS {
 	__dt__16mHeapAllocator_cFv = 0x80069060;
 	link__16mHeapAllocator_cFiPvPCci = 0x800690C0;
 	unlink__16mHeapAllocator_cFv = 0x800690E0;
+	linkAndBecomeCurrentHeap__16mHeapAllocator_cFiPvPCcii = 0x8016AAA0;
+	_ZN16mHeapAllocator_c24linkAndBecomeCurrentHeapEiPvPKcij = 0x8016AAA0; /*addAnyway*/
+	done__16mHeapAllocator_cFv = 0x8016AAF0;
 
 	__ct__10mTexture_cFv = 0x802C0D20;
 	__ct__10mTexture_cFUsUsUi = 0x802C0D70;
@@ -1116,6 +1145,7 @@ SECTIONS {
 	CheckIfMenuShouldBeCancelledForSpecifiedWiimote__Fi = 0x800B53F0;
 	StartTitleScreenStage__Fbi = 0x801018E0;
 	CreateChildObject__FsPviii = 0x8006CBA0;
+	_Z12CreateObjectsic = 0x80162C60; /*addAnyway*/
 
 	ObjCreate1 = 0x80162C40;
 	ObjCreate2 = 0x80162C60;
@@ -1188,9 +1218,11 @@ SECTIONS {
 	strcmp = 0x802E1DA4;
 	sprintf = 0x802E1ACC;
 	strrchr = 0x802E1F30;
+	mbstowcs = 0x802DF0EC;
 
 	wcslen = 0x802E470C;
 	wcscpy = 0x802E4728;
+	wcsncpy = 0x802E4744;
 
 	IOS_Open = 0x80224DB0;
 	IOS_Close = 0x80224FA0;
@@ -1280,12 +1312,24 @@ SECTIONS {
 	GetBlock__8SaveFileFi = 0x800E0470;
 	GetQSBlock__8SaveFileFi = 0x800E04A0;
 
+	_ZN8SaveFile21SaveCurrentData_MaybeEv = 0x800E1780;
+	_ZN8SaveFile24create_hash_for_savefileEv = 0x800E05A0;
+	_ZN8SaveFile28WriteSavefileToRegularBufferEv = 0x800E0630;
+	SaveCurrentData_Maybe__8SaveFileFv = 0x800E1780;
+	create_hash_for_savefile__8SaveFileFv = 0x800E1780;
+	WriteSavefileToRegularBuffer__8SaveFileFv = 0x800E1780;
+
 	_ZN9SaveBlock17GetLevelConditionEii = 0x800CE490;
 
 	GetLevelCondition__9SaveBlockFii = 0x800CE490;
 	CheckLevelCondition__9SaveBlockFiii = 0x800CE4B0;
 	SetLevelCondition__9SaveBlockFiii = 0x800CE4E0;
 	UnsetLevelCondition__9SaveBlockFiii = 0x800CE500;
+
+	_ZN9SaveBlock56OrR5AgaginstByteFromWorldAvailableArrayAt0x32ofWorldDataEjj = 0x800CE450;
+	OrR5AgaginstByteFromWorldAvailableArrayAt0x32ofWorldData__9SaveBlockFUiUi = 0x800CE450;
+	_ZN9SaveBlock53ClearR5FromByteInWorldAvailableArrayAt0x32ofWorldDataEjj = 0x800CE470;
+	ClearR5FromByteInWorldAvailableArrayAt0x32ofWorldData__9SaveBlockFUiUi = 0x800CE470;
 
 	_Z20CheckIfWeCantDoStuffv = 0x8076DB90;
 	_Z15QueryGlobal5758j = 0x800B3B50;
@@ -1320,10 +1364,12 @@ SECTIONS {
 	strcpy = 0x802E1C28;
 	strncmp = 0x802E1EC0;
 
+	acos = 0x802E88F8;
 	atan = 0x802E7F04;
 	atan2 = 0x802E8900;
 	cos = 0x802E82AC;
 	sin = 0x802E87B4;
+	tan = 0x802E8880;
 	ceil = 0x802E8134;
 	floor = 0x802E8374;
 
@@ -1367,12 +1413,14 @@ SECTIONS {
 	_Z7sprintfPcPKcz = 0x802E1ACC;
 	_Z8snprintfPciPKcz = 0x802E19D8;
 	_Z6strcatPKcS0_ = 0x802E1D2C;
+	_Z8mbstowcsPwPKcm = 0x802DF0EC;
 
 	_Z6memsetPvij = 0x800046B4;
 	sprintf__FPcPCce = 0x802E1ACC;
 	snprintf__FPcUlPCce = 0x802E19D8;
 	memcmp__FPCvPCvUi = 0x802DF388;
 	_Z6strcatPKcS0_ = 0x802E1D2C;
+	mbstowcs__FPwPCcUl = 0x802DF0EC;
 
 	_Znaj = 0x802B9350;
 
@@ -1442,6 +1490,7 @@ SECTIONS {
 	GXSetTexCoordGen2 = 0x801C4910;
 	GXSetNumTexGens = 0x801C4B60;
 	GXBegin = 0x801C56B0;
+	GXEnd = 0x802A36F0;
 	GXSetLineWidth = 0x801C58E0;
 	GXSetCullMode = 0x801C59A0;
 	GXInitLightAttn = 0x801C6570;
@@ -1557,6 +1606,14 @@ SECTIONS {
 	bind__Q23m3d8anmChr_cFPQ23m3d5mdl_cQ34nw4r3g3d9ResAnmChrb = 0x80165330;
 	internalBind__Q23m3d8anmChr_cFv = 0x801653c0;
 
+
+	__vt__Q23m3d12anmChrPart_c = 0x803036F0;
+	__dt__Q23m3d12anmChrPart_cFv = 0x80028370;
+	vf0C__Q23m3d12anmChrPart_cFv = 0x8002A200;
+	_ZN3m3d12anmChrPart_c5setupEN4nw4r3g3d6ResMdlEjP12mAllocator_cPj = 0x80165660; /*addAnyway*/
+	_ZN3m3d12anmChrPart_c9attachChrEjNS_8anmChr_cEf = 0x80165800; /*addAnyway*/
+	_ZN3m3d12anmChrPart_c9attachChrEjPjf = 0x80165800; /*addAnyway*/
+
 	/* m3d::anmVis_c */
 	__vt__Q23m3d8anmVis_c = 0x80ad8158;
 	__dt__Q23m3d8anmVis_cFv = 0x809b2090;
@@ -1572,6 +1629,8 @@ SECTIONS {
 
 	setup__Q23m3d8anmClr_cFQ34nw4r3g3d6ResMdlQ34nw4r3g3d9ResAnmClrP12mAllocator_cPUii = 0x80165D70;
 	bind__Q23m3d8anmClr_cFPQ23m3d5mdl_cQ34nw4r3g3d9ResAnmClrii = 0x80166110;
+
+	process__Q23m3d8anmClr_cFv = 0x80166310;
 
 	getFrameForEntry__Q23m3d8anmClr_cFv = 0x80166420;
 	setFrameForEntry__Q23m3d8anmClr_cFfi = 0x80166430;
@@ -1649,6 +1708,7 @@ SECTIONS {
 	_Z16GetPointerToTileP9BG_GM_haxtttPsb = 0x80077520;
 	GetPointerToTile__FP9BG_GM_haxUsUsUsPsb = 0x80077520;
 
+	GameHeap0 = 0x80377F40;
 	GameHeap1 = 0x80377F4C;
 	GameHeap2 = 0x80377F50;
 	WiimotePtr1 = 0x80377F88;
@@ -1833,6 +1893,514 @@ SECTIONS {
 	spawnCoinJump__7StageE4FRC4VEC3iii = 0x80066630;
 	sub_800757B0__14collisionMgr_cFP4VEC3PfUcic = 0x800757B0;
 
+	/*Prankster Comet Stuff*/
+	doneWithPreGameBRLANNames = 0x80B6C0B8;
+	doneWithPreGameGroups = 0x80B6C0D0;
+	doneWithPreGameReplaceStateStruct = 0x80B6C534;
+	doneWithPreGameComeToNewState = 0x80B6CDDC;
+	PreGameState0 = 0x80B6C830;
+	PreGameState1 = 0x80B6CD40;
+	PreGameState2 = 0x80B6CD80;
+	PreGameState3 = 0x80B6CE00;
+	PreGameState4 = 0x80B6CF90;
+	PreGameState5 = 0x80B6D020;
+	PreGameState6 = 0x80B6D070;
+	PreGameState7 = 0x80B6D0C0;
+
+	instance__14dGameDisplay_c = 0x8042a608;
+	onCreate_orig__14dGameDisplay_cFv = 0x80157B70;
+	onExecute_orig__14dGameDisplay_cFv = 0x801580D0;
+	onDelete_orig__14dGameDisplay_cFv = 0x80158230;
+	doneWithInitiateGDComets = 0x80157C40;
+	doneWithCometFlagsReset = 0x800E1F54;
+	doneWithGameDisplayBRLAN = 0x80158898;
+	doneWithGameDisplayGroups = 0x801588AC;
+
+	StateID_ProcGoalEnd__14dGameDisplay_c = 0x80377438;
+
+	instance__10TimeKeeper = 0x8042A350;
+	setTime__10TimeKeeperFUi = 0x800E3A00;
+
+	playerAnimStates = 0x802F1650;
+	ReleaseChr = 0x80247840;
+	doneWithtriggerCosmicKillFlag = 0x80A0A9D4;
+
+	onCreate_orig__14dWorldSelect_cFv = 0x80928AD0;
+	onExecute_orig__14dWorldSelect_cFv = 0x80928CB0;
+	onDelete_orig__14dWorldSelect_cFv = 0x80928D80;
+	StateID_OnStageWait__14dWorldSelect_c = 0x809A1FF8;
+
+	onCreate_orig__19dWorldSelectGuide_cFv = 0x8092B4D0;
+	onExecute_orig__19dWorldSelectGuide_cFv = 0x8092B6F0;
+
+	doneWithLoadCometArc = 0x80926C34;
+	doneWithFreeCometArc = 0x80927924;
+
+	ContinueFromLoadingCRSIN = 0x8091EC78;
+
+	doneWithPatchAnimNameArray = 0x808CE2BC;
+	doneWithPatchAnimByte34Array = 0x808CE30C;
+	bindAnimCobCourse = 0x808CE8E0;
+
+	CurrentWorldNumForWorldMap = 0x8042A52D;
+
+	onExecute_orig__13daObjCenter_cFv = 0x808744D0;
+	doneWithTowerBlockSpeed = 0x800D74EC;
+	doneWithTowerBlockDelay = 0x800D74B4;
+	doneWithCenterSpeed1 = 0x80874568;
+	doneWithCenterSpeed2 = 0x808745B4;
+	doneWithCenterSpeed3 = 0x808745EC;
+	doneWithDryBonesUpdateRate = 0x80A42A64;
+	doneWithdEnCDoubleSpeedX1 = 0x80095620;
+	doneWithdEnCDoubleSpeedX2 = 0x8009565C;
+	doneWithdEnCDoubleSpeedY1 = 0x800956A4;
+	doneWithdEnCDoubleSpeedY2 = 0x80095710;
+
+	onCreate_orig__10dScStage_cFv = 0x80924DC0;
+
+	doneWithFixWMNum = 0x809275F0;
+	doneWithFixWMNum2 = 0x808DEAC0;
+	doneWithFixWMNum3 = 0x800EE750;
+	doneWithLoadCSWMA = 0x8010278C;
+	downWithWMMusicID = 0x800696CC;
+	doneWithNewLoadingJTable = 0x80926A34;
+	doneWithNewLoadingJTable2 = 0x80926964;
+
+	loc_80926A40 = 0x80926A40;
+	loc_80926A50 = 0x80926A50;
+	loc_80926A60 = 0x80926A60;
+	loc_80926A70 = 0x80926A70;
+	loc_80926A80 = 0x80926A80;
+	loc_80926A94 = 0x80926A94;
+	loc_80926AA4 = 0x80926AA4;
+	loc_80926AB4 = 0x80926AB4;
+	loc_80926AC4 = 0x80926AC4;
+
+	loc_80926970 = 0x80926970;
+	loc_80926980 = 0x80926980;
+	loc_80926990 = 0x80926990;
+	loc_809269A0 = 0x809269A0;
+	loc_809269B0 = 0x809269B0;
+	loc_809269C0 = 0x809269C0;
+	loc_809269D0 = 0x809269D0;
+	loc_809269E0 = 0x809269E0;
+	loc_809269F0 = 0x809269F0;
+
+	GoToSpecificWorld = 0x801027A0;
+	CurrentWorldNumForWorldMap = 0x8042A52D;
+	currentWorldMapSubmapMaybe = 0x8042A52E;
+	W9StrmMusic = 0x802F68B0;
+	W9SeqMusic = 0x802F6990;
+
+	onCreate_orig__13dScWorldMap_cFv = 0x809275C0;
+	onExecute_orig__13dScWorldMap_cFv = 0x80927810;
+
+	doneWithGetSpeedyTimer = 0x800E39A0;
+	doneWithForbidTimeUpIfSpeedy = 0x800E3B78;
+	doneWithForbidQuickMusicIfSpeedy = 0x800E3B08;
+	doneWithForbidQuickMusicIfSpeedy2 = 0x800E3B18;
+	doneWithSetTimeKeeperTime = 0x800E3ABC;
+	doneWithLayoutResetAnimCorrectly = 0x800C951C;
+
+	onExecute_orig__14daEnStarCoin_cFv = 0x80AA9C90;
+	doneWithStarCoinGiveTime = 0x80AAA4DC;
+	doneWithNoBonusTime = 0x80925C78;
+	doneWithNoBonusTime2 = 0x80925CCC;
+
+	onCreate_orig__7dAcPy_cFv = 0x80144EA0;
+	doneWithChangeRemoconID = 0x8005316C;
+	doneWithChangeRemoconID2 = 0x80145160;
+
+	DisplayScoreAddPopup = 0x800B3540;
+	AddScore = 0x80060690;
+	getSumOfPosAndD0 = 0x8006CED0;
+	TextBoxSetBmgString = 0x800C9B50;
+	sub_800E2190 = 0x800E2190;
+
+	doneWithAlternateCRSINLYTSetup = 0x8091ED40;
+	doneWithAlternateCRSINLYTSetup2 = 0x8091ED44;
+	doneWithAlternateCRSINLYTExecute = 0x8091F24C;
+	doneWithAlternateCRSINLYTExecute2 = 0x8091F250;
+	doneWithAlternateCRSINLYTDraw = 0x8091F540;
+	doneWithAlternateCRSINLYTDraw2 = 0x8091F544;
+	doneWithAlternateCRSINLYTDelete = 0x8091F4A8;
+	doneWithAlternateCRSINLYTDelete2 = 0x8091F4AC;
+	doneWithSetAlternateCRSINLYTByte = 0x801019A8;
+	doneWithPatchNoPreGameShit = 0x801019A0;
+	doneWithNoCRSINWipe = 0x8091F118;
+	doneWithNoCRSINWipe2 = 0x8091F11C;
+	doneWithBlockGameLanguage = 0x800B4658;/*pal*/
+	doneWithBlockGameLanguage = 0x800B4658;/*pal2*/
+	doneWithBlockGameLanguage = 0x800B463C;/*ntsc*/
+	doneWithBlockGameLanguage = 0x800B463C;/*ntsc2*/
+
+	GetGameLanguage = 0x800B4630;/*pal*/
+	GetGameLanguage = 0x800B4630;/*pal2*/
+	GetGameLanguage = 0x800B4610;/*ntsc*/
+	GetGameLanguage = 0x800B4610;/*ntsc2*/
+	GetGameLanguage = 0x800B4610;/*jpn*/
+	GetGameLanguage = 0x800B4610;/*jpn2*/
+	GetGameLanguage = 0x800B4790;/*kor*/
+	GetGameLanguage = 0x800B4790;/*twn*/
+
+	onCreate_orig__14dCourseClear_cFv = 0x80779A00;
+	onExecute_orig__14dCourseClear_cFv = 0x80779C70;
+	onExecute_orig__12daEnGlpole_cFv = 0x80A09C70;
+	flagtest = 0x80A0B660;
+
+	ScreenUpThing = 0x8008226C;
+
+	doneWithTimeUpTextChange = 0x8077C210;
+	doneWithTimeUpTextChange2 = 0x8077C224;
+
+	NextStageActorDisableFlags = 0x80429FD8;
+	StageActorDisableFlags = 0x80429FDA;
+	doneWithSetPowerupPauseFlag = 0x801410C4;
+	doneWithUnsetPowerupPauseFlag = 0x8004E114;
+
+	coinConstant = 0x8042A162;
+
+	__va_arg = 0x802DC9A8;
+	__OSGetSystemTime = 0x801B60F0;
+	DCStoreRange = 0x801AC5E0;
+	NANDGetLength = 0x801D9180;
+	OSUnlockMutex = 0x801B3080;
+	SCCheckStatus = 0x801DBA20;
+	NANDWrite = 0x801D8C20;
+	OSDisableInterrupts = 0x801B1280;
+	__RAS_OSDisableInterrupts_begin = 0x801B1280;
+	OSRestoreInterrupts = 0x801B12C0;
+	OSCreateAlarm = 0x801AB420;
+	OSSetAlarm = 0x801AB680;
+	OSSuspendThread = 0x8000F390;
+	OSCancelAlarm = 0x801AB780;
+	OSGetAlarmUserData = 0x801ABBC0;
+	OSGetAppType = 0x801AB3A0;
+	OSGetAppGamename = 0x801AB310;
+	NANDGetStatus = 0x801D94E0;
+	__OSGetIOSRev = 0x801A9FB0;
+	NANDSeek = 0x801D8D10;
+	IOS_IoctlAsync = 0x80225640;
+	NANDPrivateOpen = 0x801D9780;
+	OSRegisterShutdownFunction = 0x801B3410;
+	NANDClose = 0x801D9990;
+	OSResumeThread = 0x801B59A0;
+	OSInitMutex = 0x801B2F60;
+	OSGetCurrentThread = 0x801B4C70;
+	OSRegisterVersion = 0x801AB300;
+	SCGetCounterBias = 0x801DD5F0;
+	IOS_Ioctl = 0x80225780;
+	OSLockMutex = 0x801B2FA0;
+	StmImInBuf = 0x8038F680;
+	StmImOutBuf = 0x8038F6A0;
+	StmImDesc = 0x8042AA00;
+	StmReady = 0x8042A9FC;
+	SCGetIdleMode = 0x801DD450;
+	__mod2u = 0x802DD2EC;
+	__mod2i = 0x802DD3D0;
+	__div2i = 0x802DD1B4;
+	__div2u = 0x802DD0C8;
+	NANDRead = 0x801D8B30;
+	NANDGetHomeDir = 0x801DAC30;
+	__OSUnlockAllMutex = 0x801B3150;
+	OSTryLockMutex = 0x801B31C0;
+	NANDPrivateCreate = 0x801D8730;
+	OSPanic = 0x801AD620;
+
+	MEMCreateExpHeapEx = 0x801D44C0;
+	MEMAllocFromExpHeapEx = 0x801D45A0;
+	currentDirectory = 0x8042ABD0;
+	FstStart = 0x8042ABE8;
+	FstStringStart = 0x8042ABE4;
+	__DVDLayoutFormat = 0x8042AC38;
+	DVDReadPrio = 0x801CAC60;
+	DVDClose = 0x801CAB40;
+	MEMDestroyExpHeap = 0x801D4570;
+	MEMFreeToExpHeap = 0x801D4850;
+	NANDPrivateDelete = 0x801D89D0;
+	NANDOpen = 0x801D96F0;
+	MEMFreeToAllocator = 0x801D5690;
+	nandIsInitialized = 0x801DA690;
+	ISFS_CreateDir = 0x80226880;
+	ISFS_CreateDirAsync = 0x80226980;
+	nandCallback = 0x801DAC90;
+	nandSplitPerm = 0x801D9270;
+	nandIsPrivatePath = 0x801DA5F0;
+	nandGenerateAbsPath = 0x801DA820;
+	nandGetRelativeName = 0x801DA410;
+	nandConvertErrorCode = 0x801DA6B0;
+
+	dRes_c_LoadFileList = 0x800DF8C0;
+	CWCICT = 0x80081D20;
+
+	AssembleDefaultScWorldMapSettings = 0x80102B50;
+	doneWithLoadDefaultSave = 0x8015D6CC;
+
+	doneWithDoublePipeSpeed = 0x80064008;
+	doneWithDoubleCanonSpeed = 0x80A4E568;
+	doneWithDoubleBulletSpeed = 0x80A496FC;
+	doneWithDoubleSpeedToPos = 0x8006CD44;
+
+	ObjectProfileList = 0x8042A698;
+	doneWithChangeProfileList = 0x800E1CB4;
+
+	PatchLastActorID1 = 0x8006A33C;
+	PatchLastActorID2 = 0x8006A374;
+	PatchLastActorID3 = 0x8006A628;
+	PatchLastActorID4 = 0x8008F768;
+	PatchLastActorID5 = 0x800D1434;
+	PatchLastActorID6 = 0x800E1C04;
+	PatchLastActorID7 = 0x800E1D20;
+	PatchLastActorID8 = 0x800E1EEC;
+	PatchLastActorID9 = 0x800E1F1C;
+	PatchLastActorID10 = 0x800E1F78;
+	PatchLastActorID11 = 0x8088E048;
+	PatchLastActorID12 = 0x808AB35C;
+	PatchLastActorID13 = 0x80925F54;
+	PatchLastActorID14 = 0x80B6C614;
+
+	PatchLastActorID15 = 0x8042965C;
+	PatchLastActorID16 = 0x8042C328;
+	PatchLastActorID17 = 0x8042D2D8;
+	PatchLastActorID18 = 0x8042D2DC;
+	PatchLastActorID19 = 0x80958A7C;
+	PatchLastActorID20 = 0x809656E4;
+
+	PatchLastActorID21 = 0x80428A40;
+	PatchLastActorID22 = 0x80428A42;
+	PatchLastActorID23 = 0x80428A44;
+	PatchLastActorID24 = 0x8042A19E;
+	PatchLastActorID25 = 0x80427C3C;
+
+	doneWithNewSFXHax = 0x80283CE4;
+
+	doneWithSetBonusLevelFlag = 0x8091880C;
+	doneWithSetBonusLevelFlag2 = 0x80918850;
+	doneWithCheckForBonusLevelFlag = 0x809191C0;
+	doneWithCheckForBonusLevelFlag2 = 0x809191CC;
+
+	MultiplayerModeFlags_maybe = 0x8042A260;
+	doneWithBackToBonusLevels = 0x8010248C;
+	MultiPlayCourseSelectDrawFunc = 0x8091A320;
+
+	LoadSceneLights = 0x8091C3F0;
+	doneWithMakeThisStupidMusicWork = 0x8006A30C;
+	doneWithMakeThisStupidMusicWork2 = 0x8006A308;
+
+	doneWithCheckIfInStage = 0x800E1E40;
+	doneWithAddRemoconState = 0x800DD848;
+	doneWithChangeIDForCC = 0x800DCF9C;
+
+	dRemoconMng_c_ptr = 0x8042A308;
+	DoStuffWtihWiimote = 0x802BCCB0;
+	CoreControllerPtr = 0x80377F88;
+	assignSomeColoursToWindow = 0x800B3C50;
+	StateID_WarningNunchuk__17dWarningManager_c = 0x80375248;
+	doneWithPatchShowNunchuk = 0x8010DA50;
+	doneWithShowClassic = 0x8010E098;
+	doneWithShowClassic2 = 0x8010E0B8;
+	doneWithCreateClassic = 0x8010D640;
+	CreateClassicReturn = 0x8010D6D0;
+	doneWithDrawClassic = 0x8010D7C4;
+	DeleteClassicReturn = 0x8010D850;
+	DeleteClassicContinue2 = 0x8010D83C;
+	doneWithCtorClassic = 0x8010D2FC;
+	doneWithDtorClassic = 0x8010D56C;
+	doneWithCheckForClassic = 0x8010DFF0;
+	CheckForClassicContinue = 0x8010DFF4;
+	messWithExistingSceneCount__17dWarningManager_cFv = 0x8010DC60;
+	checkForClose__17dWarningManager_cFv = 0x8010DBE0;
+	setStateToOutOfWarning__17dWarningManager_cFv = 0x8010DC40;
+	doneWithSetClassicVisibility0 = 0x8010E690;
+	ExecuteClassicForSomeReasonReturn = 0x8010E35C;
+	doneWithExecuteClassicForSomeReason = 0x8010E33C;
+	RemoconConnectExtension_executeWaitReturn = 0x800DCC10;
+	RemoconConnectExtension_executeNoneReturn = 0x800DCD44;
+	RemoconConnectExtension_executeFreestyleReturn = 0x800DCE74;
+	RemoconConnectExtension_executeOtherReturn = 0x800DCF98;
+	StateID_None__23RemoconConnectExtension = 0x80371BF0;
+	StateID_Freestyle__23RemoconConnectExtension = 0x80371C30;
+	StateID_Other__23RemoconConnectExtension = 0x80371C70;
+	RemoconConnect_StateVTable = 0x80319574;
+	inside_kpads = 0x803A1DC8;
+	doneWithGiveClassicARemoconID = 0x800B5E08;
+	doneWithPatchControllerIcon = 0x800E6EB8;
+
+	dword_8042A740 = 0x8042A740;
+
+
+	CurrentWarningManager = 0x8042A5B8;
+
+	fff1 = 0x80018CA0;
+	fff2 = 0x80018F20;
+
+	CSMWindow = 0x809413E0;
+	CSMButton1 = 0x809413EC;
+	CSMButton2 = 0x809413F8;
+	CSMButton3 = 0x80941404;
+	CSMButton4 = 0x80941410;
+	doneWithChangeGroupNames = 0x8077ABF0;
+
+	P_SBBase_01 = 0x80941468;
+	P_SBBase_02 = 0x80941474;
+	P_SBBase_03 = 0x80941480;
+	P_SBBase_04 = 0x8094148C;
+	P_back = 0x80941498;
+	P_backWhite = 0x809414A0;
+	doneWithChangePicturePaneNames = 0x8077AC10;
+
+	doneWithChangeSelectCursorStuff = 0x8077AD90;
+
+	doneWithChangeMenuResults = 0x8092FC58;
+	doneWithChangeMenuResults2 = 0x8092FD60;
+
+	doneWithSpawnSettingsActor = 0x8092707C;
+
+	changeToNormalState__22dCourseSelectManager_cFv = 0x8092F660;
+
+	doneWithHardMode = 0x801465E0;
+
+	_801446BC = 0x801446BC;
+
+	doneWithWindColor = 0x80887F8C;
+	doneWithLavaParticlesColor = 0x80888CD8;
+
+	doneWithBounceShell = 0x8003B9B4;
+	doneWithDoCloudBounceAnim = 0x80A5CA88;
+	actuallyDoCloudBounceAnim = 0x80A5CA98;
+	doneWithSpringboardShell = 0x80038924;
+
+	StateID_Throw__7dAcPy_c = 0x80376430;
+	ShellSlideState = 0x80353d64;
+
+	doneWithInvertedCoinRotation = 0x8008DEF8;
+
+	doneWithNoPlayerGP = 0x801268D0;
+	doneWithNoPlayerGP2 = 0x80126854;
+	doneWithNoPlayerFire = 0x8011B068;
+	doneWithNoPlayerIce = 0x80124708;
+	doneWithNoPlayerSpin = 0x801472E8;
+	doneWithNoPlayerSpin2 = 0x80147370;
+	doneWithNoPlayerSlide = 0x8012D67C;
+	doneWithNoPlayerSlide2 = 0x8012D6A4;
+	doneWithGPSlide = 0x80039BF4;
+	doGPSlide = 0x80038D4C;
+	unk_80353CD8 = 0x80353CD8;
+
+	doneWithAddSettingsBMG = 0x8077AC48;
+	doneWithFSELNewBMGPanes = 0x80782FA0;
+
+	NewSFXTable = 0x80450000;
+	NewSFXIndexes = 0x80460000;
+
+	sprites = 0x8030A340;
+	profiles = 0x8076A748;
+	spriteFiles = 0x8031AB4C;
+	profileNames = 0x80320B58;
+
+	doneWithAPhysicsBitfield2 = 0x8008C424;
+
+	instance__14dWorldCamera_c = 0x8042A564;
+
+	doneWithCheckNewCounts = 0x808727D4;
+	doneWithCheckNewCounts2 = 0x80872770;
+	doneWithCheckNewCounts3 = 0x8087277C;
+
+	GetPositionOfEntrance = 0x8005ED90;
+
+	doneWithAddSignFlag = 0x800F4714;
+
+	doneWithSpawnStarSign = 0x808E1928;
+	doneWithSpawnStarSign2 = 0x808E194C;
+	doneWithSpawnStarSign3 = 0x808E19AC;
+	AndR5WithNodeR4Props = 0x800F58B0;
+	SpawnWorldmapObject = 0x800F2B00;
+
+	sub_801007D0 = 0x801007D0;
+	doneWithPreserveR5 = 0x808E187C;
+	
+	doneWithLoadStarSign = 0x80926AC0;
+
+	doneWithDoSomeCheating4 = 0x808CA090;
+	
+	doneWithDoSomeCheating5 = 0x808C9CD8;
+
+	GetPositionOfWorldmapBone = 0x801007F0;
+
+	doneWithDoW8Checks = 0x80907D4C;
+	doneWithDoW8Checks2 = 0x80907DB0;
+	AndR5WithNodeR4Props = 0x800F58B0;
+
+	doneWithCSMgrCheckForSignByte = 0x8092F9EC;
+	doneWithCSMgrCheckForSignByte2 = 0x8092FB68;
+
+	StateID_KeyWait__22dCourseSelectManager_c = 0x809A2440;
+
+	doneWithMakePropellerDispawnOrNot = 0x80893C0C;
+	doneWithMakePropellerDispawnOrNot2 = 0x80893C14;
+
+	newSaveHandlerTagLoop = 0x800CFAE4;
+	NANDCreate = 0x801D8620;
+	SaveFileErrorHandling = 0x800CFC20;
+	unk_80359FC0 = 0x80359FC0;
+	NANDSafeOpen1 = 0x801D9A90;
+	ipl_nand_wrapper_SafeClose_maybe = 0x801DA0A0;
+	NANDWrite = 0x801D8C20;
+	j_OSWakeupThread = 0x801B3370;
+	NANDSafeClose = 0x801D9E50;
+	sub_801B31C0 = 0x801B31C0;
+
+	daEnSnakeBlock_c_StateID_Move = 0x80B1B3F8;
+	doSomethingElseWithTravelInfoBuffer_SnakeSubEx = 0x80AA73E0;
+	continueFromFirstLoop = 0x80AA7C10;
+	continueFromNodeLoop = 0x80AA7C80;
+	continueFromSnakeBlockLoop3 = 0x80AA7454;
+	continueFromSnakeBlockBackwards = 0x80AA7404;
+	continueFromStoreIsLoopToR9_1 = 0x80AA85A0;
+	continueFromStoreIsLoopToR9_2 = 0x80AA85B0;
+	continueFromOtherDirectionsSpawn = 0x80AA789C;
+	continueFromAdjustSpawnPosition = 0x80AA6F38;
+	continueFromRemoveSFX = 0x80AA85B0;
+	continueFromDoNotMoveIfEvent = 0x80AA72C4;
+	continueFromMakeTIBTwiceAsBig = 0x80AA7C18;
+	continueFromCreateBackwardsData = 0x80AA8154;
+	returnFromDoNotMoveIfEvent = 0x80AA72E0;
+	skipFromRemoveSFX = 0x80AA85DC;
+	cancelNodeLoop = 0x80AA8138;
+	firstLoop = 0x80AA7BC0;
+	loopForNodes = 0x80AA7C2C;
+	finishNodeLoop = 0x80AA8138;
+	abs = 0x802DE804;
+	dRail_getRailByID_static = 0x800D91B0;
+	loc_80AA86FC = 0x80AA86FC;
+	doSomethingElseWithTravelInfoBuffer_10SnakeSubExFv = 0x80AA73E0;
+
+	doBGMStuff = 0x8019CB40;
+	doBGMStuff2 = 0x8019CDB0;
+
+	mazeAutoscrollSpeed = 0x8042C078;
+	doneWithChange2CastleMazeSpeed1 = 0x80079BE8;
+	doneWithChange2CastleMazeSpeed2 = 0x80079CF0;
+	doneWithChange2CastleMazeSpeed3 = 0x80079D68;
+
+	doneWithDoubleCoinSpeed = 0x8008DF00;
+
+	doneWithDoublePlatformSpeed = 0x800C0318;
+
+	onExecute__17daEnDpakkunBase_cFv = 0x8002CE30;
+	doneWithDoublePakkunSpeed2 = 0x8002CF68;
+
+	badAppleZoomFloat = 0x8042C030;
+
+	doneWithDoubleFbaseSpeed3 = 0x80161E54;
+
+	processOperation_fBase_c = 0x80161E00;
+
+	doneWithDoubleTileAnimSpeed = 0x800879F4;
+
+	CalcLayoutPos = 0x800B33D0;
+
+	loadBMGStringToMyBuffer = 0x800E6AD0;
 
 	.text : {
 		FILL (0)

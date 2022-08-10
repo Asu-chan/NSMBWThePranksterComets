@@ -1,0 +1,9 @@
+---
+
+source_files: [../src/propellerBlock.S]
+hooks:
+  - name: MakePropellerDispawnOrNot
+    type: branch_insn
+    src_addr_pal: 0x80893C08
+    branch_type: b
+    target_func: 'MakePropellerDispawnOrNot'

@@ -264,11 +264,11 @@ int daPodouble::onCreate() {
 	HitMeBaby.xDistToEdge = 40.0;
 	HitMeBaby.yDistToEdge = 40.0;
 
-	HitMeBaby.category1 = 0x3;
-	HitMeBaby.category2 = 0x0;
-	HitMeBaby.bitfield1 = 0x4F;
-	HitMeBaby.bitfield2 = (this->isFire) ? 0x380626 : 0x380626;
-	HitMeBaby.unkShort1C = 0;
+	HitMeBaby.category = 0x3;
+	HitMeBaby.attack = 0x0;
+	HitMeBaby.categoryBitfield = 0x4F;
+	HitMeBaby.attackBitfield = (this->isFire) ? 0x380626 : 0x380626;
+	HitMeBaby.miscFlags = 0;
 	HitMeBaby.callback = &poodleCollisionCallback;
 
 	this->aPhysics.initWithStruct(this, &HitMeBaby);

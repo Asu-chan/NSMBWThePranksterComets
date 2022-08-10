@@ -1,0 +1,77 @@
+---
+
+source_files: [../src/speedy.S, ../src/speedy.cpp]
+hooks:
+  # - name: FPointerHook
+  #   type: add_func_pointer
+  #   src_addr_pal: 0xDEADBEEF
+  #   target_func: 'Whatever'
+
+  # - name: PatchHook
+  #   type: patch
+  #   addr_pal: 0xDEADBEEF
+  #   data: 'YYYYYYYY' # Orig: XXXXXXXX
+
+  # - name: BranchHook
+  #   type: branch_insn
+  #   src_addr_pal: 0xDEADBEEF
+  #   branch_type: b
+  #   target_func: 'Whatever'
+
+  - name: GetSpeedyTimer
+    type: branch_insn
+    src_addr_pal: 0x800E399C
+    branch_type: b
+    target_func: 'GetSpeedyTimer'
+
+  # - name: ForbidTimeUpIfSpeedy
+  #   type: branch_insn
+  #   src_addr_pal: 0x800E3B74
+  #   branch_type: b
+  #   target_func: 'ForbidTimeUpIfSpeedy'
+
+  - name: ForbidQuickMusicIfSpeedy
+    type: branch_insn
+    src_addr_pal: 0x800E3B04
+    branch_type: b
+    target_func: 'ForbidQuickMusicIfSpeedy'
+
+  - name: SetTimeKeeperTime
+    type: branch_insn
+    src_addr_pal: 0x800E3AB8
+    branch_type: b
+    target_func: 'SetTimeKeeperTime'
+
+  - name: TimeKeeperSetTime
+    type: branch_insn
+    src_addr_pal: 0x800E3A18
+    branch_type: b
+    target_func: 'TimeKeeperSetTime'
+
+  - name: LayoutResetAnimCorrectly
+    type: branch_insn
+    src_addr_pal: 0x800C9518
+    branch_type: b
+    target_func: 'LayoutResetAnimCorrectly'
+
+  - name: LayoutResetAnimCorrectly2
+    type: patch
+    addr_pal: 0x800C94E8
+    data: '7FC5F379' # Orig: 2C1E0000
+
+  - name: SCExec
+    type: add_func_pointer
+    src_addr_pal: 0x80B09690
+    target_func: 'daEnStarCoin_c::newOnExecute()'
+
+  # - name: StarCoinGiveTime
+  #   type: branch_insn
+  #   src_addr_pal: 0x80AAA4D8
+  #   branch_type: b
+  #   target_func: 'StarCoinGiveTime'
+
+  - name: NoBonusTime
+    type: branch_insn
+    src_addr_pal: 0x80925C74
+    branch_type: b
+    target_func: 'NoBonusTime'

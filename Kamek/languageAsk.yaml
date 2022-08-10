@@ -1,0 +1,56 @@
+---
+
+source_files: [../src/languageAsk.S, ../src/languageAsk.cpp]
+hooks:
+  - name: AlternateCRSINLYTSetup
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8091ED3C
+    target_func: 'AlternateCRSINLYTSetup'
+
+  - name: AlternateCRSINLYTExecute
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8091F248
+    target_func: 'AlternateCRSINLYTExecute'
+
+  - name: AlternateCRSINLYTDraw
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8091F53C
+    target_func: 'AlternateCRSINLYTDraw'
+
+  - name: AlternateCRSINLYTDelete
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8091F4A4
+    target_func: 'AlternateCRSINLYTDelete'
+
+  - name: SetAlternateCRSINLYTByte
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x801019A4
+    target_func: 'SetAlternateCRSINLYTByte'
+
+  - name: PatchNoPreGameShit
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8010199C
+    target_func: 'PatchNoPreGameShit'
+
+  - name: NoCRSINWipe
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8091F114
+    target_func: 'NoCRSINWipe'
+
+  - name: BlockGameLanguage
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800B4654
+    src_addr_pal2: 0x800B4654
+    src_addr_ntsc: 0x800B4638
+    src_addr_ntsc2: 0x800B4638
+    src_addr_jpn: 0xDEADF00D
+    src_addr_jpn2: 0xDEADF00D
+    target_func: 'BlockGameLanguage'

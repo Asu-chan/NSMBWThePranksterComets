@@ -1,0 +1,21 @@
+---
+
+source_files: [../src/yoshivore.S]
+hooks:
+  - name: APhysicsBitfield2
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8008C420
+    target_func: 'APhysicsBitfield2'
+
+  - name: NopShit
+    type: nop_insn
+    area_pal: 0x801503E0
+
+  - name: NopShit
+    type: nop_insn
+    area_pal: 0x801505D0
+
+  - name: NopShit
+    type: nop_insn
+    area_pal: 0x8014F8B0

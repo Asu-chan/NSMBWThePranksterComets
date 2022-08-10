@@ -702,7 +702,7 @@ AcPySetMeUpHS:
 	# partway in: r31 = this
 	lwz r3, 0x2D08(r31)
 	addi r4, r31, 0x2A60
-	bl _ZN21dHammerSuitRenderer_c5setupEP21dPlayerModelHandler_c
+	# bl _ZN21dHammerSuitRenderer_c5setupEP21dPlayerModelHandler_c # No longer needed in TPC
 
 	# epilogue
 	li r3, 1
@@ -716,7 +716,7 @@ AcPySetMeUpHS:
 AcPyDrawHS:
 	# partway in: r31 = this
 	lwz r3, 0x2D08(r31)
-	bl _ZN21dHammerSuitRenderer_c4drawEv
+	# bl _ZN21dHammerSuitRenderer_c4drawEv # No longer needed in TPC
 
 	# epilogue
 	li r3, 1
@@ -782,7 +782,7 @@ Wm2dPlayerSetMeUpHS:
 	lwz r3, 0x384(r27)
 	lwz r4, 0x128(r27)
 	li r5, 1
-	bl _ZN21dHammerSuitRenderer_c5setupEP21dPlayerModelHandler_ci
+	# bl _ZN21dHammerSuitRenderer_c5setupEP21dPlayerModelHandler_ci # No longer needed in TPC
 
 	# epilogue
 	addi r11, r1, 0x20
@@ -806,7 +806,7 @@ Wm2dPlayerDrawHS:
 	mr r31, r3
 
 	lwz r3, 0x384(r31)
-	bl _ZN21dHammerSuitRenderer_c4drawEv
+	# bl _ZN21dHammerSuitRenderer_c4drawEv # No longer needed in TPC
 
 	lwz r3, 0x128(r31)
 	bl draw__21dPlayerModelHandler_cFv
@@ -953,7 +953,7 @@ ToadTextures:
 
 .global BrosArcFileName
 BrosArcFileName:
-	.string "hammerM"
+	.string "bros"
 
 .global I_hammerArcFilename
 I_hammerArcFilename:

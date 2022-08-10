@@ -1,9 +1,26 @@
 ---
-source_files: [../src/apDebug.cpp]
+source_files: [../src/apDebug.cpp]#, ../src/apDebug.S]
 hooks:
   - name: DrawAPhysics
     type: branch_insn
     branch_type: b
     src_addr_pal: 0x80830BD8
     target_func: 'APDebugDraw()'
+
+  # - name: InitNextField
+  #   type: patch
+  #   addr_pal: 0x8006CF50
+  #   data: '38800000'
+
+  # - name: AddInstanceToTheLinkedList
+  #   type: branch_insn
+  #   branch_type: bl
+  #   src_addr_pal: 0x8006D104
+  #   target_func: 'AddInstanceToTheLinkedList'
+
+  # - name: RemoveInstanceFromTheLinkedList
+  #   type: branch_insn
+  #   branch_type: bl
+  #   src_addr_pal: 0x8006CFBC
+  #   target_func: 'RemoveInstanceFromTheLinkedList'
 

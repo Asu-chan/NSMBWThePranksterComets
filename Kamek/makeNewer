@@ -1,6 +1,11 @@
 #!/bin/sh
-python2 tools/mapfile_tool.py
-python2 tools/kamek.py NewerProject.yaml --no-rels --use-clang --gcc-type=/opt/wiidev/bin/powerpc-elf --llvm-path=/home/me/Dev/llvm-build/bin
+#cd /home/me/Games/Newer/Kamek
+rm -r NewerASM
+rm -r Build
+mkdir NewerASM
+mkdir Build
+python tools/mapfile_tool.py
+python tools/kamek.py NewerProjectKP.yaml --show-cmd --no-rels --use-clang --gcc-type=tools/devkitPPC/bin/powerpc-eabi --llvm-path=tools/NewerSMBW-LLVM/bin
 if [ "$?" = "0" ]; then
 	echo "compile successful"
 else
@@ -8,9 +13,9 @@ else
 fi
 
 copy_files() {
-	cp NewerASM/n_$1_loader.bin ~/Games/Newer/DolphinPatch/NewerRes/System$2.bin
-	cp NewerASM/n_$1_dlcode.bin ~/Games/Newer/DolphinPatch/NewerRes/DLCode$2.bin
-	cp NewerASM/n_$1_dlrelocs.bin ~/Games/Newer/DolphinPatch/NewerRes/DLRelocs$2.bin
+	cp NewerASM/n_$1_loader.bin Build/System$2.bin
+	cp NewerASM/n_$1_dlcode.bin Build/DLCode$2.bin
+	cp NewerASM/n_$1_dlrelocs.bin Build/DLRelocs$2.bin
 }
 
 copy_files pal EU_1
@@ -18,6 +23,6 @@ copy_files pal2 EU_2
 copy_files ntsc US_1
 copy_files ntsc2 US_2
 copy_files jpn JP_1
+copy_files jpn2 JP_2
 
 echo Built all!
-

@@ -218,22 +218,22 @@ int daMrSun_c::onCreate() {
 	ActivePhysics::Info HitMeBaby;
 	HitMeBaby.xDistToCenter = 0.0;
 	HitMeBaby.yDistToCenter = 0.0;
-	HitMeBaby.category1 = 0x3;
-	HitMeBaby.category2 = 0x0;
-	HitMeBaby.bitfield1 = 0x6F;
+	HitMeBaby.category = 0x3;
+	HitMeBaby.attack = 0x0;
+	HitMeBaby.categoryBitfield = 0x6F;
 
 	if ((this->settings & 0xF) == 0) { // It's a sun
-		HitMeBaby.bitfield2 = 0xffbafffc; 
+		HitMeBaby.attackBitfield = 0xffbafffc; 
 		HitMeBaby.xDistToEdge = 24.0;
 		HitMeBaby.yDistToEdge = 24.0;
 	}	
 	else { // It's a moon
-		HitMeBaby.bitfield2 = 0xffbafffe; 
+		HitMeBaby.attackBitfield = 0xffbafffe; 
 		HitMeBaby.xDistToEdge = 12.0;
 		HitMeBaby.yDistToEdge = 12.0;
 	}
 
-	HitMeBaby.unkShort1C = 0;
+	HitMeBaby.miscFlags = 0;
 	HitMeBaby.callback = &dEn_c::collisionCallback;
 
 

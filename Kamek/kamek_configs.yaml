@@ -1,6 +1,27 @@
 ---
-- friendly_name: "New Super Mario Bros. Wii"
-  short_name: 'n'
+
+############################
+# Debug build - Only PALv1 #
+############################
+
+- friendly_name: "NSMBW: The Prankster Comets"
+  short_name: 'debug'
+  short_name2: 'n'
+  include_dirs: ['include', 'src']
+  multi_build: {
+    pal: 'kamek_pal.x'
+  }
+  dynamic_link: true
+  
+###############################
+# Release build - All regions #
+###############################
+
+# Non-tournaments
+
+- friendly_name: "NSMBW: The Prankster Comets"
+  short_name: 'release1'
+  short_name2: 'n'
   include_dirs: ['include', 'src']
   multi_build: {
     pal: 'kamek_pal.x',
@@ -11,6 +32,19 @@
     jpn2: 'kamek_jpn2.x'
   }
   dynamic_link: true
-#  rel_area_start: 0x807684C0
-#  rel_area_end: 0x80B75CA8
+  
+# Tournaments (pads a few actors by two)
+
+- friendly_name: "NSMBW: The Prankster Comets (Tournament regions)"
+  short_name: 'release2'
+  short_name2: 'n'
+  include_dirs: ['include', 'src']
+  defines: {
+    'REGION_TOURNAMENT'
+  }
+  multi_build: {
+    kor: 'kamek_kor.x',
+    twn: 'kamek_twn.x'
+  }
+  dynamic_link: true
   

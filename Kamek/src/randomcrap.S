@@ -60,13 +60,13 @@ ThwompDestroyAt: .float -7533.0
 .global TitleScreenFucker
 .extern RESTART_CRSIN_LevelStartStruct
 .extern SaveFileBuffer
-.extern enableHardMode
+.extern enableDaredevil
 TitleScreenFucker:
-	lis 	r4, enableHardMode@h
-	ori 	r4, r4, enableHardMode@l
+	lis 	r4, enableDaredevil@h
+	ori 	r4, r4, enableDaredevil@l
 
 	li 		r3, 0
-	stw		r3, 0(r4)
+	stb		r3, 0(r4)
 
 	lis r3, RESTART_CRSIN_LevelStartStruct@h
 	ori r3, r3, RESTART_CRSIN_LevelStartStruct@l
@@ -458,14 +458,6 @@ RedRingEventControl:
 dontResetRREDelay:
 	b set__10dFlagMgr_cFUcibbbUi
 
-.global EFB_Crap
-.extern _Z9EFBMagic2v
-.extern ContinueFromEFBMagic2
-EFB_Crap:
-	bl _Z9EFBMagic2v
-	lwz r3, 4(r30)
-	b ContinueFromEFBMagic2
-
 .data
 .global BGScaleFront, BGScaleBack, BGScaleEnabled
 BGScale:
@@ -612,7 +604,7 @@ ReplaceExceptionOccurred:
 
 .data
 NewExceptionOccurred:
-.string "Whoops! Newer 1.0.2 has crashed.\nPlease take a screenshot of the info below\nand send it to newer@newerteam.com.\nYou can scroll through this report using the D-Pad.\n"
+.string "Whoops! NSMBW:TPC 1.0.0 has crashed.\nPlease take a screenshot of the info below\nand send it to our discord server:\nhttps://asu-chan.github.io/discord.html\nYou can scroll through this report using the D-Pad.\n"
 UniLogStr: .string "[ULog] returning %8x to: %x > %x > %x > %x > %x > %x\n"
 #WillAlloc: .string "[AH] Will allocate %x bytes aligned by %x\n"
 #Alloced: .string "[AH] Allocated %p\n"

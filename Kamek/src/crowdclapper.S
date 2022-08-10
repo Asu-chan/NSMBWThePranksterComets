@@ -1,31 +1,31 @@
-.extern OneofManySoundPlayers
-.extern EventTable
-
+.text
 #include <asm_setup.S>
 
-.text
-.align 4
+.extern _ZN12daNiceCoin_c14checkForCountsEv
 
-.global CrowdClapperEventActivate
-CrowdClapperEventActivate:
+.extern doneWithCheckNewCounts
+.extern doneWithCheckNewCounts2
 
-	mflr r0
-	bl OneofManySoundPlayers
-	mtlr r0
-	
-	lis r8, EventTable@h
-	ori r8, r8, EventTable@l
+.global ParseNewCrowdSettings
+ParseNewCrowdSettings:
+	stw		r0, 0x3D4(r31) # Restore instruction
 
-	lwz r11, 4(r8)
-
-	lwz r9, 4(r31)
-	srwi r9, r9, 24
-	
-	subi r9, r9, 1
-	
-	li r10, 1
-	slw r10, r10, r9
-	
-	or r11, r11, r10
-	stw r11, 0(r8)
+	rlwinm	r3, r5, 8, 24, 31	# Equivalent of ((this->settings >> 24) & 0xFF)
+	rlwinm	r4, r5, 28, 31, 31	# Equivalent of ((this->settings >> 4) & 1)
+	stw		r3, 0x3F0(r31)		# Number of Purple Coins to collect
+	stb		r4, 0x3F8(r31)		# Disable SFX
 	blr
+
+.global CheckNewCounts
+CheckNewCounts:
+	bl _ZN12daNiceCoin_c14checkForCountsEv
+	cmpwi r3, 1
+	beq triggerCrowdClapper
+	b doneWithCheckNewCounts
+triggerCrowdClapper:
+	lbz r3, 0x3F8(r31)
+	cmpwi r3, 1
+	beq noCrowdSFX
+	b doneWithCheckNewCounts2
+noCrowdSFX:
+	b doneWithCheckNewCounts3

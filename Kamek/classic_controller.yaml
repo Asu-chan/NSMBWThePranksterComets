@@ -1,5 +1,5 @@
 ---
-source_files: [../src/classic_controller.S]
+source_files: [../src/classic_controller.S, ../src/classic_controller.cpp]
 hooks:
     - name: AddClassicController
       type: branch_insn
@@ -13,17 +13,172 @@ hooks:
       src_addr_pal: 0x801EAF74
       target_func: 'waggleAdjust'
 
-    - name: PatchExtensionScall
-      type: patch
-      addr_pal: 0x80019EE0
-      data: '38000000'
+    # - name: PatchExtensionScall
+    #   type: patch
+    #   addr_pal: 0x80019EE0
+    #   data: '38000000'
 
-    - name: DisableWarningMgrOne
-      type: patch
-      addr_pal: 0x800B3B30
-      data: '38000000'
+    # - name: DisableWarningMgrOne
+    #   type: patch
+    #   addr_pal: 0x800B3B30
+    #   data: '38000000'
 
-    - name: DisableWarningMgrTwo
+    # - name: DisableWarningMgrTwo
+    #   type: patch
+    #   addr_pal: 0x8076DBa8
+    #   data: '38000000'
+
+    - name: CheckIfInStage
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x800E1E3C
+      target_func: 'CheckIfInStage'
+
+    - name: AddRemoconState # Useless, sinits are called before the patches are loaded
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x800DD844
+      target_func: 'AddRemoconState'
+
+    # - name: ChangeIDForCC
+    #   type: branch_insn
+    #   branch_type: b
+    #   src_addr_pal: 0x800DCF98
+    #   target_func: 'ChangeIDForCC'
+
+    - name: RemoconConnectExtensionExecuteWait
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x802EE57C
+      target_func: 'RemoconConnectExtension_executeWait'
+
+    - name: RemoconConnectExtensionExecuteNone
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x800DCD00
+      target_func: 'RemoconConnectExtension_executeNone'
+
+    - name: RemoconConnectExtensionExecuteFreestyle
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x800DCE30
+      target_func: 'RemoconConnectExtension_executeFreestyle'
+
+    - name: RemoconConnectExtensionExecuteOther
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x800DCF58
+      target_func: 'RemoconConnectExtension_executeOther'
+
+    # - name: No2ByDefault
+    #   type: nop_insn
+    #   area_pal: 0x800DCEA4
+
+    - name: ChangeWarningMgrSize
       type: patch
-      addr_pal: 0x8076DBa8
-      data: '38000000'
+      addr_pal: 0x8010D278
+      data: '38600D98' # Orig: 38600B94
+
+    # - name: PatchShowNunchuk
+    #   type: branch_insn
+    #   branch_type: b
+    #   src_addr_pal: 0x8010DA4C
+    #   target_func: 'PatchShowNunchuk'
+
+    - name: CtorClassic
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x8010D2F8
+      target_func: 'CtorClassic'
+
+    - name: DtorClassic
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x8010D568
+      target_func: 'DtorClassic'
+
+    - name: CreateClassic
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x8010D63C
+      target_func: 'CreateClassic'
+
+    - name: DeleteClassic
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x8010D830
+      target_func: 'DeleteClassic'
+
+    # - name: ExecuteClassic
+    #   type: branch_insn
+    #   branch_type: b
+    #   src_addr_pal: 0x8010E02C
+    #   target_func: 'ExecuteClassic'
+
+    - name: DrawClassic
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x8010D7C0
+      target_func: 'DrawClassic'
+
+    - name: ShowClassic
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x8010E034
+      target_func: 'ShowClassic'
+
+    - name: CheckForClassic
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x8010DFEC
+      target_func: 'CheckForClassic'
+
+    - name: SetClassicVisibility0
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x8010E68C
+      target_func: 'SetClassicVisibility0'
+
+    - name: ExecuteClassicForSomeReason
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x8010E338
+      target_func: 'ExecuteClassicForSomeReason'
+
+    - name: GiveClassicARemoconID
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x800B5DFC
+      target_func: 'GiveClassicARemoconID'
+
+    - name: NoNunchukForClassic
+      type: patch
+      addr_pal: 0x800B60DC
+      data: '2C000001' # Orig: 2C000002
+
+    - name: PatchControllerIconA
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x800E6E6C
+      target_func: 'PatchControllerIconA'
+
+    - name: PatchControllerIcon1
+      type: branch_insn
+      branch_type: b
+      src_addr_pal: 0x800E6EA8
+      target_func: 'PatchControllerIcon1'
+
+    - name: StoreCorrectIDIntoGameMgr
+      type: patch
+      addr_pal: 0x800126DC
+      data: '7FE4FB78' # Orig: 7C7F1B78
+
+    - name: StoreCorrectIDIntoGameMgr
+      type: patch
+      addr_pal: 0x800126E0
+      data: '7C7F1B78' # Orig: 38000001
+
+    - name: StoreCorrectIDIntoGameMgr
+      type: patch
+      addr_pal: 0x800126F0
+      data: '988303D9' # Orig: 980303D9

@@ -1,0 +1,54 @@
+---
+
+source_files: [../src/gameDisplay.S, ../src/gameDisplay.cpp]
+hooks:
+  - name: ExtendGameDisplayStruct
+    type: patch
+    addr_pal: 0x80157828
+    data: '386005AC' # Orig: 386005A4
+
+  - name: GameDisplayCreate
+    type: add_func_pointer
+    src_addr_pal: 0x80327A40
+    target_func: 'dGameDisplay_c::newOnCreate()'
+
+  - name: GameDisplayExecute
+    type: add_func_pointer
+    src_addr_pal: 0x80327A58
+    target_func: 'dGameDisplay_c::newOnExecute()'
+
+  - name: GameDisplayUpdateTimer1
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x800E3B34
+    target_func: 'dGameDisplay_c::newUpdateTimer(unsigned int)'
+
+  - name: GameDisplayUpdateTimer2
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80157C2C
+    target_func: 'dGameDisplay_c::newUpdateTimer(unsigned int)'
+
+  - name: InitiateGDComets
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80157C3C
+    target_func: 'InitiateGDComets'
+
+  - name: CometFlagsReset
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800E1F50
+    target_func: 'CometFlagsReset'
+
+  - name: GameDisplayBRLAN
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80158890
+    target_func: 'GameDisplayBRLAN'
+
+  - name: GameDisplayGroups
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x801588A0
+    target_func: 'GameDisplayGroups'

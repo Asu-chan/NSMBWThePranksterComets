@@ -1,0 +1,18 @@
+---
+
+source_files: []
+hooks:
+  - name: DrillRotationBoo
+    type: write_addr
+    addr_pal: 0x80B06E1C
+    data_pal: 0x80A995C0
+
+  - name: DrillIcicle
+    type: write_addr
+    addr_pal: 0x80AE9EC4
+    data_pal: 0x809FE210
+
+  - name: DrillFallingIcicle
+    type: write_addr
+    addr_pal: 0x80AEFFD4
+    data_pal: 0x80A20FA0

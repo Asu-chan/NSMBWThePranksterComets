@@ -31,7 +31,7 @@ LoadMapScene:
 	li r4, 36	#Light count
 	li r5, 8	#Ambient light count
 	li r6, 2	#Dunno
-	li r7, 0	#Make fog (bool)
+	li r7, 1	#Make fog (bool)
 	li r8, 0	#Scene ID
 
 	bl MakeScene
@@ -145,8 +145,8 @@ SceneBrres:	.string "scene/scene.brres"
 MainSelect:	.string "MainSelect"
 .align 4
 Zero:		.float 0.0
-BlightW1:	.string "light/W8.blight"
-BlmapW1:	.string "light/W8.blmap"
+BlightW1:	.string "light/W4.blight"
+BlmapW1:	.string "light/W4.blmap"
 
 .align 4
 

@@ -1,0 +1,106 @@
+---
+
+source_files: [../src/bonusWorld.S, ../src/bonusWorld.cpp]
+hooks:
+  # - name: FPointerHook
+  #   type: add_func_pointer
+  #   src_addr_pal: 0xDEADBEEF
+  #   target_func: 'Whatever'
+
+  # - name: PatchHook
+  #   type: patch
+  #   addr_pal: 0xDEADBEEF
+  #   data: 'YYYYYYYY' # Orig: XXXXXXXX
+
+  # - name: BranchHook
+  #   type: branch_insn
+  #   src_addr_pal: 0xDEADBEEF
+  #   branch_type: b
+  #   target_func: 'Whatever'
+
+  # - name: LoadWSWMA
+  #   type: patch
+  #   addr_pal: 0x80926D18
+  #   data: '2C1C0009' # Orig: 2C1C0008
+
+  # - name: FreeWSWMA
+  #   type: patch
+  #   addr_pal: 0x80927A58
+  #   data: '2C170009' # Orig: 2C170008
+
+  - name: LoadCSWMA
+    type: branch_insn
+    src_addr_pal: 0x80102788
+    branch_type: b
+    target_func: 'LoadCSWMA'
+
+  # - name: FixWMNum
+  #   type: branch_insn
+  #   src_addr_pal: 0x809275EC
+  #   branch_type: b
+  #   target_func: 'FixWMNum'
+
+  # - name: FixWMNum2
+  #   type: branch_insn
+  #   src_addr_pal: 0x808DEABC
+  #   branch_type: b
+  #   target_func: 'FixWMNum2'
+
+  # - name: FixWMNum3
+  #   type: branch_insn
+  #   src_addr_pal: 0x800EE74C
+  #   branch_type: b
+  #   target_func: 'FixWMNum3'
+
+  - name: WMMusicSTRM
+    type: patch
+    addr_pal: 0x802f6908
+    data: '0000073A' # Orig: 00000000
+
+  - name: WMMusicSEQ
+    type: patch
+    addr_pal: 0x802f69e8
+    data: '00000790' # Orig: 00000000
+
+  - name: WMMusicID
+    type: branch_insn
+    src_addr_pal: 0x800696C8
+    branch_type: b
+    target_func: 'WMMusicID'
+
+  - name: IncLoadingJTable
+    type: patch
+    addr_pal: 0x80926A20
+    data: '28000009' # Orig: 28000008
+
+  - name: IncLoadingJTable2
+    type: patch
+    addr_pal: 0x80926950
+    data: '28000009' # Orig: 28000008
+
+  - name: NewLoadingJTable
+    type: branch_insn
+    src_addr_pal: 0x80926A30
+    branch_type: b
+    target_func: 'NewLoadingJTable'
+
+  - name: NewLoadingJTable2
+    type: branch_insn
+    src_addr_pal: 0x80926960
+    branch_type: b
+    target_func: 'NewLoadingJTable2'
+
+  - name: MapLightThing
+    type: patch
+    addr_pal: 0x80927AEC
+    data: '28050009' # Orig: 28050008
+
+  - name: WMCreate
+    type: add_func_pointer
+    src_addr_pal: 0x8098E230
+    target_func: 'dScWorldMap_c::newOnCreate()'
+
+  - name: WMExecute
+    type: add_func_pointer
+    src_addr_pal: 0x8098E248
+    target_func: 'dScWorldMap_c::newOnExecute()'

@@ -1,0 +1,17 @@
+---
+#Replaces Actor 435 AC_LIFT_OBJBG_HMOVE_BIG (Sprite 29)
+
+
+source_files: [../src/cosmicDestructor.cpp]
+hooks:
+  - name: CosmicDestructorBuild
+    type: add_func_pointer
+    src_addr_pal: 0x8096781C
+    target_func: 'daCosmicDestructor_c::build()'
+
+  - name: UpdateCosmicDestructorSpriteInfo
+    type: patch
+    # 0x8030A340 + sprite num * 0x28 == offset
+    addr_pal: 0x8030a7c8
+    #      -ID- ----  -X Offs- -Y Offs-  -RectX1- -RectY1- -RectX2- -RectY2-  -1C- -1E- -20- -22-  Flag ----
+    data: '01B3 0000  00000000 00000000  00000000 00000000 00000000 00000000  0000 0000 0000 0000  0002 0000'

@@ -21,53 +21,53 @@ struct Hijacker {
 
 
 const char* SongNameList [] = {
-	"AIRSHIP",
-	"BOSS_TOWER",
-	"MENU",
-	"UNDERWATER",
-	"ATHLETIC",
-	"CASTLE",
-	"MAIN",
-	"MOUNTAIN",
-	"TOWER",
-	"UNDERGROUND",
-	"DESERT",
-	"FIRE",
-	"FOREST",
-	"FREEZEFLAME",
-	"JAPAN",
-	"PUMPKIN",
-	"SEWER",
-	"SPACE",
-	"BOWSER",
-	"BONUS",	
-	"AMBUSH",	
-	"BRIDGE_DRUMS",	
-	"SNOW2",	
-	"MINIMEGA",	
-	"CLIFFS",
-	"AUTUMN",
-	"CRYSTALCAVES",
-	"GHOST_HOUSE",
-	"GRAVEYARD",
-	"JUNGLE",
-	"TROPICAL",
-	"SKY_CITY",
-	"SNOW",
-	"STAR_HAVEN",
-	"SINGALONG",
-	"FACTORY",
-	"TANK",
-	"TRAIN",
-	"YOSHIHOUSE",
-	"FACTORYB",
-	"CAVERN",
-	"SAND",
-	"SHYGUY",
-	"MINIGAME",
-	"BONUS_AREA",
-	"CHALLENGE",
-	"BOWSER_CASTLE",
+	"new/Purple",		// 100
+	"new/Speedy",
+	"new/Cosmic",
+	"new/StarWaiting",
+	"new/Chimp",
+	"new/BAD_APPLE",		// 105
+	"new/STRM_BGM_CHIJOU",
+	"new/",
+	"new/",
+	"new/",
+	"new/",		// 110
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",		// 115
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/SONG_120",		// 120
+	"new/SONG_121",
+	"new/SONG_122",
+	"new/SONG_123",
+	"new/SONG_124",
+	"new/SONG_125",
+	"new/SONG_126",
+	"new/SONG_127",
+	"new/SONG_128",
+	"new/SONG_129",
+	"new/SONG_130",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
+	"new/",
 	"",
 	"",
 	"",
@@ -77,8 +77,8 @@ const char* SongNameList [] = {
 	"",
 	"",
 	"",
-	"BOSS_CASTLE",
-	"BOSS_AIRSHIP",
+	"new/BOSS_CASTLE",
+	"new/BOSS_AIRSHIP",
 	NULL	
 };
 
@@ -113,9 +113,16 @@ inline char *BrsarInfoOffset(u32 offset) {
 	return (char*)(*(u32*)(((u32)SoundRelatedClass) + 0x5CC)) + offset;
 }
 
+int currentUse = 0;
+bool forceReset = false;
+
 void FixFilesize(u32 streamNameOffset);
 
 u8 hijackMusicWithSongName(const char *songName, int themeID, bool hasFast, int channelCount, int trackCount, int *wantRealStreamID) {
+	return hijackMusicWithSongName(songName, themeID, hasFast, channelCount, trackCount, wantRealStreamID, false, false);
+}
+
+u8 hijackMusicWithSongName(const char *songName, int themeID, bool hasFast, int channelCount, int trackCount, int *wantRealStreamID, bool doTheResetThing, bool overwriteCurrent) {
 	Hijacker *hj = &Hijackers[channelCount==4?1:0];
 
 	// do we already have this theme in this slot?
@@ -123,11 +130,26 @@ u8 hijackMusicWithSongName(const char *songName, int themeID, bool hasFast, int 
 	// if we do, NSMBW will think it's a different song, and restart it ...
 	// but if it's just an area transition where both areas are using the same
 	// song, we don't want that
-	if ((themeID >= 0) && hj->currentCustomTheme == themeID)
-		return hj->stream[hj->currentStream].originalID;
+	if(!doTheResetThing) {
+		if(!forceReset) {
+			if ((themeID >= 0) && hj->currentCustomTheme == themeID) {
+				return hj->stream[hj->currentStream].originalID;
+			}
+		}
+		else {
+			forceReset = false;
+		}
+	}
 
 	// which one do we use this time...?
 	int toUse = (hj->currentStream + 1) & 1;
+
+	if(overwriteCurrent) {
+		toUse = currentUse;
+		forceReset = true;
+	}
+	else
+		currentUse = toUse;
 
 	hj->currentStream = toUse;
 	hj->currentCustomTheme = themeID;
@@ -144,8 +166,8 @@ u8 hijackMusicWithSongName(const char *songName, int themeID, bool hasFast, int 
 		OSReport("It has been set to: channel count %d, track bitfield 0x%x\n", thing[0], thing[1]);
 	}
 
-	sprintf(BrsarInfoOffset(stream->stringOffset), "new/%s.er", songName);
-	sprintf(BrsarInfoOffset(stream->stringOffsetFast), hasFast?"new/%s_F.er":"new/%s.er", songName);
+	sprintf(BrsarInfoOffset(stream->stringOffset), "%s.brstm", songName);
+	sprintf(BrsarInfoOffset(stream->stringOffsetFast), hasFast?"%s_F.brstm":"%s.brstm", songName);
 
 	// update filesizes
 	FixFilesize(stream->stringOffset);
@@ -161,6 +183,7 @@ u8 hijackMusicWithSongName(const char *songName, int themeID, bool hasFast, int 
 
 //oh for fuck's sake
 #include "fileload.h"
+//#include <rvl/dvd.h>
 
 void FixFilesize(u32 streamNameOffset) {
 	char *streamName = BrsarInfoOffset(streamNameOffset);
@@ -187,7 +210,141 @@ extern "C" u8 after_course_getMusicForZone(u8 realThemeID) {
 		return realThemeID;
 
 	bool usesDrums = (realThemeID >= 200);
-	return hijackMusicWithSongName(SongNameList[realThemeID-100], realThemeID, true, usesDrums?4:2, usesDrums?2:1, 0);
+	const char *name = SongNameList[realThemeID - (usesDrums ? 200 : 100)];
+	// OSReport("num: %d\n", realThemeID - (usesDrums ? 200 : 100));
+	// OSReport("name: %s\n", name);
+	return hijackMusicWithSongName(name, realThemeID, true, usesDrums?4:2, usesDrums?2:1, 0, false, false);
 }
 
+const char* SFXNameList [] = {
+	"sfx/original",
+	"sfx/pranskter_comet",	//2000
+	"sfx/purple_coin",
+	"sfx/CM-Appear",
+	"sfx/CM-Die",
+	"sfx/CM-Provoke",
+	"sfx/CM-LetsGo",		//2005
+	"sfx/Countdown",
+	"sfx/TimerSignal",
+	"sfx/TimerLastSignal",
+	"sfx/TimerAlarm1",
+	"sfx/TimerAlarm2",		//2010
+	"sfx/TimerAlarm3",
+	"sfx/PlusClock",
+	"sfx/StarAppear",
+	"sfx/StarWait",
+	"sfx/CM-Laugh",			//2015
+	"sfx/PageFlip",
+	"sfx/ButtonPress",
+	"sfx/CharactersWooo",
+	"sfx/CharactersHappy",
+	"sfx/BowserThunder",	//2020
+	"sfx/CharactersGo",
+	"sfx/Chimp_AwfulNoise",
+	"sfx/Chimp_Dissatisfied",
+	"sfx/Chimp_FailClap",
+	"sfx/Chimp_FailFull",	//2025
+	"sfx/Chimp_HandClap",
+	"sfx/Chimp_Laugh",
+	"sfx/Chimp_Surprised",
+	"sfx/Chimp_Talk",
+	"sfx/doubleDate/beat",					//2030
+	"sfx/doubleDate/kick_slap",
+	"sfx/doubleDate/kick",
+	"sfx/doubleDate/kick_rugby",
+	"sfx/doubleDate/kick_miss",
+	"sfx/doubleDate/bounce_football",		//2035
+	"sfx/doubleDate/bounce_basketball",
+	"sfx/doubleDate/bounce_rugby",
+	"sfx/doubleDate/bounce_grass1",
+	"sfx/doubleDate/bounce_grass2",
+	"sfx/doubleDate/bounce_grass3",			//2040
+	"sfx/doubleDate/squirrel",
+	"sfx/doubleDate/get_rekt",
+	NULL	
+};
 
+int currentSFX = -1;
+u32 *currentPtr = 0;
+
+extern void loadFileAtIndex(u32 *filePtr, u32 fileLength, u32* whereToPatch);
+
+// static FileHandle handle;
+extern u32* GetCurrentPC();
+
+
+extern "C" u32 NewSFXTable[];
+extern "C" u32 NewSFXIndexes;
+
+void loadAllSFXs() {
+	u32 currentIdx = (u32)&NewSFXIndexes;
+
+	FileHandle handle;
+	for(int sfxIndex = 0; sfxIndex < (sizeof(SFXNameList)-1)/sizeof(SFXNameList[0]); sfxIndex++) {
+		char nameWithSound[80];
+		snprintf(nameWithSound, 79, "/Sound/%s.rwav", SFXNameList[sfxIndex]);
+
+		u32 filePtr = (u32)LoadFile(&handle, nameWithSound);
+
+		// OSReport("currentIdx: %p\n", currentIdx);
+		NewSFXTable[sfxIndex] = currentIdx;
+		loadFileAtIndex((u32*)filePtr, handle.length, (u32*)currentIdx);
+		currentIdx += handle.length;
+		currentIdx += (currentIdx % 0x10);
+
+		FreeFile(&handle);
+	}
+}
+
+int hijackSFX(int SFXNum) {
+	int nameIndex = SFXNum - 1999;
+	if(currentSFX == nameIndex) {
+		return 189;
+	}
+
+	currentPtr = (u32*)NewSFXTable[nameIndex];
+
+	/*char nameWithSound[80];
+	snprintf(nameWithSound, 79, "/Sound/%s.rwav", SFXNameList[nameIndex]);
+
+	// OSReport("Opening File %s\n", nameWithSound);
+
+	// if(currentPtr) {
+	// 	FreeFile(&handle);
+	// }
+	FileHandle handle;
+	currentPtr = (u32*)LoadFile(&handle, nameWithSound);
+
+	OSReport("PChijack: %p\n", GetCurrentPC());
+	u32 *ohwell = (u32*)((u32)((u32*)*(u32*)(*(u32*)(*(u32*)(((*(u32*)(((u32)SoundRelatedClass) + 0x61C))) - 0x20)))) + 0x78EBE0);
+	OSReport("ohwell: %p\n", ohwell);*/
+
+/*
+	u32 rwavPtr1 = (*(u32*)(((u32)SoundRelatedClass) + 0x61C));
+	u32 rwavPtr2 = *(u32*)(rwavPtr1 - 0x20);
+	u32 rwavPtr3 = *(u32*)rwavPtr2;
+	u32 *rwavPtr4 = (u32*)*(u32*)rwavPtr3;
+	u32 *rwavPtr5 = (u32*)((u32)rwavPtr4 + 0x957E40);
+
+	u32 *rwavPtr6 = (u32*)((u32)rwavPtr4 + 0x78EBE0);
+
+	OSReport("Val %p\n", rwavPtr6);
+
+	// OSReport("oFILE ADDR: %X\n", rwavPtr4);
+	// OSReport("oRWAV ADDR: %X\n", rwavPtr5);
+	// OSReport("nRWAV ADDR: %X\n", outPtr);
+	loadFileAtIndex(outPtr, handle.length, rwavPtr5);
+
+*/
+	// OSReport("Hijacked.\n");
+
+	currentSFX = nameIndex;
+
+	return 189;
+}
+
+static nw4r::snd::StrmSoundHandle yoshiHandle;
+
+void fuckingYoshiStuff() {
+	PlaySoundWithFunctionB4(SoundRelatedClass, &yoshiHandle, 189, 1);
+}

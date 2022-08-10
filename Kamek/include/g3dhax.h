@@ -154,6 +154,7 @@ namespace nw4r {
 
 
 namespace EGG {
+
 	class Allocator {
 		public:
 			char data1[0x10];
@@ -188,7 +189,9 @@ class mHeapAllocator_c : public mAllocator_c {
 		bool link(s32 size, void *heap, const char *name, int align);
 		u32 unlink();
 
-		bool linkAndBecomeCurrentHeap(s32 size, void *heap, const char *name, int align);
+		bool linkAndBecomeCurrentHeap(s32 size, void *heap, const char *name, int align, u32 unk);
+
+		void done();
 };
 
 namespace m3d {
@@ -211,7 +214,7 @@ namespace m3d {
 			bool getScnObjOption(ulong, ulong*);
 
 			void setScale(float x, float y, float z);
-			void setScale(Vec vec);
+			void setScale(Vec *vec);
 
 			void setDrawMatrix(Mtx *mtx);
 			void getLocalMatrix(Mtx *mtx);
@@ -267,6 +270,28 @@ namespace m3d {
 			char data[0x38];
 	};
 
+	class bmdl_c : public scnLeaf_c {
+		public:
+			bmdl_c();
+			virtual ~bmdl_c();
+
+			u32 _8;
+	};
+
+	class smdl_c : public bmdl_c {
+		public:
+			smdl_c();
+			virtual ~smdl_c();
+
+			// virtual void returnUnknown();
+			// virtual void deleteObj();
+			// virtual void insertIntoCurrentScnGroup();
+			// virtual void vf18_maybeDoAnim();
+			// virtual void vf1C();
+
+			bool setup(nw4r::g3d::ResMdl model, void *allocator, u32 flags, u32 unk1=1, u32 unk2=0);
+	};
+
 
 
 
@@ -274,7 +299,7 @@ namespace m3d {
 		public:
 			virtual ~banm_c();
 
-			virtual int _vf0C() = 0;
+			virtual int _vf0C();
 			virtual void detach();
 			virtual void process();
 
@@ -318,6 +343,18 @@ namespace m3d {
 					mAllocator_c *allocator, u32 *sizeOutPtr);
 
 			void bind(/*b*/mdl_c *model, nw4r::g3d::ResAnmChr anmRes, bool playsOnce);
+	};
+
+	class anmChrPart_c : public banm_c {
+		public:
+			~anmChrPart_c();
+			int _vf0C();
+
+			bool setup(nw4r::g3d::ResMdl modelRes, u32 count,
+					mAllocator_c *allocator, u32 *sizeOutPtr);
+
+			// void bind(/*b*/mdl_c *model, nw4r::g3d::ResAnmChr anmRes, bool playsOnce);
+			void attachChr(u32 index, m3d::anmChr_c anim, float weight);
 	};
 
 	class anmVis_c : public fanm_c {

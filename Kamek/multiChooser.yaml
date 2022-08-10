@@ -1,0 +1,10 @@
+---
+#Replaces Actor 665 WM_GRID (Sprite 319)
+
+
+source_files: [../src/multiChooser.cpp]
+hooks:
+  - name: MultiChooserBuild
+    type: add_func_pointer
+    src_addr_pal: 0x80982F34
+    target_func: 'daMultiChooser_c::build()'

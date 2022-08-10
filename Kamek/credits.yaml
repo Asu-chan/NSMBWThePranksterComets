@@ -1,0 +1,5 @@
+---
+# New Actor STAFFCREDITS
+
+source_files: [../src/credits.cpp, ../src/creditsCam.cpp] # Based on cutScene.yaml/cpp/h from NewerSMBW
+hooks: []

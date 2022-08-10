@@ -43,7 +43,7 @@ void DoTiles(void* self) {
 		char realName[0x40];
 		snprintf(realName, 0x40, "BG_tex/%s", name);
 		
-		void *blah = BgTexMng__LoadAnimTile(self, entry->tilesetNum, entry->tileNum, realName, frameDelays, entry->reverse);
+		BgTexMng__LoadAnimTile(self, entry->tilesetNum, entry->tileNum, realName, frameDelays, entry->reverse);
 	}
 }
 

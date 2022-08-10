@@ -1,0 +1,36 @@
+---
+#Replaces Actor 508 EN_TARZANROPE (Sprite 183)
+
+source_files: [../src/opening.S, ../src/opening.cpp] # Based on cutScene.yaml/cpp/h from NewerSMBW
+hooks: 
+  - name: BuildCutScene
+    type: add_func_pointer
+    src_addr_pal: 0x80B0A940
+    target_func: 'dScOpening_c::build()'
+
+  - name: FixLastActorForCutScene
+    type: patch
+    addr_pal: 0x80124DDC
+    data: '28001234'
+
+  # - name: WrapExitStage
+  #   type: branch_insn
+  #   src_addr_pal: 0x80102370
+  #   branch_type: b
+  #   target_func: 'ExitStageWrapper'
+
+  - name: DisableCutsceneMusic
+    type: patch
+    addr_pal: 0x802F68D8
+    data: '00000000 00000000 00000000'
+
+  - name: DisableCutsceneMusic2
+    type: patch
+    addr_pal: 0x80069668
+    data: '4800001C' # Orig: 480000b0
+
+  - name: ChangeMovieID
+    type: patch
+    addr_pal: 0x809191C8
+    data: '386001FC' # Orig: 38600008 (238 for sound test, 1FC otherwise)
+

@@ -1,0 +1,15 @@
+---
+# This has kind of turned into the "random stuff that we don't want to make a yaml for"
+# yaml, hasn't it...
+source_files: [../src/defaultsave.S, ../src/defaultsave.cpp]
+hooks:
+  - name: LoadDefaultSave
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8015D6C8
+    target_func: 'LoadDefaultSave'
+
+  - name: InternationalSaveFile
+    type: patch
+    addr_pal: 0x800CF890
+    data: '4182003C' # Orig: 41820014

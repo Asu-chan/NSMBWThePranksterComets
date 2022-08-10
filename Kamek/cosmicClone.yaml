@@ -1,0 +1,29 @@
+---
+#Replaces Actor 343 EN_IWAO (Sprite 290)
+
+
+source_files: [../src/cosmicClone.S, ../src/cosmicClone.cpp]
+hooks:
+  - name: CosmicCloneBuild
+    type: add_func_pointer
+    src_addr_pal: 0x80AF1F80
+    target_func: 'daCosmicClone_c::build()'
+
+  - name: CosmicCloneSpriteFileInfo
+    type: add_func_pointer
+    src_addr_pal: 0x8031afd4
+    target_func: 'CCarcNameList'
+    # 0x8031AB4C + sprite num * 0x4 == offset
+
+  - name: UpdateCosmicCloneSpriteInfo
+    type: patch
+    # 0x8030A340 + sprite num * 0x28 == offset
+    addr_pal: 0x8030d090
+    #      -ID- ----  -X Offs- -Y Offs-  -RectX1- -RectY1- -RectX2- -RectY2-  -1C- -1E- -20- -22-  Flag ----
+    data: '0157 0000  00000000 00000000  00000000 00000000 00000000 00000000  0000 0000 0000 0000  0002 0000'
+
+  - name: triggerCosmicKillFlag
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80A0A9D0
+    target_func: 'triggerCosmicKillFlag'

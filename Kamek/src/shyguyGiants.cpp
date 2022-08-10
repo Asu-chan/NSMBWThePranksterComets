@@ -438,11 +438,11 @@ int daShyGuyGiant::onCreate() {
 		collMgr.init(this, &below, 0, &adjacent);
 	}
 
-	HitMeBaby.category1 = 0x3;
-	HitMeBaby.category2 = 0x9;
-	HitMeBaby.bitfield1 = 0x4F;
-	HitMeBaby.bitfield2 = 0xffba7ffe;
-	HitMeBaby.unkShort1C = 0;
+	HitMeBaby.category = 0x3;
+	HitMeBaby.attack = 0x9;
+	HitMeBaby.categoryBitfield = 0x4F;
+	HitMeBaby.attackBitfield = 0xffba7ffe;
+	HitMeBaby.miscFlags = 0;
 	HitMeBaby.callback = &shyCollisionCallback;
 
 	this->aPhysics.initWithStruct(this, &HitMeBaby);

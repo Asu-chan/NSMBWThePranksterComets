@@ -1,0 +1,8 @@
+---
+source_files: [../src/hintMovies.S]
+hooks:
+  - name: ChangeReplayDataPtr
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x8079617C
+    target_func: 'ChangeReplayDataPtr'

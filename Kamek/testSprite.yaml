@@ -1,0 +1,16 @@
+---
+#Replaces Actor 210 BRANCH (Sprite 213)
+
+
+source_files: [../src/testSprite.cpp]
+hooks:
+  - name: TestSpriteBuild
+    type: add_func_pointer
+    src_addr_pal: 0x80955978
+    target_func: 'daCustomSprite_c::build()'
+
+  - name: TestSpriteSpriteFileInfo
+    type: add_func_pointer
+    src_addr_pal: 0x8031aea0
+    target_func: 'TSarcNameList'
+    # 0x8031AB4C + sprite num * 0x4 == offset

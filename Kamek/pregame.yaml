@@ -1,5 +1,5 @@
 ---
-source_files: [../src/pregame.S, ../src/pregame.cpp]
+source_files: [../src/levelinfo.cpp, ../src/pregame.S, ../src/pregame.cpp]
 hooks:
   - name: PGLH_loadLevelNumber
     type: branch_insn
@@ -7,10 +7,10 @@ hooks:
     src_addr_pal: 0x80B6BDD0
     target_func: 'PregameLytHandler::hijack_loadLevelNumber()'
 
-  - {name: CRSIN_makeLonger,type: patch,addr_pal: 0x8091F144,data: '380000B4'}
+  - {name: CRSIN_makeLonger,type: patch, addr_pal: 0x8091F144, data: '380000B4'}
 
-  - {name: PGLH_dis1,type: patch,addr_pal: 0x80b6c1cc,data: '48000238'}
-  - {name: PGLH_dis2,type: patch,addr_pal: 0x80b6c404,data: '7F83E378'}
+  - {name: PGLH_dis1, type: patch, addr_pal: 0x80b6c1cc, data: '48000238'}
+  - {name: PGLH_dis2, type: patch, addr_pal: 0x80b6c404, data: '7F83E378'}
 
   - {name: PGLH_tbGetFix0, type: add_func_pointer, src_addr_pal: 0x80B88658, target_func: 'T_x_00'}
   - {name: PGLH_tbGetFix1, type: add_func_pointer, src_addr_pal: 0x80B8865C, target_func: 'T_x_00'}
@@ -32,3 +32,32 @@ hooks:
   - {name: PGLH_picGetFix10, type: add_func_pointer, src_addr_pal: 0x80B88878, target_func: 'P_bat_00'}
   - {name: PGLH_picGetFix11, type: add_func_pointer, src_addr_pal: 0x80B888D4, target_func: 'P_bat_00'}
 
+  - name: PreGameBRLANNames
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80B6C0B0
+    target_func: 'PreGameBRLANNames'
+
+  - name: PreGameGroups
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80B6C0C4
+    target_func: 'PreGameGroups'
+
+  - name: PreGameReplaceStateStruct
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80B6C530
+    target_func: 'PreGameReplaceStateStruct'
+
+  - name: PreGameComeToNewState
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80B6CDD8
+    target_func: 'PreGameComeToNewState'
+
+  - name: PreGameLoadFile
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80B6C474
+    target_func: 'PreGameLoadFile'

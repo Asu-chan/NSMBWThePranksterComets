@@ -1,8 +1,6 @@
 # Fucking Nintendo, how do they work
 #include <asm_setup.S>
 
-.extern isReplayEnabled
-
 .extern IOS_Open
 .extern IOS_Close
 .extern IOS_Read
@@ -96,9 +94,11 @@ replayStart: # b from 809246E0
 	
 replayStartLoop:
 	
-	lis r3, str_replayFileNameBuffer@h
-	ori r3, r3, str_replayFileNameBuffer@l
-	
+	lis r3, finalReplayDataBufferFilenames@h
+	ori r3, r3, finalReplayDataBufferFilenames@l
+	mulli r4, r29, 4
+	lwzx r3, r3, r4
+
 	li r4, 64
 	
 	lis r5, str_replayFileNameFormat@h
@@ -127,8 +127,10 @@ replayStartLoop:
 	crclr 4*cr1+eq
 	bl snprintf
 	
-	lis r4, str_replayFileNameBuffer@h
-	ori r4, r4, str_replayFileNameBuffer@l
+	lis r4, finalReplayDataBufferFilenames@h
+	ori r4, r4, finalReplayDataBufferFilenames@l
+	mulli r3, r29, 4
+	lwzx r4, r4, r3
 	lis r3, str_startMsg@h
 	ori r3, r3, str_startMsg@l
 	crclr 4*cr1+eq
@@ -137,22 +139,22 @@ replayStartLoop:
 	lis r3, str_replayFileNameBuffer@h
 	ori r3, r3, str_replayFileNameBuffer@l
 	
-	li r4, 0x602 # O_WRITE | O_CREAT | O_TRUNC
+	#li r4, 0x602 # O_WRITE | O_CREAT | O_TRUNC
 	
-	bl IOS_Open
+	#bl IOS_Open
 	
-	cmpwi r3, 0
-	blt iosOpenFail
+	#cmpwi r3, 0
+	#blt iosOpenFail
 	
 	lis r4, replayHandles@h
 	ori r4, r4, replayHandles@l
 	stwx r3, r4, r30
 	
-	mr r4, r3
-	lis r3, str_iosOpenMsg@h
-	ori r3, r3, str_iosOpenMsg@l
-	crclr 4*cr1+eq
-	bl OSReport
+	#mr r4, r3
+	#lis r3, str_iosOpenMsg@h
+	#ori r3, r3, str_iosOpenMsg@l
+	#crclr 4*cr1+eq
+	#bl OSReport
 	
 	# now write the header
 	lis r4, replayHeaders@h
@@ -168,7 +170,7 @@ replayStartLoop:
 	lis r9, CurrentStartedEntrance@h
 	ori r9, r9, CurrentStartedEntrance@l # WRONG
 	
-	lbz r6, 0(r6)
+	lbz r6, 0(r6)	
 	lbz r7, 0(r7)
 	
 	stb r6, 0(r4)
@@ -227,12 +229,41 @@ replayStartLoop:
 	lis r4, keepTiltValues@h
 	ori r4, r4, keepTiltValues@l
 	stwx r3, r4, r30
+
+	
+	# alloc the final memory if doesn't exist yet
+
+	lis r3, finalReplayDataBufferPointers@h
+	ori r3, r3, finalReplayDataBufferPointers@l
+	lwzx r3, r3, r30
+	cmpwi r3, 0
+	bne finalDataExists
 	
 	lis r4, replayDataBufferSize@h
 	ori r4, r4, replayDataBufferSize@l
 	lwz r3, 0(r4)
+
+	#li r4, -4
+	#lis r5, GameHeap0@h
+	#lwz r5, GameHeap0@l(r5)
+	#bl EGG__Heap__alloc__FUliPv
+	bl _Z18AllocFromGameHeap1j
+
+	addi r4, r3, 32
+	rlwinm r3, r3, 0, 27, 31
+	sub r3, r4, r3
 	
+	lis r4, finalReplayDataBufferPointers@h
+	ori r4, r4, finalReplayDataBufferPointers@l
+	stwx r3, r4, r30
+
+finalDataExists:
 	# alloc the memory
+	
+	lis r4, replayDataBufferSize@h
+	ori r4, r4, replayDataBufferSize@l
+	lwz r3, 0(r4)
+
 	li r4, 4
 	lis r5, GameHeap2@h
 	ori r5, r5, GameHeap2@l
@@ -409,6 +440,7 @@ replayEnd: # bl from 80102238
 	stw r31, 0x1C(sp)
 	stw r30, 0x18(sp)
 	stw r29, 0x14(sp)
+	stw r28, 0x10(sp)
 	
 	cmpwi r3, 1
 	bne justLeave
@@ -424,14 +456,21 @@ replayEndLoop:
 	lwz r3, 0(r31)
 	cmpwi r3, 0
 	beq dontEndThisReplay
+
+	lis r28, finalReplayDataBufferPointers@h
+	ori r28, r28, finalReplayDataBufferPointers@l
+	lwzx r28, r28, r30
 	
+	mr r3, r28
 	lis r4, replayHeaders@h
 	ori r4, r4, replayHeaders@l
 	lwzx r4, r4, r30
 	li r5, 0x40
-	bl IOS_Write
+	addi r28, r28, 0x40
+	#bl IOS_Write
+	bl memcpy
 	
-	lwz r3, 0(r31)
+	mr r3, r28
 	lis r4, replayDataBuffers@h
 	ori r4, r4, replayDataBuffers@l
 	lwzx r4, r4, r30
@@ -439,16 +478,28 @@ replayEndLoop:
 	ori r5, r5, replayDataBufferPointers@l
 	lwzx r5, r5, r30
 	subf r5, r4, r5
-	bl IOS_Write
+	add r28, r28, r5
+	#bl IOS_Write
+	bl memcpy
 	
-	lwz r3, 0(r31)
+	mr r3, r28
 	lis r4, replayFooter@h
 	ori r4, r4, replayFooter@l
 	li r5, 4
-	bl IOS_Write
+	addi r28, r28, 4
+	#bl IOS_Write
+	bl memcpy
 	
-	lwz r3, 0(r31)
-	bl IOS_Close
+	#lwz r3, 0(r31)
+	#bl IOS_Close
+	mr r3, r28
+	lis r28, finalReplayDataBufferPointers@h
+	ori r28, r28, finalReplayDataBufferPointers@l
+	lwzx r28, r28, r30
+	sub r3, r3, r28
+	lis r28, finalReplayDataBufferSizes@h
+	ori r28, r28, finalReplayDataBufferSizes@l
+	stwx r3, r28, r30
 	
 	li r3, 0
 	stw r3, 0(r31)
@@ -472,6 +523,17 @@ replayEndLoop:
 	crclr 4*cr1+eq
 	bl OSReport
 	
+	lis r3, str_finish@h
+	ori r3, r3, str_finish@l
+	lis r4, finalReplayDataBufferPointers@h
+	ori r4, r4, finalReplayDataBufferPointers@l
+	lwzx r4, r4, r30
+	lis r5, finalReplayDataBufferSizes@h
+	ori r5, r5, finalReplayDataBufferSizes@l
+	lwzx r5, r5, r30
+	crclr 4*cr1+eq
+	bl OSReport
+	
 	# before we leave, set the flag again
 	lis r3, replayFlags@h
 	ori r3, r3, replayFlags@l
@@ -488,6 +550,27 @@ dontEndThisReplay:
 	addi r30, r30, 4
 	cmpwi r29, 4
 	blt replayEndLoop
+
+	lis r31, SaveHandlerInstance@ha
+	lwz r31, SaveHandlerInstance@l(r31)
+
+	addi r3, r31, 0x54
+	bl sub_801B31C0
+	neg r0, r3
+	or r0, r0, r3
+	srwi. r0, r0, 31
+	#li r3, 0
+	beq justLeave
+
+	li r4, 0 # 800CF1A4
+	li r0, 7
+	stw r4, 0x78(r31)
+	stw r0, 0x74(r31)
+
+	addi r3, r31, 0x54
+	bl OSUnlockMutex
+	addi r3, r31, 0x6C
+	bl j_OSWakeupThread
 	
 	li r3, 1
 	
@@ -497,6 +580,7 @@ justLeave:
 	lwz r31, 0x1C(sp)
 	lwz r30, 0x18(sp)
 	lwz r29, 0x14(sp)
+	lwz r28, 0x10(sp)
 	mtlr r0
 	addi sp, sp, 0x20
 	blr
@@ -710,6 +794,183 @@ yesSkipIt:
 	b doSkipReplayPrepare
 
 
+
+.global NewSaveHandlerTag # b'd from 800CFB28
+NewSaveHandlerTag:
+	cmpwi r0, 7
+	beq value7_writeReplays
+	b newSaveHandlerTagLoop
+
+value7_writeReplays:
+	mr r3, r30
+	li r4, 0
+	bl WriteReplayToNAND
+	cmpwi r3, 2
+	beq value7_writeReplays
+
+value7_redoReplay1:
+	mr r3, r30
+	li r4, 1
+	bl WriteReplayToNAND
+	cmpwi r3, 2
+	beq value7_redoReplay1
+
+value7_redoReplay2:
+	mr r3, r30
+	li r4, 2
+	bl WriteReplayToNAND
+	cmpwi r3, 2
+	beq value7_redoReplay2
+
+value7_redoReplay3:
+	mr r3, r30
+	li r4, 3
+	bl WriteReplayToNAND
+	cmpwi r3, 2
+	beq value7_redoReplay3
+
+	b newSaveHandlerTagLoop
+
+
+.global WriteReplayToNAND # Stole from 800CF200
+WriteReplayToNAND:
+	stwu sp, -0x100(sp)
+	mflr r0
+	stw r0, 0x104(sp)
+	stw r31, 0xFC(sp)
+	stw r30, 0xF8(sp)
+	stw r29, 0xF4(sp)
+
+
+	mr r31, r3
+	mulli r29, r4, 4
+
+	lis r30, finalReplayDataBufferFilenames@h
+	ori r30, r30, finalReplayDataBufferFilenames@l
+	lwzx r30, r30, r29
+
+	mr r3, r30
+	li r4, 0x3C
+	li r5, 0
+	bl NANDCreate
+
+	mr r4, r3
+	mr r3, r31
+	bl SaveFileErrorHandling
+
+	lwz r0, 0x78(r31)
+	cntlzw r0, r0
+	srwi. r0, r0, 5
+	bne FileOpenSuccess
+	li r3, 1
+	b WriteReplayToNANDReturn
+
+FileOpenSuccess:
+	mr		r3, r30
+	addi	r4, sp, 8
+	li		r5, 2
+	lis		r6, unk_80359FC0@h
+	ori		r6, r6, unk_80359FC0@l
+	li		r7, 0x4000
+	bl		NANDSafeOpen1
+
+	mr		r4, r3
+	mr		r3, r31
+	bl		SaveFileErrorHandling
+
+	lwz		r3, 0x78(r31)
+	cntlzw	r0, r3
+	srwi.	r0, r0, 5
+	bne		FileSafeOpenSuccess
+
+	addi	r0, r3, -6
+	cntlzw	r0, r0
+	srwi.	r0, r0, 5
+	beq		WriteReplayToNANDReturn1
+
+	addi	r3, sp, 8
+	bl		ipl_nand_wrapper_SafeClose_maybe
+
+	mr		r4, r3
+	mr		r3, r31
+	bl		SaveFileErrorHandling
+
+FileSafeOpenSuccess:
+	addi	r3, sp, 8
+	lis		r4, finalReplayDataBufferPointers@h
+	ori		r4, r4, finalReplayDataBufferPointers@l
+	lwzx	r4, r4, r29
+	lis		r5, finalReplayDataBufferSizes@h
+	ori		r5, r5, finalReplayDataBufferSizes@l
+	lwzx	r5, r5, r29
+	bl		NANDWrite
+
+	cmpwi	r3, 0
+	mr		r4, r3
+	bge		WriteReplayToNANDSafeClose
+
+	mr		r3, r31
+	bl		SaveFileErrorHandling
+
+	lwz		r3, 0x78(r31)
+	cntlzw	r0, r3
+	srwi.	r0, r0, 5
+	bne		WriteReplayToNANDSafeClose
+
+	addi	r0, r3, -6
+	cntlzw	r0, r0
+	srwi.	r0, r0, 5
+	beq		WriteReplayToNANDReturn1 #AAAA
+
+	addi	r3, sp, 8
+	bl		ipl_nand_wrapper_SafeClose_maybe
+
+	mr		r4, r3
+	mr		r3, r31
+	bl		SaveFileErrorHandling
+
+	lwz		r0, 0x78(r31)
+	cntlzw	r0, r0
+	srwi.	r0, r0, 5
+	beq		WriteReplayToNANDReturn1
+	li		r3, 2
+	b		WriteReplayToNANDReturn
+
+
+WriteReplayToNANDReturn1:
+	li		r3, 1
+	b		WriteReplayToNANDReturn
+
+WriteReplayToNANDReturn2:
+	li		r3, 2
+	b		WriteReplayToNANDReturn
+
+WriteReplayToNANDSafeClose:
+	addi	r3, sp, 8
+	bl		NANDSafeClose
+
+	mr		r4, r3
+	mr		r3, r31
+	bl		SaveFileErrorHandling
+
+	lwz		r0, 0x78(r31)
+	cntlzw	r0, r0
+	srwi.	r0, r0, 5
+	#bne		WriteReplayToNANDReturn
+
+	li		r3, 1
+
+WriteReplayToNANDReturn:
+	lwz		r0, 0x104(sp)
+	lwz		r31, 0xFC(sp)
+	lwz		r30, 0xF8(sp)
+	lwz		r29, 0xF4(sp)
+	mtlr	r0
+	addi	sp, sp, 0x100
+	blr
+
+
+
 .data
 
 replayFlags: .short 1, 1, 1, 1
@@ -732,9 +993,15 @@ replayTime_msec:	.long 0
 replayTime_usec:	.long 0
 
 str_replayFileNameFormat:
-	.string "file/Replay_%02d-%02d_from_%02d-%02d_p%d.bin"
+	#.string "/file/Replay_%02d-%02d_from_%02d-%02d_p%d.bin"
+	.string "Replay_%02d-%02d_from_%02d-%02d_p%d.bin"
 
 str_replayFileNameBuffer:
+	.byte 0,0,0,0,0,0,0,0
+	.byte 0,0,0,0,0,0,0,0
+	.byte 0,0,0,0,0,0,0,0
+	.byte 0,0,0,0,0,0,0,0
+	.byte 0,0,0,0,0,0,0,0
 	.byte 0,0,0,0,0,0,0,0
 	.byte 0,0,0,0,0,0,0,0
 	.byte 0,0,0,0,0,0,0,0
@@ -758,6 +1025,9 @@ str_bufferObtained:
 
 str_endMsg:
 	.string "*** Replay Recorder -- Recording complete. %d frames saved.\n"
+
+str_finish:
+	.string "*** Replay Recorder -- Ptr: %p; Size: 0x%X.\n"
 
 str_debugFlags:
 	.string "DEBUG:%04x\n"
@@ -846,8 +1116,19 @@ replayDataBuffers: .long 0, 0, 0, 0
 replayDataBufferPointers: .long 0, 0, 0, 0
 replayDataBufferSize: .long 0x80000
 
+finalReplayDataBufferPointers: .long 0, 0, 0, 0
+finalReplayDataBufferSizes: .long 0, 0, 0, 0
+finalReplayDataBufferFilenames: .long finalReplayDataName0, finalReplayDataName1, finalReplayDataName2, finalReplayDataName3
+
+finalReplayDataName0: .long 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+finalReplayDataName1: .long 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+finalReplayDataName2: .long 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+finalReplayDataName3: .long 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
 saveRandomSeed: .long 0
 
 
 keepTiltValues: .long 0, 0, 0, 0
 
+.global isReplayEnabled
+isReplayEnabled: .byte 100, 0, 0, 0 # It's actually a single byte but added more for alignment

@@ -61,7 +61,7 @@ bool GrowBoss(daBoss *actor, daKameckDemo *Kameck, float initialScale, float end
 	if (timer == 130) { actor->Kameck->doStateChange(&daKameckDemo::StateID_DemoSt); }
 	if (timer == 400) { actor->Kameck->doStateChange(&daKameckDemo::StateID_DemoSt2); }
 
-	float scaleSpeed, yPosScaling;
+	float scaleSpeed;
 
 	if (timer == 150) { PlaySound(actor, SE_BOSS_IGGY_WANWAN_TO_L);  }
 

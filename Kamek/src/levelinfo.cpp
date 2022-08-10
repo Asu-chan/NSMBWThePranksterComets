@@ -1,23 +1,8 @@
 #include "levelinfo.h"
 
-dDvdLoader_c s_levelInfoLoader;
-bool s_levelInfoLoaded = false;
 
 dLevelInfo_c dLevelInfo_c::s_info;
 
-bool LoadLevelInfo() {
-	if (s_levelInfoLoaded)
-		return true;
-
-	void *data = s_levelInfoLoader.load("/NewerRes/LevelInfo.bin");
-	if (data) {
-		dLevelInfo_c::s_info.load(data);
-		s_levelInfoLoaded = true;
-		return true;
-	}
-
-	return false;
-}
 
 
 void dLevelInfo_c::load(void *buffer) {
@@ -33,12 +18,6 @@ void dLevelInfo_c::load(void *buffer) {
 
 			if (level->levelSlot < 42)
 				SetSomeConditionShit(level->worldSlot, level->levelSlot, level->flags);
-
-			char *name = (char*)getNameForLevel(level);
-
-			for (int i = 0; i < level->nameLength+1; i++) {
-				name[i] -= 0xD0;
-			}
 		}
 	}
 }

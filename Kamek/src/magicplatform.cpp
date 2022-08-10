@@ -63,6 +63,11 @@ daEnMagicPlatform_c *daEnMagicPlatform_c::build() {
 	return c;
 }
 
+
+#include <profile.h>
+const SpriteData magicPlatformData = {ProfileId::NEWER_MAGICPLATFORM, 8, -8, 0, 0, 0x100, 0x100, 0, 0, 0, 0, 2};
+Profile magicPlatformProfile = Profile((buildFunc)&daEnMagicPlatform_c::build, SpriteId::NEWER_MAGICPLATFORM, &magicPlatformData, ProfileId::NEWER_MAGICPLATFORM, ProfileId::NEWER_MAGICPLATFORM, 0x12, "NEWER_MAGICPLATFORM", 0);
+
 extern "C" void HurtMarioBecauseOfBeingSquashed(void *mario, dStageActor_c *squasher, int type);
 
 static void PhysCB1(daEnMagicPlatform_c *one, dStageActor_c *two) {

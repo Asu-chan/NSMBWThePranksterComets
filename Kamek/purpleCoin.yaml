@@ -1,0 +1,34 @@
+---
+#Replaces Actor 321 MIST_INTERMITTENT (Sprite 239)
+
+
+source_files: [../src/purpleCoin.cpp, ../src/purpleCoin.S]
+hooks:
+  - name: PurpleCoinBuild
+    type: add_func_pointer
+    src_addr_pal: 0x80970DB8
+    target_func: 'daPurpleCoin_c::build()'
+
+  - name: PurpleCoinSpriteFileInfo
+    type: add_func_pointer
+    src_addr_pal: 0x8031af08
+    target_func: 'PCarcNameList'
+    # 0x8031AB4C + sprite num * 0x4 == offset
+
+  - name: PurpleCoinCheckpoint
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x8008EF98
+    target_func: 'PurpleCoinCheckpoint()'
+
+  - name: WipePurpleCoins
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x8005F0A8
+    target_func: 'WipePurpleCoins'
+
+  - name: RestorePurpleCoins
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x8005F108
+    target_func: 'RestorePurpleCoins'

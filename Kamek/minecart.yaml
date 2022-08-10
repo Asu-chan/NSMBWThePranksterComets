@@ -1,0 +1,5 @@
+---
+# New Actor MINECART
+
+source_files: [../src/minecart/core.cpp, ../src/minecart/player.cpp, ../src/minecart/node.cpp] 
+hooks: []

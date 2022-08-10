@@ -1,0 +1,13 @@
+---
+source_files: [../src/YoshiHacks.S]
+hooks:
+  - name: MakeP1BeYoshi
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x800D6DBC
+    target_func: 'MakeP1BeYoshi'
+
+  - name: NoPlayerVoices
+    type: nop_insn
+    area_pal: 0x80105140
+

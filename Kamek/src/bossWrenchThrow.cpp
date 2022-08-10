@@ -129,11 +129,11 @@ int daWrench::onCreate() {
 		this->scale.z = 2.0;
 	}
 
-	HitMeBaby.category1 = 0x3;
-	HitMeBaby.category2 = 0x0;
-	HitMeBaby.bitfield1 = 0x47;
-	HitMeBaby.bitfield2 = 0xFFFFFFFF;
-	HitMeBaby.unkShort1C = 0;
+	HitMeBaby.category = 0x3;
+	HitMeBaby.attack = 0x0;
+	HitMeBaby.categoryBitfield = 0x47;
+	HitMeBaby.attackBitfield = 0xFFFFFFFF;
+	HitMeBaby.miscFlags = 0;
 	HitMeBaby.callback = &dEn_c::collisionCallback;
 
 	this->aPhysics.initWithStruct(this, &HitMeBaby);

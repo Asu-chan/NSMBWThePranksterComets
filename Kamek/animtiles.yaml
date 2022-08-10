@@ -1,5 +1,5 @@
 ---
-source_files: [../src/animtiles.cpp]
+source_files: [../src/animtiles.cpp, ../src/fileload.cpp]
 hooks:
   - name: AnimatedTiles
     type: branch_insn

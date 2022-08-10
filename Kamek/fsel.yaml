@@ -1,0 +1,115 @@
+---
+
+source_files: [../src/fsel.S]
+hooks:
+  # - name: FPointerHook
+  #   type: add_func_pointer
+  #   src_addr_pal: 0xDEADBEEF
+  #   target_func: 'Whatever'
+
+  # - name: PatchHook
+  #   type: patch
+  #   addr_pal: 0xDEADBEEF
+  #   data: 'YYYYYYYY' # Orig: XXXXXXXX
+
+  # - name: BranchHook
+  #   type: branch_insn
+  #   src_addr_pal: 0xDEADBEEF
+  #   branch_type: b
+  #   target_func: 'Whatever'
+
+  - name: NoMoreLeftAndRight
+    type: patch
+    addr_pal: 0x80783C68
+    data: '418200EC' # Orig: 4182004C
+
+  - name: NoMoreCoinBattle
+    type: nop_insn
+    area_pal: 0x80783D0C
+
+  - name: BonusGroup
+    type: add_func_pointer
+    src_addr_pal: 0x80943B88
+    target_func: 'bonusGroup'
+
+  - name: BonusGroup
+    type: add_func_pointer
+    src_addr_pal: 0x80943BDC
+    target_func: 'bonusGroup'
+
+  - name: BonusGroup
+    type: add_func_pointer
+    src_addr_pal: 0x80943BE4
+    target_func: 'bonusGroup'
+
+  - name: BonusGroup
+    type: add_func_pointer
+    src_addr_pal: 0x80943BEC
+    target_func: 'bonusGroup'
+
+  - name: BonusGroup
+    type: add_func_pointer
+    src_addr_pal: 0x80943BF4
+    target_func: 'bonusGroup'
+
+  - name: BonusGroup
+    type: add_func_pointer
+    src_addr_pal: 0x80943BFC
+    target_func: 'bonusGroup'
+
+  # - name: BonusText
+  #   type: add_func_pointer
+  #   src_addr_pal: 0x80943D00
+  #   target_func: 'bonusText'
+
+  # - name: BonusTextS
+  #   type: add_func_pointer
+  #   src_addr_pal: 0x80943CFC
+  #   target_func: 'bonusTextS'
+
+  - name: BonusWindow
+    type: add_func_pointer
+    src_addr_pal: 0x80943D88
+    target_func: 'bonusWindow'
+
+  # - name: SetBonusLevelFlag
+  #   type: branch_insn
+  #   src_addr_pal: 0x80918808
+  #   branch_type: b
+  #   target_func: 'SetBonusLevelFlag'
+
+  - name: CheckForBonusLevelFlag
+    type: branch_insn
+    src_addr_pal: 0x809191BC
+    branch_type: b
+    target_func: 'CheckForBonusLevelFlag'
+
+  - name: ChangeMPCS
+    type: patch
+    addr_pal: 0x80918FCC
+    data: '38600155' # Orig: 3860000B
+
+  - name: SingleplayerMPCS
+    type: patch
+    addr_pal: 0x807AC3F4
+    data: '70000000' # Orig: 540006F7
+
+  - name: SingleplayerMPCS
+    type: patch
+    addr_pal: 0x807AC694
+    data: '70000000' # Orig: 
+
+  - name: SingleplayerMPCS
+    type: patch
+    addr_pal: 0x807AC710
+    data: '70000000' # Orig: 
+
+  - name: SingleplayerMPCS
+    type: patch
+    addr_pal: 0x807ACB10
+    data: '70000000' # Orig: 
+
+  - name: SingleplayerMPCS
+    type: patch
+    addr_pal: 0x807ac644
+    data: '70000000' # Orig: 

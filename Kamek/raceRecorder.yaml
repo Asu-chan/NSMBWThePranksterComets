@@ -1,0 +1,17 @@
+---
+#Replaces Actor 119 EN_BOYON (Sprite 88)
+
+
+source_files: [../src/raceRecorder.cpp]
+hooks:
+  - name: RaceRecorderBuild
+    type: add_func_pointer
+    src_addr_pal: 0x80ADEA00
+    target_func: 'daRaceRecorder_c::build()'
+
+  - name: UpdateRaceRecorderSpriteInfo
+    type: patch
+    # 0x8030A340 + sprite num * 0x28 == offset
+    addr_pal: 0x8030b100
+    #      -ID- ----  -X Offs- -Y Offs-  -RectX1- -RectY1- -RectX2- -RectY2-  -1C- -1E- -20- -22-  Flag ----
+    data: '0077 0000  00000000 00000000  00000000 00000000 00000000 00000000  0000 0000 0000 0000  0002 0000'

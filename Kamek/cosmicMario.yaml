@@ -1,0 +1,24 @@
+---
+#Replaces Actor 109 EN_HELPOS (Sprite 79)
+
+
+source_files: [../src/cosmicMario.cpp]
+hooks:
+  - name: CosmicMarioBuild
+    type: add_func_pointer
+    src_addr_pal: 0x80AEE178
+    target_func: 'daCosmicMario_c::build()'
+
+  - name: CosmicMarioSpriteFileInfo
+    type: add_func_pointer
+    src_addr_pal: 0x8031ac88
+    target_func: 'CMarcNameList'
+    # 0x8031AB4C + sprite num * 0x4 == offset
+
+
+  - name: UpdateCosmicMarioSpriteInfo
+    type: patch
+    # 0x8030A340 + sprite num * 0x28 == offset
+    addr_pal: 0x8030af98
+    #      -ID- ----  -X Offs- -Y Offs-  -RectX1- -RectY1- -RectX2- -RectY2-  -1C- -1E- -20- -22-  Flag ----
+    data: '006D 0000  00000000 00000000  00000000 00000000 00000000 00000000  0000 0000 0000 0000  0002 0000'

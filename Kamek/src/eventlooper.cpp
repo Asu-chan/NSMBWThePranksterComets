@@ -1,30 +1,38 @@
-#include <common.h>
 #include <game.h>
+#include <common.h>
 
-struct EventLooper {
-	u32 id;			// 0x00
-	u32 settings;	// 0x04
-	u16 name;		// 0x08
-	u8 _0A[6];		// 0x0A
-	u8 _10[0x9C];	// 0x10
-	float x;		// 0xAC
-	float y;		// 0xB0
-	float z;		// 0xB4
-	u8 _B8[0x318];	// 0xB8
-	// Any variables you add to the class go here; starting at offset 0x3D0
-	u64 eventFlag;	// 0x3D0
-	u64 eventActive;	// 0x3D0
-	u8 delay;		// 0x3D4
-	u8 delayCount;	// 0x3D7
+
+
+class dEventLooper_c : public dActorState_c {
+public:
+	int onCreate();
+	int onExecute();
+	int onDelete();
+	// int onDraw();
+
+	u64 eventFlag;
+	u64 eventActive;
+	u8 delay;
+	u8 delayCount;
+
+	static dEventLooper_c *build();
 };
 
-void EventLooper_Update(EventLooper *self);
+
+dEventLooper_c *dEventLooper_c::build() {
+	void *buffer = AllocFromGameHeap1(sizeof(dEventLooper_c));
+	dEventLooper_c *c = new(buffer) dEventLooper_c;
+	return c;
+}
+
+#include <profile.h>
+const SpriteData eventLooperData = {ProfileId::NEWER_EVENTLOOPER, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2};
+Profile eventLooperProfile = Profile((buildFunc)&dEventLooper_c::build, SpriteId::NEWER_EVENTLOOPER, &eventLooperData, ProfileId::NEWER_EVENTLOOPER, ProfileId::NEWER_EVENTLOOPER, 0x12, "NEWER_EVENTLOOPER", 0);
 
 
-
-bool EventLooper_Create(EventLooper *self) {
-	char eventStart	= (self->settings >> 24)	& 0xFF;
-	char eventEnd	= (self->settings >> 16)	& 0xFF;
+int dEventLooper_c::onCreate() {
+	char eventStart	= (this->settings >> 24)	& 0xFF;
+	char eventEnd	= (this->settings >> 16)	& 0xFF;
 
 	// Putting all the events into the flag
 	int i;
@@ -34,75 +42,76 @@ bool EventLooper_Create(EventLooper *self) {
 		q = q | ((u64)1 << (i - 1));
 	}
 		
-	self->eventFlag = q;
+	this->eventFlag = q;
 	
-	self->delay		= (((self->settings) & 0xFF) + 1) * 10;
-	self->delayCount = 0;
+	this->delay		= (((this->settings) & 0xFF) + 1) * 10;
+	this->delayCount = 0;
 	
-	char tmpEvent= (self->settings >> 8)	& 0xFF;
+	char tmpEvent= (this->settings >> 8)	& 0xFF;
 	if (tmpEvent == 0)
 	{
-		self->eventActive = (u64)0xFFFFFFFFFFFFFFFF;
+		this->eventActive = (u64)0xFFFFFFFFFFFFFFFF;
 	}
 	else
 	{
-		self->eventActive = (u64)1 << (tmpEvent - 1);
+		this->eventActive = (u64)1 << (tmpEvent - 1);
 		
 	}
 	
 
-	if (dFlagMgr_c::instance->flags & self->eventActive)
+	if (dFlagMgr_c::instance->flags & this->eventActive)
 	{
 		u64 evState = (u64)1 << (eventStart - 1);
 		dFlagMgr_c::instance->flags |= evState;
 	}
 
-	EventLooper_Update(self);
-	
+	this->onExecute();
+
 	return true;
 }
 
-bool EventLooper_Execute(EventLooper *self) {
-	EventLooper_Update(self);
-	return true;
-}
-
-
-void EventLooper_Update(EventLooper *self) {
-	
-	if ((dFlagMgr_c::instance->flags & self->eventActive) == 0)
-		return;
+int dEventLooper_c::onExecute() {
+	if ((dFlagMgr_c::instance->flags & this->eventActive) == 0)
+		return true;
 
 	// Waiting for the right moment
-	if (self->delayCount < self->delay) 
+	if (this->delayCount < this->delay) 
 	{
 
-		self->delayCount = self->delayCount + 1;
-		return;
+		this->delayCount = this->delayCount + 1;
+		return true;
 	}	
 	
 	// Reset the delay
-	self->delayCount = 0;
+	this->delayCount = 0;
 	
 	// Find which event(s) is/are on
-	u64 evState = dFlagMgr_c::instance->flags & self->eventFlag;
+	u64 evState = dFlagMgr_c::instance->flags & this->eventFlag;
 	
 	// Turn off the old events
-	dFlagMgr_c::instance->flags = dFlagMgr_c::instance->flags & (~self->eventFlag);
+	dFlagMgr_c::instance->flags = dFlagMgr_c::instance->flags & (~this->eventFlag);
 	
 	// Shift them right if they can, if not, reset!
 	evState = evState << 1;
-	if (evState < self->eventFlag)
+	if (evState < this->eventFlag)
 	{
 		dFlagMgr_c::instance->flags = dFlagMgr_c::instance->flags | evState;
 	}
 	
 	else
 	{
-		char eventStart	= (self->settings >> 24)	& 0xFF;
+		char eventStart	= (this->settings >> 24) & 0xFF;
 		evState = (u64)1 << (eventStart - 1);
 		dFlagMgr_c::instance->flags = dFlagMgr_c::instance->flags | evState;
 	}
-	
-	
+
+	return true;
 }
+
+int dEventLooper_c::onDelete() {
+	return true;
+}
+
+// int dEventLooper_c::onDraw() {
+// 	return true;
+// }

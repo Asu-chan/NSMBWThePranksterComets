@@ -1,0 +1,23 @@
+---
+
+source_files: [../src/stage.cpp]
+hooks:
+  - name: StageCreate
+    type: add_func_pointer
+    src_addr_pal: 0x8098DC30
+    target_func: 'dScStage_c::newOnCreate()'
+
+  - name: newStartLevel
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x8090CF58
+    target_func: 'newStartLevel(GameMgr*, StartLevelInfo*)'
+
+  # - name: ChangeWhatever
+  #   type: patch
+  #   addr_pal: 0x8090CF50
+  #   data: '7E639B78' # Orig: 7FE3FB78
+    
+  - name: fixDrawForShop
+    type: nop_insn
+    area_pal: 0x80926800
