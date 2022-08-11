@@ -1,0 +1,30 @@
+1:1
+2:2
+3:3
+4:4
+5:5
+6:6
+7:7
+8:8
+9:9
+10:A
+11:B
+12:C
+13:D
+14:E
+20:A
+21:Tower
+22:Tower (2)
+23:Castle
+24:Tower (3)
+25:Bowser's Castle
+26:Railroad
+27:Airship
+29:Yoshi House
+36:Music House
+37:Shop
+38:Challenge House
+39:Red Switch Palace
+40:Blue Switch Palace
+41:Yellow Switch Palace
+42:Green Switch Palace

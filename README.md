@@ -9,6 +9,7 @@ These resources include:
 - The game's source code (`Kamek` folder)
 - The game's code loader (`Loader` folder)
 - An all-in-one toolbox to edit various of the custom file formats used in the game (`PranksterToolbox` folder)
+- Miscellaneous tools used during development, including a **[Level Info Editor](https://github.com/RoadrunnerWMC/Level-Info-Editor) mod* (`Tools` folder)
 - The game's [Reggie Next v4.8.0](https://github.com/CLF78/Reggie-Next/tree/v4.8.0) patch (`Reggie` folder)
 
 This repo is (meant to be) a fork of the [/Newer-Team/NewerSMBW, clang-no-translations branch](https://github.com/Newer-Team/NewerSMBW/tree/clang-no-translations) repo since part of [**Newer Super Mario Bros. Wii**](https://newerteam.com/wii/)'s code was used in [**New Super Mario Bros. Wii: The Prankster Comets**](https://youtu.be/5QI8ACl1E9c).
@@ -64,11 +65,18 @@ If you're looking for other non-downscaled pieces of art made for the game, or a
 
 ### Licensing
 
-The [**New Super Mario Bros. Wii: The Prankster Comets**](https://youtu.be/5QI8ACl1E9c) source code, loader and tools, along with [**Newer Super Mario Bros. Wii**](https://newerteam.com/wii/)'s, are released under the MIT license.
+The [**New Super Mario Bros. Wii: The Prankster Comets**](https://youtu.be/5QI8ACl1E9c) source code, loader, Reggie Next patch, the "Prankster Toolbox" and [**Newer Super Mario Bros. Wii**](https://newerteam.com/wii/), are released under the MIT license.
 
 See the `LICENSE` file in this repository for full details.
 
 Copyright (c) 2021-2022 Asu-chan; 2010-2013 Treeki, Tempus, megazig
+
+
+The [**Level Info Editor mod**](https://github.com/Asu-chan/NSMBWThePranksterComets/tree/clang-no-translations/Tools/Level%20Info%20Editor) source code is released under the GPL-3.0 license.
+
+See the `LICENSE` file in the corresponding folder for full details.
+
+Copyright (c) 2023-2021 RoadRunnerWMC; 2021-2022 Asu-chan
 
 ### Credits
 
@@ -84,3 +92,5 @@ If you contributed to any of the work that is featured in this repo and you were
 **Usage of any of the Prankster Toolbox's source code requires crediting [Asu-chan](https://github.com/Asu-chan).**
 
 **Usage of any of the Reggie Next v4.8.0 patch requires crediting [Asu-chan](https://github.com/Asu-chan) and the [Reggie Next Team](https://github.com/CLF78/Reggie-Next/tree/v4.8.0#reggie-team).**
+
+**Usage of any of the Level Info Editor mod requires crediting [RoadrunnerWMC](https://github.com/RoadrunnerWMC) and [Asu-chan](https://github.com/Asu-chan).**
