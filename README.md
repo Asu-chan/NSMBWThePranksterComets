@@ -93,4 +93,4 @@ If you contributed to any of the work that is featured in this repo and you were
 
 **Usage of any of the Reggie Next v4.8.0 patch requires crediting [Asu-chan](https://github.com/Asu-chan) and the [Reggie Next Team](https://github.com/CLF78/Reggie-Next/tree/v4.8.0#reggie-team).**
 
-**Usage of any of the Level Info Editor mod requires crediting [RoadrunnerWMC](https://github.com/RoadrunnerWMC) and [Asu-chan](https://github.com/Asu-chan).**
+**Usage of the Level Info Editor mod itself and its code requires crediting [RoadrunnerWMC](https://github.com/RoadrunnerWMC) and [Asu-chan](https://github.com/Asu-chan).**
