@@ -3,7 +3,7 @@
 
 ### Information 
 
-This repo includes some of the resources used to make the [**New Super Mario Bros. Wii: The Prankster Comets**](https://youtu.be/5QI8ACl1E9c) game mod, which is a mod of **New Super Mario Bros. Wii** based on [**Newer Super Mario Bros. Wii**](https://newerteam.com/wii/).
+This repo includes some of the resources used to make the [**New Super Mario Bros. Wii: The Prankster Comets**](https://youtu.be/5QI8ACl1E9c) game mod, which is a mod of **New Super Mario Bros. Wii** based on [**Newer Super Mario Bros. Wii**](https://newerteam.com/wii/) <ins>**that got cancelled due to lack of motivation and time**</ins>.
 
 These resources include:
 - The game's source code (`Kamek` folder)
